@@ -24,7 +24,7 @@ app.use(layouts);
 app.use(express.static(path.join(__dirname, "public")))
 app.set('layout', 'layouts/layout');
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'front-end/views'));
+app.set('views', path.join(__dirname, '../front-end/views'));
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -37,7 +37,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use("/usuario_mep", usuario_mepRoute)
 
 app.get('/', (req, res) => {
-    res.render("index.ejs");
+    res.render("index");
 });
 
 app.listen(PORT, ()=>{
