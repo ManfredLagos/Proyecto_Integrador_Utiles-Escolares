@@ -21,10 +21,11 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());//Habilita el anÃ¡lisis de JSON en las peticiones 
 app.use(cors());
 app.use(layouts);
+app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")))
 app.set('layout', 'layouts/layout');
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../front-end/views'));
+app.set('views', path.join(__dirname, '/views'));
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,

@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Ministario de Educación Pública</title>
-    <link id="logo" rel="icon" href="{{ url_for('/front-end/public/images', filename='images/logo_mep.ico') }}" type="image/ico">
-    <link rel="stylesheet" href="/front-end/public/css/styles.css">
+    <link rel="icon" href="/images/logo_mep.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <%- include("../partials/inicioHeader") %>
 
     <main>
-        <%- body %>
+        <div class="contenedor">
+            <%- body %>
+        </div>
     </main>
 
     <%- include("../partials/inicioFooter") %>
