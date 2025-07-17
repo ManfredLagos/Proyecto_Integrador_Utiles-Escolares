@@ -2,3 +2,6 @@
 @import url("header.css");
 @import url("footer.css");
 
+*{
+    font-family: "Cabin", sans-serif;
+}

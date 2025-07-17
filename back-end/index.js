@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000; //Usar el puerto indicado en .env o si no
 const path = require('path');
 
 //importar rutas
-const usuario_mepRoute = require("./routes/usuario_mep.route")
+const usuario_mepRoute = require("./src/routes/usuario_mep.route")
 
 app.use(express.json());//Habilita el manejo de JSON en las peticiones
 app.use(express.static(path.join(__dirname, 'public')));
