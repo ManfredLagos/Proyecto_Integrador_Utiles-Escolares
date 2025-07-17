@@ -1,0 +1,22 @@
+.finalPagina{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.lineaFooter{
+    color: #ffffff;
+    width: 45%;
+    border: 1.5px solid white;
+}
+
+.logoFooter{
+    width: 450px;
+    height: 60px;
+}
+
+.finalPagina p{
+    color: #fff;
+}

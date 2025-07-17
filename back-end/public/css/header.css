@@ -1,0 +1,30 @@
+.inicioPagina{
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inicioPagina h1{
+    padding-top: 10px;
+}
+
+
+.imgMep{
+    width: 75px;
+    height: 75px;
+}
+
+nav{
+    padding: 25px 25px 0 0;
+}
+
+nav a{
+    color: rgb(255, 255, 255);
+    padding: 0 8px;
+    text-decoration: none;
+}
+
+nav a:hover{
+    font-weight: 500;
+
+}

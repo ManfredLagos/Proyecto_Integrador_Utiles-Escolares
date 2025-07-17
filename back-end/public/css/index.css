@@ -1,0 +1,76 @@
+
+.cuerpoInicio{
+   padding: 0%;
+   margin: 0%;
+   height: 100%;
+   display: grid;
+   grid-template: 
+   "inicioPagina" 80px
+   "contenedor" auto
+   "finalPagina" 160px
+   ;
+}
+
+.inicioPagina{
+   grid-area: inicioPagina;
+   background-color: #1E2957;
+   height: 100%;
+}
+
+.contenedor{
+   grid-area: contenedor;
+   padding:  0 165px 50px 165px;
+}
+
+.finalPagina{
+   grid-area: finalPagina;
+   background-color: #1E2957;
+   height: 100%;
+}
+
+.seccionInicio{
+    display: flex;
+    flex-direction: column;
+    background-image: url("../images/fondoInicio.png");
+    background-size: cover;         /* Ajusta la imagen para cubrir toda la sección */
+    background-position: center;    /* Centra la imagen */
+    background-repeat: no-repeat;
+    justify-content: start;
+    align-items: center;
+    height: 500px;
+    width: 1000px;
+    border-radius: 20px;
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, .57);
+    color: #fff;
+    padding: 30px 50px 50px 50px;
+    margin: 50px 0;
+}
+
+.seccionInicio h1{
+    margin: 80px 0 30px 0;
+}
+
+.seccionInicio h4{
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.seccionInicio button{
+    margin-top: 40px;
+    height: 50px;
+    width: 100px;
+    background-color: #1E2957;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-weight: 500;
+    font-size: 20px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .57);
+    cursor: pointer;
+}
+
+.seccionInicio button:hover{
+    background-color: #3449a0;
+
+;
+}
