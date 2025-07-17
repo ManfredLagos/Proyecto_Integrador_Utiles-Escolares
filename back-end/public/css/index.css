@@ -1,3 +1,10 @@
+:root {
+    --gray: #505050;
+    --spacing-sm: 15px;
+    --spacing-md: 25px;
+    --spacing-lg: 35px;
+}
+
 
 .cuerpoInicio{
    padding: 0%;
@@ -32,8 +39,8 @@
     display: flex;
     flex-direction: column;
     background-image: url("../images/fondoInicio.png");
-    background-size: cover;         /* Ajusta la imagen para cubrir toda la sección */
-    background-position: center;    /* Centra la imagen */
+    background-size: cover;
+    background-position: center;    
     background-repeat: no-repeat;
     justify-content: start;
     align-items: center;
@@ -48,6 +55,8 @@
 
 .seccionInicio h1{
     margin: 80px 0 30px 0;
+    font-size: 46px;
+    font-weight: 700;
 }
 
 .seccionInicio h4{
@@ -71,6 +80,148 @@
 
 .seccionInicio button:hover{
     background-color: #3449a0;
-
 ;
+}
+
+.mensajeCartas h2{
+    color: #1E2957;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.mensajeCartas h4{
+    color: #1E2957;
+    margin: 45px 0;
+    padding-right: 30px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.grid-system {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    margin: 30px 0;
+}
+
+.grid-item {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.grid-item img{
+    width: 30px;
+    height: 25px;
+}
+
+.grid-item a{
+    background-color: #094bac;
+    border: none;
+}
+
+.grid-item a:hover,
+.grid-item a:focus,
+.grid-item a:active{
+    background-color: #2d72da;
+    border: none;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.grid-item h5 {
+    color: #1E2957 !important; 
+    font-weight: 700 !important;
+    font-size: 18px;
+    margin: 0 !important;
+    padding-bottom: 10px;
+
+}
+
+.grid-item p {
+    color: #747474 !important; 
+    font-weight: 500 !important;
+    font-size: 14px;
+
+}
+
+.card.shadow{
+    height: 100%;
+    padding: 10px;
+}
+
+.card-body{
+    padding: 10px 0 !important;
+}
+
+.mensajeFinal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 30px 10px 30px;
+    color: #1E2957;
+    gap: 20px;
+}
+
+.mensajeFinal h2{
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.mensajeFinal h4{
+    font-size: 18px;
+    padding: 0 50px;
+    text-align: center;
+}
+
+.mensajeFinal button{
+    height: 55px;
+    width: 200px;
+    background-color: #1E2957;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-weight: 500;
+    font-size: 20px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .57);
+    cursor: pointer;
+}
+
+.mensajeFinal button:hover{
+    background-color: #3449a0;
+}
+
+/* Mediaqueri para establecer los parametros responsivos de la página*/
+
+@media (min-width: 576px) {
+    .grid-system {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    .grid-system {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-md);
+    }
+}
+
+@media (min-width: 992px) {
+    .grid-system {
+        grid-template-columns: repeat(4, 1fr); /* columnas*/ 
+        gap: var(--spacing-md);
+    }
+}
+
+@media (min-width: 1200px) {
+    .grid-system {
+        gap: var(--spacing-lg);
+    }
 }
