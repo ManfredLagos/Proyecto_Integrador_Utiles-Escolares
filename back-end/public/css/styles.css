@@ -1,6 +1,7 @@
 @import url("index.css");
 @import url("header.css");
 @import url("footer.css");
+@import url("iniciar.css");
 
 *{
     font-family: "Cabin", sans-serif;

@@ -1,0 +1,86 @@
+.contenedorIniciar{
+    border: 2px solid red;
+    width: 800px;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.contenedorFormulario{
+    border: 1px solid gray;
+    width: 100%;
+}
+
+.contenedorFormulario .iniciarUsuaro{
+    transition: transform 0.5s ease-in-out;
+}
+
+.contenedorFormulario .registrarUsuario{
+    transition: transform 0.5s ease-in-out;
+}
+
+.iniciarUsuaro{
+    display: flex;
+    flex-direction: column;
+}
+
+.registrarUsuario{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedorDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.contenedorIniciar.toggle .iniciarUsuaro{
+    transform: translateX(-100%);
+}
+
+.contenedorIniciar.toggle .registrarUsuario{
+    transform: translateX(100%);
+}
+
+.contenedorSaludo{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    overflow: hidden;
+}
+
+.contenedorSaludo .saludo{
+    border: 2px solid red;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 50px;
+    transition: transform 0.5s ease-in-out;
+
+}
+
+.saludoRegistrar{
+    transform: translateX(-100%);
+}
+
+.contenedorIniciar.toggle .saludoIniciar{
+    transform: translateX(-100%);
+}
+
+.contenedorIniciar.toggle .saludoRegistrar{
+    transform: translateX(0);
+}
+
+
