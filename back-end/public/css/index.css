@@ -26,7 +26,7 @@
 
 .contenedor{
    grid-area: contenedor;
-   padding:  0 165px 50px 165px;
+   padding:  0 165px;
 }
 
 .finalPagina{

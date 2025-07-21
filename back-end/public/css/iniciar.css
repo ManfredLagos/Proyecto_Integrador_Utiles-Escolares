@@ -1,19 +1,20 @@
 .contenedorIniciar{
-    border: 2px solid red;
     width: 800px;
     height: 500px;
     display: flex;
     flex-direction: row;
     position: relative;
+    border-radius: 20px;
+    box-shadow: 7px 7px 20px 0px rgba(0,0,0,0.25);
+    margin: 50px;
 }
 
 .contenedorFormulario{
-    border: 1px solid gray;
-    width: 100%;
+    overflow: hidden;
 }
 
 .contenedorFormulario .iniciarUsuaro{
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.75s ease-in-out;
 }
 
 .contenedorFormulario .registrarUsuario{
@@ -21,16 +22,75 @@
 }
 
 .iniciarUsuaro{
-    display: flex;
-    flex-direction: column;
-}
-
-.registrarUsuario{
-    width: 100%;
+    width: 350px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+.iniciarUsuaro h1{
+    color: #182951;
+    font-weight: 700;
+}
+
+.iniciarUsuaro input{
+    width: 280px;
+    height: 35px;
+    border: 2px solid #a5a5a5;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 0;
+    font-size: 16px;
+    color: #182951;
+}
+
+.iniciarUsuaro input:focus{
+    outline: none;
+    border: 2px solid #a5a5a5;
+    box-shadow: 2px 2px 2px 2px rgba(172, 172, 172, 0.5);
+}
+
+#btnRegistrar{
+    border: none;
+    background-color: #fff;
+    color: #3158ca;
+    display: inline-block;
+    text-decoration: underline;
+}
+
+#btnIniciar{
+    width: 100px;
+    height: 35px;
+    background-color: #182951;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#inputRecordarContraseña{
+    width: 15px;
+    height: 15px;
+    box-shadow: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.registrarUsuario{
+    width: 450px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(100%);
+    gap: 10px;
 }
 
 .contenedorDiv{
@@ -38,6 +98,9 @@
     display: flex;
     flex-direction: column;
     align-items: start;
+    padding-left: 50px;
+    margin: 20px 0;
+    gap: 10px;
 }
 
 .contenedorIniciar.toggle .iniciarUsuaro{
@@ -45,34 +108,41 @@
 }
 
 .contenedorIniciar.toggle .registrarUsuario{
-    transform: translateX(100%);
+    transform: translateX(0%);
 }
 
 .contenedorSaludo{
     position: absolute;
-    width: 50%;
+    width: 450px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: aqua;
     overflow: hidden;
+    transition: transform 0.75s ease-in-out;
 }
 
 .contenedorSaludo .saludo{
-    border: 2px solid red;
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
     padding: 0 50px;
-    transition: transform 0.5s ease-in-out;
-
 }
 
 .saludoRegistrar{
     transform: translateX(-100%);
+    height: 100%;
+}
+
+.saludoIniciar{
+    height: 100%;
+}
+
+.contenedorIniciar.toggle .contenedorSaludo{
+    transform: translateX(128.5%);
+    width: 350px;
 }
 
 .contenedorIniciar.toggle .saludoIniciar{
