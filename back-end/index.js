@@ -33,6 +33,8 @@ const mainRouter = require("./src/routes/main.router");
 app.use(mainRouter);
 
 app.use("/iniciar", require("./src/routes/iniciar.router"));
+app.use("/Contacto", require("./src/routes/contacto.router"));
+app.use("/SobreNosotros", require("./src/routes/sobreNosotros.router"));
 
 app.listen(PORT, ()=>{
     console.log('Servidor corriendo en http://localhost:' + PORT);

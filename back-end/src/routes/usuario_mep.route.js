@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Usuario_mep = require("../../models/usuario_mep.model");
+const Usuario_mep = require("../models/usuario_mep.model");
 
 // Ruta POST
 
