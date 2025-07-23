@@ -1,0 +1,22 @@
+.centrar{
+    width: 100%;
+    height: 100%;
+    color: #1E2957;
+    padding: 30px 100px;
+}
+
+.centrar h2{
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.centrar p,li{
+    font-size: 17px;
+}
+
+.centrar h3{
+    font-size: 28px;
+    font-weight: 600;
+    margin: 20px 0;
+}

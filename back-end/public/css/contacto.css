@@ -1,0 +1,59 @@
+.centrar h1{
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.inicioContacto{
+    margin-bottom: 30px;
+}
+
+.centrar form{
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-info{
+    margin: 30px 0;
+}
+
+.contact-info h2{
+    font-size: 26px !important;
+    font-weight: 600;
+}
+
+.contact-info hr{
+    width: 100%;
+    color: #747474;
+}
+
+.formularioContacto{
+    margin: 30px 0;
+    gap: 5px;
+}
+
+.formularioContacto h2{
+    font-size: 26px !important;
+    font-weight: 600;
+}
+
+.formularioContacto label{
+    font-size: 14px;
+
+}
+
+.formularioContacto input{
+    width: 340px;
+    height: 40px;
+    border: 2px solid #a5a5a5;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.formularioContacto textarea{
+    width: 400px;
+    height: 120px;
+    border: 2px solid #a5a5a5;
+    border-radius: 5px;
+    text-decoration: none;
+}

@@ -1,37 +1,38 @@
 <div class="centrar">
     <div class="contacto">
-        <h1>Contactenos</h1>
-        <p>En esta sección podra encontrar e ingresar información de contacto</p>
+        <section class="inicioContacto">
+            <h1>Contactenos</h1>
+            <p>En esta sección podra encontrar e ingresar información de contacto</p>
+        </section>
         
         <div class="contact-info">
             <h2>Información de contacto</h2>
             <div class="info-row">
+                <hr>
                 <span class="info-label">Address</span>
                 <span class="info-value">Av. Central, San José, Costa Rica</span>
             </div>
             <div class="info-row">
+                <hr>
                 <span class="info-label">Phone</span>
                 <span class="info-value">+506 2256-7011</span>
             </div>
             <div class="info-row">
+                <hr>
                 <span class="info-label">Email</span>
                 <span class="info-value">info@mep.go.cr</span>
             </div>
         </div>
-        <form>
+        <form class="formularioContacto">
             <h2>Formulario de contacto</h2>
-            <label>Nombre:
-                <input type="text">
-            </label>
-            <label>Correo:
-                <input type="email">
-            </label>
-            <label>Asunto:
-                <input type="text">
-            </label>
-            <label>Mensage:
-                <textarea></textarea>
-            </label>
+            <label for="nombreContacto">Nombre:</label>
+            <input name="nombreContacto" type="text">
+            <label for="correoContacto">Correo:</label>
+            <input name="correoContacto" type="email">
+            <label for="asuntoContacto">Asunto:</label>
+            <input name="asuntoContacto" type="text">
+            <label for="mensageContacto">Mensage:</label>
+            <textarea name="mensageContacto"></textarea>
         </form>
     </div>
 </div>
