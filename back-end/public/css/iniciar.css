@@ -14,11 +14,11 @@
 }
 
 .contenedorFormulario .iniciarUsuaro{
-    transition: transform 0.75s ease-in-out;
+    transition: transform 0.7s ease-in-out;
 }
 
 .contenedorFormulario .registrarUsuario{
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.7s ease-in-out;
 }
 
 .iniciarUsuaro{
@@ -82,6 +82,14 @@
     font-weight: 600;
 }
 
+#btnVolverInicio{
+    border: none;
+    background-color: #fff;
+    color: #3158ca;
+    display: inline-block;
+    text-decoration: underline;
+}
+
 #inputRecordarContraseña{
     width: 15px;
     height: 15px;
@@ -116,6 +124,7 @@
 
 .contenedorIniciar.toggle .registrarUsuario{
     transform: translateX(0%);
+    padding: 0;
 }
 
 .contenedorSaludo{
@@ -126,7 +135,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    transition: transform 0.75s ease-in-out;
+    transition: transform 0.7s ease-in-out;
 }
 
 .contenedorSaludo .saludo{
@@ -140,8 +149,9 @@
     display: flex;
     justify-content: center;
     align-items: end;
-    transform: translateX(-110%);
+    transform: translateX(-120%);
     height: 100%;
+    width: 350px;
 }
 
 .saludoIniciar{
@@ -163,23 +173,46 @@
 }
 
 .mensajeRegistrar{
+    background: linear-gradient(to top, #b8c1e7, #1e2957);
     width: 100%;
-    height: 85%;
+    height: 75%;
+    color: #fff;
+    padding: 20px 20px 0 20px;
+    border-radius: 0 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.mensajeRegistrar h1{
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.mensajeRegistrar p{
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .mensajeRegistrar img{
-    width: 300px;
-    height: 100px;
+    width: 320px;
+    height: 140px;
+    margin-top: 15px;
 }
 
 .mensageRegistrarLogo{
+    background-color: #1e2957;
     width: 100%;
-    height: 20%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 20px 0;
 }
 
 .mensageRegistrarLogo img{
-    width: 280px;
-    height: 45px;
+    width: 300px;
+    height: 100px;
 }
 
 .mensajeIngresar{
@@ -202,11 +235,6 @@
 .mensajeIngresar p{
     font-size: 20px;
     font-weight: 500;
-}
-
-.mensajeIngresar img{
-    padding: 0;
-    margin: 0;
 }
 
 .mensajeIngresarLogo{

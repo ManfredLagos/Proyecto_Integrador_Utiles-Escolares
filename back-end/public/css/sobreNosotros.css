@@ -5,7 +5,7 @@
     padding: 30px 100px;
 }
 
-.centrar h2{
+.centrar h1{
     font-size: 32px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -15,8 +15,8 @@
     font-size: 17px;
 }
 
-.centrar h3{
-    font-size: 28px;
+.centrar h2{
+    font-size: 26px;
     font-weight: 600;
     margin: 20px 0;
 }
