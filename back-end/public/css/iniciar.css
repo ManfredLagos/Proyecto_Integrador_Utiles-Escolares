@@ -35,6 +35,7 @@
 .iniciarUsuaro h1{
     color: #182951;
     font-weight: 700;
+    margin-bottom: 10px;
 }
 
 .iniciarUsuaro input{
@@ -72,6 +73,13 @@
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
+}
+
+#btnIniciar:hover{
+    background-color: #fff;
+    color: #3449a0;
+    border: 2px solid #3449a0;
+    font-weight: 600;
 }
 
 #inputRecordarContraseña{
@@ -126,20 +134,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 0 50px;
 }
 
 .saludoRegistrar{
     display: flex;
     justify-content: center;
     align-items: end;
-    transform: translateX(-100%);
+    transform: translateX(-110%);
     height: 100%;
 }
 
 .saludoIniciar{
     height: 100%;
+    width: 100%;
 }
 
 .contenedorIniciar.toggle .contenedorSaludo{
@@ -148,7 +155,7 @@
 }
 
 .contenedorIniciar.toggle .saludoIniciar{
-    transform: translateX(-100%);
+    transform: translateX(-110%);
 }
 
 .contenedorIniciar.toggle .saludoRegistrar{
@@ -173,6 +180,48 @@
 .mensageRegistrarLogo img{
     width: 280px;
     height: 45px;
+}
+
+.mensajeIngresar{
+    background: linear-gradient(to top, #b8c1e7, #1e2957);
+    width: 100%;
+    height: 75%;
+    color: #fff;
+    padding: 40px 40px 0 40px;
+    border-radius: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.mensajeIngresar h1{
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.mensajeIngresar p{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.mensajeIngresar img{
+    padding: 0;
+    margin: 0;
+}
+
+.mensajeIngresarLogo{
+    background-color: #1e2957;
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 0 20px;
+}
+
+.mensajeIngresarLogo img{
+    width: 370px;
+    height: 115px;
 }
 
 
