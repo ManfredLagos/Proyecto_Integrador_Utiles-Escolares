@@ -40,24 +40,30 @@
         <div class="contenedorFormulario">
             <div class="iniciarUsuaro">
                 <h1>Iniciar Sesión</h1>
-                <div class="contenedorUsuario">
+                <div class="inputIngresar">
+                    <div class="contenedorUsuario">
                     <img src="/images/avatar.png" alt="Avatar">
-                    <input type="text">
+                    <input type="text" placeholder="Usuario">
                 </div>
                 <div class="contenedorContraseña">
                     <img src="/images/cerrar-con-llave.png" alt="Avatar">
-                    <input type="password"> 
-                    <img src="/images/ojo.png" alt="ojo">
-                    <img src="/images/invisible.png" alt="ojo-invisible">
+                    <input type="password" placeholder="Contraseña"> 
+                    <img id="imgMostrarContrasenia" src="/images/invisible.png" alt="ojo-invisible">
+                    <img id="imgOcultarContrasenia" src="/images/ojo.png" alt="ojo">
                 </div> 
-                <div>
+                </div>
+                <div class="enlaceContraseña">
                     <input id="inputRecordarContraseña" type="checkbox">
                     <label for="">Recordar contraseña</label>
                     <a href="">Olvidé mi contraseña</a>
                 </div>
                 <button id="btnIniciar">Iniciar</button>
                 <button id="btnRegistrar">Registrar</button>
-                <button><img src="/images/descarga1.png" alt="logoGoogle">Registrar con Google</button>
+                <div id="registrarGoogle">
+                    <img src="/images/google.png" alt="logoGoogle">
+                    <p>Registrar con Google</p>
+                </div>
+                
             </div>
         </div>
 
