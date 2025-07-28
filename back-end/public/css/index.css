@@ -1,11 +1,3 @@
-:root {
-    --gray: #505050;
-    --spacing-sm: 15px;
-    --spacing-md: 25px;
-    --spacing-lg: 35px;
-}
-
-
 .cuerpoInicio{
    padding: 0%;
    margin: 0%;
@@ -20,7 +12,7 @@
 
 .inicioPagina{
    grid-area: inicioPagina;
-   background-color: #1E2957;
+   background-color: var(--azulOscuro);
    height: 100%;
 }
 
@@ -31,7 +23,7 @@
 
 .finalPagina{
    grid-area: finalPagina;
-   background-color: #1E2957;
+   background-color: var(--azulOscuro);
    height: 100%;
 }
 
@@ -59,7 +51,7 @@
     font-weight: 600;
 }
 
-.seccionInicio h4{
+.seccionInicio h2{
     font-weight: 400;
     font-size: 18px;
 }
@@ -68,7 +60,7 @@
     margin-top: 40px;
     height: 50px;
     width: 100px;
-    background-color: #1E2957;
+    background-color: var(--azulOscuro);
     color: #fff;
     border: none;
     border-radius: 7px;
@@ -80,7 +72,7 @@
     text-align: center;
     justify-content: center;
     padding-top: 8px;
-    border: 2px solid #1E2957;
+    border: 2px solid var(--azulOscuro);
 }
 
 .seccionInicio a:hover{
@@ -91,13 +83,13 @@
 }
 
 .mensajeCartas h2{
-    color: #1E2957;
+    color: var(--azulOscuro);
     font-size: 36px;
     font-weight: 600;
 }
 
-.mensajeCartas h4{
-    color: #1E2957;
+.mensajeCartas h3{
+    color: var(--azulOscuro);
     margin: 45px 0;
     padding-right: 30px;
     font-size: 18px;
@@ -139,8 +131,8 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.grid-item h5 {
-    color: #1E2957 !important; 
+.grid-item h2 {
+    color: var(--azulOscuro) !important; 
     font-weight: 700 !important;
     font-size: 18px;
     margin: 0 !important;
@@ -170,7 +162,7 @@
     justify-content: center;
     align-items: center;
     margin: 40px 30px 40px 30px;
-    color: #1E2957;
+    color: var(--azulOscuro);
     gap: 20px;
 }
 
@@ -179,7 +171,7 @@
     font-weight: 600;
 }
 
-.mensajeFinal h4{
+.mensajeFinal h3{
     font-size: 18px;
     padding: 0 50px;
     text-align: center;
@@ -188,7 +180,7 @@
 .mensajeFinal a{
     height: 55px;
     width: 200px;
-    background-color: #1E2957;
+    background-color: var(--azulOscuro);
     color: #fff;
     border: none;
     border-radius: 7px;
@@ -199,7 +191,7 @@
     text-decoration: none;
     text-align: center;
     padding-top: 9px;
-    border: 2px solid #1E2957;
+    border: 2px solid var(--azulOscuro);
 }
 
 .mensajeFinal a:hover{

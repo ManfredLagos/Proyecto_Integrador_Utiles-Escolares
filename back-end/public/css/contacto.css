@@ -68,7 +68,7 @@
 .botonFormulario button{
     height: 40px;
     width: 75px;
-    background-color: #1E2957;
+    background-color: var(--azulOscuro);
     color: #fff;
     border: none;
     border-radius: 7px;

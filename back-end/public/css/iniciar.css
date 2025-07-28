@@ -5,7 +5,7 @@
     flex-direction: row;
     position: relative;
     border-radius: 20px;
-    box-shadow: 7px 7px 20px 0px rgba(0,0,0,0.25);
+    box-shadow: 7px 7px 20px 7px rgba(0,0,0,0.25);
     margin: 50px;
 }
 
@@ -14,10 +14,6 @@
 }
 
 .contenedorFormulario .iniciarUsuaro{
-    transition: transform 0.7s ease-in-out;
-}
-
-.contenedorFormulario .registrarUsuario{
     transition: transform 0.7s ease-in-out;
 }
 
@@ -85,7 +81,7 @@
 }
 
 .iniciarUsuaro h1{
-    color: #182951;
+    color: var(--azulOscuro);
     font-weight: 700;
     margin-bottom: 20px;
 }
@@ -137,7 +133,7 @@
     margin-top: 15px;
 }
 
-#btnRegistrar{
+#enlaceRegistrar{
     border: none;
     background-color: #fff;
     color: #346efd;
@@ -145,18 +141,18 @@
     text-decoration: underline;
 }
 
-#btnRegistrar:hover{
+#enlaceRegistrar:hover{
     color: #0a58ca;
 }
 
 #btnIniciar{
-    width: 100px;
-    height: 35px;
-    background-color: #182951;
+    width: 115px;
+    height: 40px;
+    background-color: var(--azulOscuro);
     color: #fff;
     border: none;
     border-radius: 7px;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     cursor: pointer;
 }
@@ -168,14 +164,6 @@
     font-weight: 600;
 }
 
-#btnVolverInicio{
-    border: none;
-    background-color: #fff;
-    color: #3158ca;
-    display: inline-block;
-    text-decoration: underline;
-}
-
 #inputRecordarContraseña{
     width: 15px;
     height: 15px;
@@ -183,34 +171,8 @@
     cursor: pointer;
 }
 
-.registrarUsuario{
-    width: 450px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(100%);
-    gap: 10px;
-}
-
-.contenedorDiv{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding-left: 50px;
-    margin: 20px 0;
-    gap: 10px;
-}
-
 .contenedorIniciar.toggle .iniciarUsuaro{
     transform: translateX(-100%);
-}
-
-.contenedorIniciar.toggle .registrarUsuario{
-    transform: translateX(0%);
-    padding: 0;
 }
 
 .contenedorSaludo{
@@ -231,15 +193,6 @@
     align-items: center;
 }
 
-.saludoRegistrar{
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    transform: translateX(-120%);
-    height: 100%;
-    width: 350px;
-}
-
 .saludoIniciar{
     height: 100%;
     width: 100%;
@@ -254,56 +207,8 @@
     transform: translateX(-110%);
 }
 
-.contenedorIniciar.toggle .saludoRegistrar{
-    transform: translateX(0);
-}
-
-.mensajeRegistrar{
-    background: linear-gradient(to top, #94a5f0, #1e2957);
-    width: 100%;
-    height: 80%;
-    color: #fff;
-    padding: 20px 20px 0 20px;
-    border-radius: 0 20px 0 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    gap: 5px;
-}
-
-.mensajeRegistrar h1{
-    font-size: 38px;
-    font-weight: 600;
-}
-
-.mensajeRegistrar p{
-    font-size: 20px;
-    font-weight: 500;
-}
-
-.mensajeRegistrar img{
-    width: 320px;
-    height: 140px;
-    margin-top: 30px;
-}
-
-.mensageRegistrarLogo{
-    background-color: #1e2957;
-    width: 100%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0 0 20px 0;
-}
-
-.mensageRegistrarLogo img{
-    width: 300px;
-    height: 90px;
-}
-
 .mensajeIngresar{
-    background: linear-gradient(to top, #94a5f0, #1e2957);
+    background: linear-gradient(to top, #94a5f0, var(--azulOscuro));
     width: 100%;
     height: 80%;
     color: #fff;
@@ -330,7 +235,7 @@
 }
 
 .mensajeIngresarLogo{
-    background-color: #1e2957;
+    background-color: var(--azulOscuro);
     width: 100%;
     height: 20%;
     display: flex;

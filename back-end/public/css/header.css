@@ -2,10 +2,11 @@
     color: #fff;
     display: flex;
     justify-content: space-between;
+    padding-left: 15px;
 }
 
 .inicioPagina h1{
-    padding-top: 10px;
+    padding-top: 13px;
     font-weight: 600;
 }
 

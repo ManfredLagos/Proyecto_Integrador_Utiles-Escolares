@@ -2,8 +2,10 @@
 @import url("header.css");
 @import url("footer.css");
 @import url("iniciar.css");
+@import url("iniciar-registro.css");
 @import url("contacto.css");
 @import url("sobreNosotros.css");
+@import url("variables.css");
 
 *{
     font-family: "Cabin", sans-serif;

@@ -1,0 +1,148 @@
+.contenedorFormulario .registrarUsuario{
+    transition: transform 0.7s ease-in-out;
+}
+
+.registrarUsuario{
+    width: 450px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(100%);
+    gap: 10px;
+    color: var(--azulOscuro);
+}
+
+.registrarUsuario h1{
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.registrarUsuario label{
+    font-size: 16px;
+    font-weight: 600;  
+}
+
+.contenedorDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-left: 40px;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.contenedorDiv select{
+    width: 220px;
+    height: 40px;
+    border-radius: 7px;
+    border: 2px solid #747474;
+    padding: 0 10px;
+    outline: none;
+    color: #4e4e4e;
+}
+
+.contenedorDiv input{
+    width: 220px;
+    height: 40px;
+    border-radius: 7px;
+    border: 2px solid #747474;
+    padding: 0 10px;
+    outline: none;
+}
+
+#enviarRegistro{
+    height: 45px;
+    width: 130px;
+    background-color: var(--azulOscuro);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 20px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .57);
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    border: 2px solid var(--azulOscuro);
+}
+
+#enviarRegistro:hover{
+    background-color: #fff;
+    color: #3449a0;
+    border: 2px solid #3449a0;
+    font-weight: 600;
+}
+
+.saludoRegistrar{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    transform: translateX(-120%);
+    height: 100%;
+    width: 350px;
+}
+
+.contenedorIniciar.toggle .registrarUsuario{
+    transform: translateX(0%);
+    padding: 0;
+}
+
+.contenedorIniciar.toggle .saludoRegistrar{
+    transform: translateX(0%);
+}
+
+#btnVolverInicio{
+    border: none;
+    background-color: #fff;
+    color: #3158ca;
+    display: inline-block;
+    text-decoration: underline;
+}
+
+.mensajeRegistrar{
+    background: linear-gradient(to top, #94a5f0, var(--azulOscuro));
+    width: 100%;
+    height: 80%;
+    color: #fff;
+    padding: 20px 20px 0 20px;
+    border-radius: 0 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 5px;
+}
+
+.mensajeRegistrar h1{
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.mensajeRegistrar p{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.mensajeRegistrar img{
+    width: 320px;
+    height: 140px;
+    margin-top: 30px;
+}
+
+.mensageRegistrarLogo{
+    background-color: var(--azulOscuro);
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 20px 0;
+}
+
+.mensageRegistrarLogo img{
+    width: 300px;
+    height: 90px;
+}
