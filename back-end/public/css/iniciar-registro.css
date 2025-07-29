@@ -17,6 +17,8 @@
 .registrarUsuario h1{
     font-size: 38px;
     font-weight: 600;
+    padding: 0;
+    margin: 0;
 }
 
 .registrarUsuario label{
@@ -30,7 +32,7 @@
     flex-direction: column;
     align-items: start;
     padding-left: 40px;
-    margin: 20px 0;
+    margin: 15px 0 20px 0;
     gap: 10px;
 }
 
@@ -53,7 +55,16 @@
     outline: none;
 }
 
-#enviarRegistro{
+.input-error{
+    border: 2px solid #ff3636 !important;
+}
+
+.input-error::placeholder {
+  color: #ff3636;
+  opacity: 1;
+}
+
+#btnRegistrarusuario{
     height: 45px;
     width: 130px;
     background-color: var(--azulOscuro);
@@ -70,7 +81,7 @@
     border: 2px solid var(--azulOscuro);
 }
 
-#enviarRegistro:hover{
+#btnRegistrarusuario:hover{
     background-color: #fff;
     color: #3449a0;
     border: 2px solid #3449a0;
@@ -124,6 +135,7 @@
 .mensajeRegistrar p{
     font-size: 20px;
     font-weight: 500;
+    margin-bottom: 50px;
 }
 
 .mensajeRegistrar img{
@@ -146,3 +158,4 @@
     width: 300px;
     height: 90px;
 }
+

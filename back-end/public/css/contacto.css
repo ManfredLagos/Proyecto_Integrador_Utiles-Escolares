@@ -52,10 +52,11 @@
 
 .formularioContacto textarea{
     width: 400px;
-    height: 120px;
+    min-height: 120px;
     border: 2px solid #a5a5a5;
     border-radius: 5px;
-    text-decoration: none;
+    max-height: 300px;
+    overflow: hidden;
 }
 
 .botonFormulario{

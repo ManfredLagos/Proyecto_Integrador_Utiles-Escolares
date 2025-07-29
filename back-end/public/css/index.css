@@ -178,14 +178,14 @@
 }
 
 .mensajeFinal a{
-    height: 55px;
-    width: 200px;
+    height: 45px;
+    width: 170px;
     background-color: var(--azulOscuro);
     color: #fff;
     border: none;
     border-radius: 7px;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, .57);
     cursor: pointer;
     text-decoration: none;

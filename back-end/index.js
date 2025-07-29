@@ -12,8 +12,15 @@ const app = express(); //Crear una instancia de express
 const PORT = process.env.PORT || 3000; //Usar el puerto indicado en .env o si no se indica usar el puerto 3000
 const path = require('path');
 
+//importar rutas
+const usuario_mepRoute = require("./src/routes/usuario_mep.route")
+const utilesRoute = require("./src/routes/utiles.route")
+const lista_utilesRoute = require("./src/routes/lista-utiles.route")
+const gradoRoute = require("./src/routes/grado.route")
+
 app.use(express.json());//Habilita el manejo de JSON en las peticiones
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'js')));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());//Habilita el anÃ¡lisis de JSON en las peticiones 
 app.use(cors());
@@ -29,12 +36,18 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(()=> console.log('MongoDB Atlas conectado'))
 .catch(error => console.log('Ocurrió un error al conectarse con MongoDB: ', error));
 
-const mainRouter = require("./src/routes/main.router");
+//rutas
+app.use("/usuario_mep", usuario_mepRoute)
+app.use("/utiles", utilesRoute)
+app.use("/lista-utiles", lista_utilesRoute)
+app.use("/grado", gradoRoute)
+
+const mainRouter = require("./src/routes/main.route");
 app.use(mainRouter);
 
-app.use("/iniciar", require("./src/routes/iniciar.router"));
-app.use("/Contacto", require("./src/routes/contacto.router"));
-app.use("/SobreNosotros", require("./src/routes/sobreNosotros.router"));
+app.use("/iniciar", require("./src/routes/iniciar.route"));
+app.use("/contacto", require("./src/routes/contacto.route"));
+app.use("/sobreNosotros", require("./src/routes/sobreNosotros.route"));
 
 app.listen(PORT, ()=>{
     console.log('Servidor corriendo en http://localhost:' + PORT);
