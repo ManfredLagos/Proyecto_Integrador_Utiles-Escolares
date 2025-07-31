@@ -58,3 +58,77 @@ async function cargarTabla() {
 }
 
 cargarTabla();
+
+
+
+document.getElementById("btnEliminarUsuario").addEventListener("click", async () => {
+  const id = document.getElementById("editarIdUsuario").value;
+
+  if (!id) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'No se encontró el usuario para eliminar',
+      showClass: {
+        popup: 'animate__animated animate__shakeX'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    });
+    return;
+  }
+
+  const result = await Swal.fire({
+    title: '¿Seguro que deseas eliminar este usuario?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar',
+    reverseButtons: true,
+    showClass: { popup: 'animate__animated animate__fadeInDown' },
+    hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+  });
+
+  if (result.isConfirmed) {
+    try {
+      const res = await fetch(`http://localhost:3000/usuario_mep/${id}`, { method: "DELETE" });
+      const data = await res.json();
+
+      if (!res.ok) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: data.msj || 'Error al eliminar usuario',
+          showClass: { popup: 'animate__animated animate__shakeX' },
+          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+        });
+        return;
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario eliminado',
+        showConfirmButton: false,
+        timer: 1500,
+        showClass: { popup: 'animate__animated animate__fadeInDown' },
+        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+      });
+
+      // Cierra modal y recarga tabla
+      bootstrap.Modal.getInstance(document.getElementById("editarUsuarioModal")).hide();
+      cargarTabla();
+
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error en el servidor al eliminar usuario',
+        showClass: { popup: 'animate__animated animate__shakeX' },
+        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+      });
+    }
+  }
+});
+
+

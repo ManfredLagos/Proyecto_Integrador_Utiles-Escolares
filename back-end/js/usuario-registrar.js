@@ -1,9 +1,9 @@
-const inputNombre = document.getElementById("txtNombre");
-const inputApellidos = document.getElementById("txtApellidos");
-const inputCorreo = document.getElementById("txtCorreo");
-const inputUsuario = document.getElementById("txtUsuario");
-const inputContrasenia = document.getElementById("txtContrasenia");
-const btnGuardar = document.getElementById("btnGuardar");
+const inputNombre = document.getElementById("nombre");
+const inputApellidos = document.getElementById("apellidos");
+const inputCorreo = document.getElementById("correo");
+const inputUsuario = document.getElementById("usuario");
+const inputContrasenia = document.getElementById("contrasenia");
+const btnGuardar = document.getElementById("btnRegistrarusuario");
 
 const inputsRequeridos = document.querySelectorAll("input[required]");
 
