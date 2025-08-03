@@ -43,27 +43,17 @@
                 <div class="inputIngresar">
                     <div class="contenedorUsuario">
                     <img src="/images/avatar.png" alt="Avatar">
-                    <input type="text" placeholder="Usuario">
+                    <input id="inputUsuarioIniciar" type="text" placeholder="Usuario">
                 </div>
-                <div class="contenedorContraseña">
+                <div class="contenedorContrasenia">
                     <img src="/images/cerrar-con-llave.png" alt="Avatar">
-                    <input type="password" placeholder="Contraseña"> 
-                    <img id="imgMostrarContrasenia" src="/images/invisible.png" alt="ojo-invisible">
-                    <img id="imgOcultarContrasenia" src="/images/ojo.png" alt="ojo">
+                    <input id="inputContraseniaIniciar" type="password" placeholder="Contraseña">
+                    <img id="imgMostrarContrasenia" src="/images/invisible.png" alt="ojo-invisible" onclick="mostrarContrasenia()">
+                    <img id="imgOcultarContrasenia" src="/images/ojo.png" alt="ojo" onclick="ocultarContrasenia()">
                 </div> 
-                </div>
-                <div class="enlaceContraseña">
-                    <input id="inputRecordarContraseña" type="checkbox">
-                    <label for="">Recordar contraseña</label>
-                    <a href="">Olvidé mi contraseña</a>
                 </div>
                 <button id="btnIniciar">Iniciar</button>
                 <button id="enlaceRegistrar">Registrar</button>
-                <div id="registrarGoogle">
-                    <img src="/images/google.png" alt="logoGoogle">
-                    <p>Registrar con Google</p>
-                </div>
-                
             </div>
         </div>
 
@@ -92,192 +82,4 @@
     </div>
 </div>
 
-<script>
-  const contenedorIniciar = document.querySelector(".contenedorIniciar");
-  const enlaceRegistrar = document.getElementById("enlaceRegistrar");
-  const btnVolverInicio = document.getElementById("btnVolverInicio");
-
-  // Inputs por clase y atributo name específicos dentro del formulario registro
-  const inputNombre = document.querySelector('input.nombre[name="nombre"]');
-  const inputApellidos = document.querySelector('input.apellidos[name="apellidos"]');
-  const inputCorreo = document.querySelector('input.correo[name="correo"]');
-  const inputUsuario = document.querySelector('input.usuario[name="usuario"]');
-  const inputContrasenia = document.querySelector('input.contrasenia[name="contrasenia"]');
-  const selectRol = document.querySelector('select.rol[name="rol"]');
-  const btnGuardar = document.getElementById("btnRegistrarusuario");
-
-  // Inputs requeridos dentro del formulario de registro
-  const inputsRequeridos = document.querySelectorAll('.registrarUsuario input[required], .registrarUsuario select[required]');
-
-  // Evento para abrir el formulario de registro
-  enlaceRegistrar.addEventListener("click", () => {
-    contenedorIniciar.classList.add("toggle");
-  });
-
-  // Evento para volver a la vista inicial
-  btnVolverInicio.addEventListener("click", () => {
-    contenedorIniciar.classList.remove("toggle");
-  });
-
-  // Función para validar campos vacíos
-  function validarCamposVacios() {
-    let error = false;
-
-    inputsRequeridos.forEach(input => {
-      if (input.value.trim() === "") {
-        input.classList.add("input-error");
-        error = true;
-      } else {
-        input.classList.remove("input-error");
-      }
-    });
-
-    return error;
-  }
-
-  // Función para validar formato general de correo
-  function esCorreoValido(correo) {
-    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regexCorreo.test(correo);
-  }
-
-  // Función para validar dominio institucional para rol docente
-  function esDominioValidoParaDocente(correo) {
-    const partes = correo.split("@");
-    if (partes.length !== 2) return false;
-    return partes[1].toLowerCase() === "ucenfotec.ac.cr";
-  }
-
-  // Función principal para validar antes de registrar
-  function validar() {
-    if (validarCamposVacios()) {
-      Swal.fire({
-        icon: "warning",
-        title: "No se puede registrar al usuario",
-        text: "Por favor complete los campos resaltados.",
-        showClass: { popup: 'animate__animated animate__headShake' },
-        hideClass: { popup: 'animate__animated animate__fadeOut' }
-      });
-      return;
-    }
-
-    // Validar formato del correo
-    if (!esCorreoValido(inputCorreo.value.trim())) {
-      Swal.fire({
-        icon: "error",
-        title: "Correo inválido",
-        text: "Por favor ingrese un correo electrónico válido.",
-        showClass: { popup: 'animate__animated animate__shakeX' },
-        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-      });
-      inputCorreo.classList.add("input-error");
-      return;
-    } else {
-      inputCorreo.classList.remove("input-error");
-    }
-
-    // Validar dominio para rol docente
-    if (selectRol.value === "docente") {
-      if (!esDominioValidoParaDocente(inputCorreo.value.trim())) {
-        Swal.fire({
-          icon: "error",
-          title: "Dominio inválido",
-          text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
-          showClass: { popup: 'animate__animated animate__shakeX' },
-          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-        });
-        inputCorreo.classList.add("input-error");
-        return;
-      } else {
-        inputCorreo.classList.remove("input-error");
-      }
-    }
-
-    // Si todo está bien, registra usuario
-    registrarUsuario();
-  }
-
-  // Función para enviar datos al backend y manejar respuesta
-  function registrarUsuario() {
-    const datosUsuario_mep = {
-      nombre: inputNombre.value.trim(),
-      apellidos: inputApellidos.value.trim(),
-      correo: inputCorreo.value.trim(),
-      usuario: inputUsuario.value.trim(),
-      contrasenia: inputContrasenia.value,
-      rol: selectRol.value.trim()
-    };
-
-    fetch("http://localhost:3000/usuario_mep", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(datosUsuario_mep)
-    })
-    .then(response => {
-      if (!response.ok) {
-        if (response.status === 400) {
-          Swal.fire({
-            icon: "error",
-            title: "Usuario duplicado",
-            text: "El correo o nombre de usuario ya existe en la base de datos.",
-            showClass: { popup: 'animate__animated animate__shakeX' },
-            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error de servidor",
-            text: "Ocurrió un error al registrar el usuario.",
-            showClass: { popup: 'animate__animated animate__shakeX' },
-            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-          });
-        }
-      } else {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "¡Registro realizado exitosamente!",
-          showConfirmButton: false,
-          timer: 2000,
-          showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },
-          hideClass: { popup: 'animate__animated animate__fadeOutDown animate__faster' }
-        });
-
-        // Limpiar campos
-        inputNombre.value = "";
-        inputApellidos.value = "";
-        inputCorreo.value = "";
-        inputUsuario.value = "";
-        inputContrasenia.value = "";
-        selectRol.value = "padre";
-
-        // Eliminar clases de error
-        inputsRequeridos.forEach(input => input.classList.remove("input-error"));
-
-        // Cerrar formulario registro
-        contenedorIniciar.classList.remove("toggle");
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        title: "Error de red",
-        text: "No se pudo conectar con el servidor.",
-        showClass: { popup: 'animate__animated animate__shakeX' },
-        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-      });
-    });
-  }
-
-  // Asociar evento al botón Registrar con prevención del submit por defecto
-  btnGuardar.addEventListener("click", function(e) {
-    e.preventDefault();
-    validar();
-  });
-</script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/usuario-iniciar.js"></script>

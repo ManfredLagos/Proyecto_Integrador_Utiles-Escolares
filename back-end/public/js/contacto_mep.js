@@ -1,47 +1,3 @@
-<div class="centrar">
-    <div class="contacto">
-        <section class="inicioContacto">
-            <h1>Contactenos</h1>
-            <p>En esta sección podra encontrar e ingresar información de contacto</p>
-        </section>
-        
-        <div class="contact-info">
-            <h2>Información de contacto</h2>
-            <div class="info-row">
-                <hr>
-                <span class="info-label">Address</span>
-                <span class="info-value">Av. Central, San José, Costa Rica</span>
-            </div>
-            <div class="info-row">
-                <hr>
-                <span class="info-label">Phone</span>
-                <span class="info-value">+506 2256-7011</span>
-            </div>
-            <div class="info-row">
-                <hr>
-                <span class="info-label">Email</span>
-                <span class="info-value">info@mep.go.cr</span>
-            </div>
-        </div>
-        <form class="formularioContacto">
-            <h2>Formulario de contacto</h2>
-            <label for="nombreContacto">Nombre:</label>
-            <input id="nombreContacto" name="nombreContacto" type="text" required>
-            <label for="correoContacto">Correo:</label>
-            <input id="correoContacto" name="correoContacto" type="email" required>
-            <label for="asuntoContacto">Asunto:</label>
-            <input id="asuntoContacto" name="asuntoContacto" type="text" required>
-            <label for="mensageContacto">Mensage:</label>
-            <textarea id="mensageContacto" name="mensageContacto" required></textarea>
-            <div class="botonFormulario">
-                <button class="btnFormularioContacto">Enviar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-// Obtener referencias correctas
 const nombreContacto = document.getElementById("nombreContacto");
 const correoContacto = document.getElementById("correoContacto");
 const asuntoContacto = document.getElementById("asuntoContacto");
@@ -63,16 +19,14 @@ function validarCamposVaciosContacto() {
     }
   });
 
-  return !error;  // true si no hay error
+  return !error;
 }
 
-// Función para validar formato de correo con regex simple
 function esCorreoValido(correo) {
   const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regexCorreo.test(correo);
 }
 
-// Función principal para validar el formulario
 function validarFormulario() {
   if (!validarCamposVaciosContacto()) {
     Swal.fire({
@@ -103,12 +57,11 @@ function validarFormulario() {
   return true;
 }
 
-// Evento para el botón enviar (prevenir envío si hay errores)
+
 btnEnviar.addEventListener("click", function(e) {
   e.preventDefault();
 
   if (validarFormulario()) {
-    // Aquí puedes agregar el código para enviar el formulario, con fetch, axios o submit.
     Swal.fire({
       icon: "success",
       title: "Mensaje enviado",
@@ -119,12 +72,9 @@ btnEnviar.addEventListener("click", function(e) {
       hideClass: { popup: 'animate__animated animate__fadeOutDown' }
     });
 
-    // Opcional: limpiar campos tras envío exitoso
     nombreContacto.value = "";
     correoContacto.value = "";
     asuntoContacto.value = "";
     mensageContacto.value = "";
   }
 });
-
-</script>

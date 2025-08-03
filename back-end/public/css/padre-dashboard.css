@@ -1,0 +1,153 @@
+body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.contenedor-dashboar-administrador{
+    padding: 0;
+    margin: 0;
+}
+
+#fila{
+    padding: 10px;
+}
+
+#columna-1{
+    padding: 20px 10px 10px 30px;
+}
+
+#columna-1 h1{
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 10px;
+}
+
+#columna-1 p{
+  margin-top: 5px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #333;
+}
+
+#columna-2{
+    padding: 20px;
+}
+
+#columna-2 h1, h2{
+    color: #333;
+}
+
+#columna-2 h2{
+    margin-top: 10px;
+}
+
+#menuLateral img{
+    width: 24px;
+    height: auto;
+}
+
+#menuLateral {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 50px;
+  padding: 8px 12px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #d1d1d1;
+}
+
+.icon-col {
+  flex: 0 0 30px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.text-col{
+  width: 200px;
+  height: 100%;
+}
+
+.text-col a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  display: block;       /* Hace que el <a> sea bloque y ocupe todo el ancho */
+  width: 100%;    
+}
+
+#tblUsuarios{
+    max-width: 95%;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.btnEditar{
+    border: none;
+    color: #ffffff;
+    background-color: #1E2957;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 60px;
+    height: 30px;
+    border: 2px solid var(--azulOscuro);
+}
+
+.btnEditar:hover{
+    background-color: #fff;
+    color: #3449a0;
+    border: 2px solid #3449a0;
+    font-weight: 600;
+}
+
+#columna-4{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: end;
+  padding-right: 55px;
+}
+
+#crearUsuario{
+  width: 180px;
+  height: 35px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  background-color: #e6e6e6;
+  border-radius: 20px;
+}
+
+#crearUsuario:hover{
+  background-color: #a1a1a1;
+}
+
+#btnCrearUsuario{
+  background-color: #1E2957; 
+  border: none;
+}
+
+#btnCrearUsuario:hover{
+  background-color: #3e56b6; 
+}
+
+
+
+

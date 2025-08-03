@@ -74,7 +74,7 @@
     align-items: center;
 }
 
-.contenedorContraseña{
+.contenedorContrasenia{
     display: flex;
     align-items: center;
     position: relative;
@@ -93,13 +93,18 @@
 
 #imgMostrarContrasenia{
     cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.7s ease;
 }
 
 #imgOcultarContrasenia{
     position: absolute;
-    top: 7px;
-    display: none;
+    top: 4px;
+    visibility: hidden;
     cursor: pointer;
+    right: 12px;
+    opacity: 0;
+    transition: opacity 0.7s ease;
 }
 
 #registrarGoogle{
