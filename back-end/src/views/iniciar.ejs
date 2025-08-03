@@ -6,27 +6,27 @@
                 <div class="contenedorDiv">
                     <div>
                         <label for="nombre">Nombre</label>
-                        <input style="margin-left: 87px;" id="nombre" name="nombre" type="text" placeholder="Ej: Manfred" required>
+                        <input style="margin-left: 87px;" class="nombre" name="nombre" type="text" placeholder="Ej: Manfred" required>
                     </div>
                     <div>
                         <label for="apellidos">Apellidos</label>
-                        <input style="margin-left: 75px;" id="apellidos" name="apellidos" type="text" placeholder="Ej: Lagos Rodríguez" required>
+                        <input style="margin-left: 75px;" class="apellidos" name="apellidos" type="text" placeholder="Ej: Lagos Rodríguez" required>
                     </div>
                     <div>
                         <label for="correo">Correo electrónico</label>
-                        <input style="margin-left: 5px;" id="correo" name="correo" type="email" placeholder="Ej: manfred@gmail.com" required>
+                        <input style="margin-left: 5px;" class="correo" name="correo" type="email" placeholder="Ej: manfred@gmail.com" required>
                     </div>
                     <div>
                         <label for="usuario">Usuario</label>
-                        <input style="margin-left: 88px;" id="usuario" name="usuario" type="text" placeholder="Ej: mlagos" required>
+                        <input style="margin-left: 88px;" class="usuario" name="usuario" type="text" placeholder="Ej: mlagos" required>
                     </div>
                     <div>
                         <label for="password">Contraseña</label>
-                        <input style="margin-left: 60px;" id="contrasenia" name="contrasenia" type="password" placeholder="********" required>
+                        <input style="margin-left: 60px;" class="contrasenia" name="contrasenia" type="password" placeholder="********" required>
                     </div>
                     <div>
                         <label for="rol">Rol</label>
-                        <select name="rol" id="rol" style="margin-left: 122px;" required>
+                        <select style="margin-left: 122px;" class="rol" name="rol" required>
                             <option value="padre">Padre</option>
                             <option value="docente">Docente</option>
                         </select>
@@ -93,140 +93,191 @@
 </div>
 
 <script>
-    const contenedorIniciar = document.querySelector(".contenedorIniciar");
-    const enlaceRegistrar = document.getElementById("enlaceRegistrar");
-    const btnVolverInicio = document.getElementById("btnVolverInicio");
+  const contenedorIniciar = document.querySelector(".contenedorIniciar");
+  const enlaceRegistrar = document.getElementById("enlaceRegistrar");
+  const btnVolverInicio = document.getElementById("btnVolverInicio");
 
-    enlaceRegistrar.addEventListener("click", ()=>{
-        contenedorIniciar.classList.add("toggle");
+  // Inputs por clase y atributo name específicos dentro del formulario registro
+  const inputNombre = document.querySelector('input.nombre[name="nombre"]');
+  const inputApellidos = document.querySelector('input.apellidos[name="apellidos"]');
+  const inputCorreo = document.querySelector('input.correo[name="correo"]');
+  const inputUsuario = document.querySelector('input.usuario[name="usuario"]');
+  const inputContrasenia = document.querySelector('input.contrasenia[name="contrasenia"]');
+  const selectRol = document.querySelector('select.rol[name="rol"]');
+  const btnGuardar = document.getElementById("btnRegistrarusuario");
+
+  // Inputs requeridos dentro del formulario de registro
+  const inputsRequeridos = document.querySelectorAll('.registrarUsuario input[required], .registrarUsuario select[required]');
+
+  // Evento para abrir el formulario de registro
+  enlaceRegistrar.addEventListener("click", () => {
+    contenedorIniciar.classList.add("toggle");
+  });
+
+  // Evento para volver a la vista inicial
+  btnVolverInicio.addEventListener("click", () => {
+    contenedorIniciar.classList.remove("toggle");
+  });
+
+  // Función para validar campos vacíos
+  function validarCamposVacios() {
+    let error = false;
+
+    inputsRequeridos.forEach(input => {
+      if (input.value.trim() === "") {
+        input.classList.add("input-error");
+        error = true;
+      } else {
+        input.classList.remove("input-error");
+      }
     });
 
-    btnVolverInicio.addEventListener("click", ()=>{
-        contenedorIniciar.classList.remove("toggle");
-    });
+    return error;
+  }
 
+  // Función para validar formato general de correo
+  function esCorreoValido(correo) {
+    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regexCorreo.test(correo);
+  }
 
+  // Función para validar dominio institucional para rol docente
+  function esDominioValidoParaDocente(correo) {
+    const partes = correo.split("@");
+    if (partes.length !== 2) return false;
+    return partes[1].toLowerCase() === "ucenfotec.ac.cr";
+  }
 
-    const inputNombre = document.getElementById("nombre");
-    const inputApellidos = document.getElementById("apellidos");
-    const inputCorreo = document.getElementById("correo");
-    const inputUsuario = document.getElementById("usuario");
-    const inputContrasenia = document.getElementById("contrasenia");
-    const selectRol = document.getElementById("rol");
-    const btnGuardar = document.getElementById("btnRegistrarusuario");
-
-    const inputsRequeridos = document.querySelectorAll("input[required]");
-
-    // Validar todos los campos vacíos
-    function validarCamposVacios() {
-      let error = false;
-
-      inputsRequeridos.forEach(input => {
-        if (input.value.trim() === "") {
-          input.classList.add("input-error");
-          error = true;
-        } else {
-          input.classList.remove("input-error");
-        }
+  // Función principal para validar antes de registrar
+  function validar() {
+    if (validarCamposVacios()) {
+      Swal.fire({
+        icon: "warning",
+        title: "No se puede registrar al usuario",
+        text: "Por favor complete los campos resaltados.",
+        showClass: { popup: 'animate__animated animate__headShake' },
+        hideClass: { popup: 'animate__animated animate__fadeOut' }
       });
-
-      return error;
+      return;
     }
 
-    // Función principal de validación
-    function validar() {
-      if (!validarCamposVacios()) {
-        registrarUsuario();
-      } else {
+    // Validar formato del correo
+    if (!esCorreoValido(inputCorreo.value.trim())) {
+      Swal.fire({
+        icon: "error",
+        title: "Correo inválido",
+        text: "Por favor ingrese un correo electrónico válido.",
+        showClass: { popup: 'animate__animated animate__shakeX' },
+        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+      });
+      inputCorreo.classList.add("input-error");
+      return;
+    } else {
+      inputCorreo.classList.remove("input-error");
+    }
+
+    // Validar dominio para rol docente
+    if (selectRol.value === "docente") {
+      if (!esDominioValidoParaDocente(inputCorreo.value.trim())) {
         Swal.fire({
-          icon: "warning",
-          title: "No se puede registrar al usuario",
-          text: "Por favor complete los campos resaltados."
+          icon: "error",
+          title: "Dominio inválido",
+          text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
+          showClass: { popup: 'animate__animated animate__shakeX' },
+          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
         });
+        inputCorreo.classList.add("input-error");
+        return;
+      } else {
+        inputCorreo.classList.remove("input-error");
       }
     }
 
-    // Función para registrar el usuario
-    function registrarUsuario() {
-      const datosUsuario_mep = {
-        nombre: inputNombre.value.trim(),
-        apellidos: inputApellidos.value.trim(),
-        correo: inputCorreo.value.trim(),
-        usuario: inputUsuario.value.trim(),
-        contrasenia: inputContrasenia.value,
-        rol: selectRol.value.trim()
-      };
+    // Si todo está bien, registra usuario
+    registrarUsuario();
+  }
 
-      fetch("http://localhost:3000/usuario_mep", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(datosUsuario_mep)
-      })
-        .then(response => {
-          if (!response.ok) {
-            if (response.status === 400) {
-              Swal.fire({
-                icon: "error",
-                title: "Usuario duplicado",
-                text: "El correo o nombre de usuario ya existe en la base de datos."
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Error de servidor",
-                text: "Ocurrió un error al registrar el usuario."
-              });
-            }
-          } else {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "¡Registro realizado exitosamente!",
-              showConfirmButton: false,
-              timer: 2000,
-              showClass: {
-                popup: `
-                  animate__animated
-                  animate__fadeInUp
-                  animate__faster
-                `
-              },
-              hideClass: {
-                popup: `
-                  animate__animated
-                  animate__fadeOutDown
-                  animate__faster
-                `
-              }
-            });
+  // Función para enviar datos al backend y manejar respuesta
+  function registrarUsuario() {
+    const datosUsuario_mep = {
+      nombre: inputNombre.value.trim(),
+      apellidos: inputApellidos.value.trim(),
+      correo: inputCorreo.value.trim(),
+      usuario: inputUsuario.value.trim(),
+      contrasenia: inputContrasenia.value,
+      rol: selectRol.value.trim()
+    };
 
-            // Limpiar campos
-            inputNombre.value = "";
-            inputApellidos.value = "";
-            inputCorreo.value = "";
-            inputUsuario.value = "";
-            inputContrasenia.value = "";
-
-            // Eliminar clases de error
-            inputsRequeridos.forEach(input => input.classList.remove("input-error"));
-
-            contenedorIniciar.classList.remove("toggle");
-          }
-        })
-        .catch(error => {
-          console.error(error);
+    fetch("http://localhost:3000/usuario_mep", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(datosUsuario_mep)
+    })
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 400) {
           Swal.fire({
             icon: "error",
-            title: "Error de red",
-            text: "No se pudo conectar con el servidor."
+            title: "Usuario duplicado",
+            text: "El correo o nombre de usuario ya existe en la base de datos.",
+            showClass: { popup: 'animate__animated animate__shakeX' },
+            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
           });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error de servidor",
+            text: "Ocurrió un error al registrar el usuario.",
+            showClass: { popup: 'animate__animated animate__shakeX' },
+            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+          });
+        }
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "¡Registro realizado exitosamente!",
+          showConfirmButton: false,
+          timer: 2000,
+          showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },
+          hideClass: { popup: 'animate__animated animate__fadeOutDown animate__faster' }
         });
-    }
 
-    btnGuardar.addEventListener("click", validar);
+        // Limpiar campos
+        inputNombre.value = "";
+        inputApellidos.value = "";
+        inputCorreo.value = "";
+        inputUsuario.value = "";
+        inputContrasenia.value = "";
+        selectRol.value = "padre";
 
+        // Eliminar clases de error
+        inputsRequeridos.forEach(input => input.classList.remove("input-error"));
+
+        // Cerrar formulario registro
+        contenedorIniciar.classList.remove("toggle");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de red",
+        text: "No se pudo conectar con el servidor.",
+        showClass: { popup: 'animate__animated animate__shakeX' },
+        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+      });
+    });
+  }
+
+  // Asociar evento al botón Registrar con prevención del submit por defecto
+  btnGuardar.addEventListener("click", function(e) {
+    e.preventDefault();
+    validar();
+  });
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
