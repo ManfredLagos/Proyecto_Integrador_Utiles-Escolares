@@ -112,7 +112,7 @@ router.post("/iniciar", async (req, res) => {
   }
 });
 
-router.get('/usuario_mep/perfil', autenticar, (req, res) => {
+router.get('/perfil', (req, res) => {
   const usuario = req.session.usuario; // o carga desde DB según sesión
   if (!usuario) {
     return res.status(401).json({ mensaje: 'No autenticado' });
