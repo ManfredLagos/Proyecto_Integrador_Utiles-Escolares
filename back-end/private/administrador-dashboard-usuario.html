@@ -43,7 +43,7 @@
         </div>
 
         <div class="col-10" id="columna-2">
-            <div class="row">
+            <div class="row" id="administradorInicio">
                 <div class="col-8" id="columna-3">
                     <h1>Panel de administrador</h1>
                     <h2>Lista de usuarios</h1>
@@ -52,7 +52,7 @@
                     <button id="crearUsuario" data-bs-toggle="modal" data-bs-target="#loginModal">Crear Nuevo Usuario</button>
                 </div>
             </div>
-            <div class="row" style="padding: 20px 0  0 10px;">
+            <div class="row" style="padding: 20px;">
                 <table id="tblUsuarios" class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -75,57 +75,62 @@
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">         
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Registrar Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>         
-                <div class="modal-body">
-                    <form id="loginForm" novalidate>
-                        <div class="mb-3">
-                            <label for="loginName" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" required>
-                            <div id="nameError" class="invalid-feedback">Por favor ingrese su nombre.</div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="loginLastname" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" required>
-                            <div id="lastnameError" class="invalid-feedback">Por favor ingrese sus apellidos.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="correo" required>
-                            <div id="emailError" class="invalid-feedback">Ingrese un correo válido.</div>
-                        </div>   
-                        <div class="mb-3">
-                            <label for="loginUser" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="usuario" required>
-                            <div id="userError" class="invalid-feedback">Ingrese un nombre de usuario.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="contrasenia" required>
-                            <div id="passwordError" class="invalid-feedback">Ingrese una contraseña.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="rol" class="form-label">Rol</label>
-                            <select id="rol" name="rol" class="form-select" required>
-                            <option value="" disabled selected>Seleccione su rol</option>
-                            <option value="padre">Padre</option>
-                            <option value="docente">Docente</option>
-                            <option value="docente">Administrador</option>
-                            </select>
-                            <div id="rolError" class="invalid-feedback">Seleccione un rol.</div>
-                        </div>
-                    </form>
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Registrar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>         
+            <div class="modal-body">
+                <form id="loginForm" novalidate>
+                <div class="mb-3">
+                    <label for="loginName" class="form-label">Nombre</label>
+                    <input id="loginName" class="nombre form-control" name="nombre" type="text" placeholder="Ej: Manfred" required>
+                    <div id="nameError" class="invalid-feedback">Por favor ingrese su nombre.</div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                    <button type="submit" form="loginForm" id="btnRegistrarusuario" class="btn btn-primary">Crear Usuario</button>
+                
+                <div class="mb-3">
+                    <label for="loginLastname" class="form-label">Apellidos</label>
+                    <input id="loginLastname" class="apellidos form-control" name="apellidos" type="text" placeholder="Ej: Lagos Rodríguez" required>
+                    <div id="lastnameError" class="invalid-feedback">Por favor ingrese sus apellidos.</div>
                 </div>
+                
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Correo electrónico</label>
+                    <input id="loginEmail" class="correo form-control" name="correo" type="email" placeholder="Ej: manfred@gmail.com" required>
+                    <div id="emailError" class="invalid-feedback">Ingrese un correo válido.</div>
+                </div>   
+                
+                <div class="mb-3">
+                    <label for="loginUser" class="form-label">Usuario</label>
+                    <input id="loginUser" class="usuario form-control" name="usuario" type="text" placeholder="Ej: mlagos" required>
+                    <div id="userError" class="invalid-feedback">Ingrese un nombre de usuario.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Contraseña</label>
+                    <input id="loginPassword" class="contrasenia form-control" name="contrasenia" type="password" placeholder="Ingrese su contraseña" required>
+                    <div id="passwordError" class="invalid-feedback">Ingrese una contraseña.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="loginRol" class="form-label">Rol</label>
+                    <select id="loginRol" class="rol form-select" name="rol" required>
+                    <option value="" disabled selected>Seleccione su rol</option>
+                    <option value="padre">Padre</option>
+                    <option value="docente">Docente</option>
+                    <option value="administrador">Administrador</option>
+                    </select>
+                    <div id="rolError" class="invalid-feedback">Seleccione un rol.</div>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                <button type="submit" form="loginForm" class="btn btn-primary btnRegistrarUsuario">Crear Usuario</button>
+            </div>
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -172,128 +177,6 @@
         crossorigin="anonymous"></script>
     <script src="js/usuario_mep-listar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        const inputNombre = document.getElementById("nombre");
-        const inputApellidos = document.getElementById("apellidos");
-        const inputCorreo = document.getElementById("correo");
-        const inputUsuario = document.getElementById("usuario");
-        const inputContrasenia = document.getElementById("contrasenia");
-        const selectRol = document.getElementById("rol");
-        const btnGuardar = document.getElementById("btnRegistrarusuario");
-
-        const inputsRequeridos = document.querySelectorAll("input[required]");
-
-        // Validar todos los campos vacíos
-        function validarCamposVacios() {
-        let error = false;
-
-        inputsRequeridos.forEach(input => {
-            if (input.value.trim() === "") {
-            input.classList.add("input-error");
-            error = true;
-            } else {
-            input.classList.remove("input-error");
-            }
-        });
-
-        return error;
-        }
-
-        // Función principal de validación
-        function validar() {
-        if (!validarCamposVacios()) {
-            registrarUsuario();
-        } else {
-            Swal.fire({
-            icon: "warning",
-            title: "No se puede registrar al usuario",
-            text: "Por favor complete los campos resaltados."
-            });
-        }
-        }
-
-        // Función para registrar el usuario
-        function registrarUsuario() {
-        const datosUsuario_mep = {
-            nombre: inputNombre.value.trim(),
-            apellidos: inputApellidos.value.trim(),
-            correo: inputCorreo.value.trim(),
-            usuario: inputUsuario.value.trim(),
-            contrasenia: inputContrasenia.value,
-            rol: selectRol.value.trim()
-        };
-
-        fetch("http://localhost:3000/usuario_mep", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json"
-            },
-            body: JSON.stringify(datosUsuario_mep)
-        })
-            .then(response => {
-            if (!response.ok) {
-                if (response.status === 400) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Usuario duplicado",
-                    text: "El correo o nombre de usuario ya existe en la base de datos."
-                });
-                } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error de servidor",
-                    text: "Ocurrió un error al registrar el usuario."
-                });
-                }
-            } else {
-                Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "¡Registro realizado exitosamente!",
-                showConfirmButton: false,
-                timer: 2000,
-                showClass: {
-                    popup: `
-                    animate__animated
-                    animate__fadeInUp
-                    animate__faster
-                    `
-                },
-                hideClass: {
-                    popup: `
-                    animate__animated
-                    animate__fadeOutDown
-                    animate__faster
-                    `
-                }
-                });
-
-                // Limpiar campos
-                inputNombre.value = "";
-                inputApellidos.value = "";
-                inputCorreo.value = "";
-                inputUsuario.value = "";
-                inputContrasenia.value = "";
-
-                // Eliminar clases de error
-                inputsRequeridos.forEach(input => input.classList.remove("input-error"));
-
-                contenedorIniciar.classList.remove("toggle");
-            }
-            })
-            .catch(error => {
-            console.error(error);
-            Swal.fire({
-                icon: "error",
-                title: "Error de red",
-                text: "No se pudo conectar con el servidor."
-            });
-            });
-        }
-
-        btnGuardar.addEventListener("click", validar);
-
-    </script>
+    <script src="/js/usuario-iniciar.js"></script>
 </body>
 </html>

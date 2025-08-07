@@ -94,10 +94,10 @@
 }
 
 .input-error{
-    border: 2px solid #ff3636 !important;
+    border: 2px solid #ff3636;
 }
 
-.input-error::placeholder {
+.input-error::placeholder{
   color: #ff3636;
   opacity: 1;
 }

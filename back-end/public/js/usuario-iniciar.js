@@ -1,200 +1,222 @@
+// --------- Variables DOM para registro y control vista ---------
+const contenedorIniciar = document.querySelector(".contenedorIniciar");
+const enlaceRegistrar = document.getElementById("enlaceRegistrar");
+const btnVolverInicio = document.getElementById("btnVolverInicio");
 
-  const contenedorIniciar = document.querySelector(".contenedorIniciar");
-  const enlaceRegistrar = document.getElementById("enlaceRegistrar");
-  const btnVolverInicio = document.getElementById("btnVolverInicio");
+// Selectores para formulario registro dentro del contenedor
+const formularioRegistro = document.querySelector('.registrarUsuario');
+const inputNombre = formularioRegistro.querySelector('input.nombre[name="nombre"]');
+const inputApellidos = formularioRegistro.querySelector('input.apellidos[name="apellidos"]');
+const inputCorreo = formularioRegistro.querySelector('input.correo[name="correo"]');
+const inputUsuario = formularioRegistro.querySelector('input.usuario[name="usuario"]');
+const inputContrasenia = formularioRegistro.querySelector('input.contrasenia[name="contrasenia"]');
+const selectRol = formularioRegistro.querySelector('select.rol[name="rol"]');
+const btnGuardar = formularioRegistro.querySelector(".btnRegistrarUsuario");
 
-  // Inputs por clase y atributo name específicos dentro del formulario registro
-  const inputNombre = document.querySelector('input.nombre[name="nombre"]');
-  const inputApellidos = document.querySelector('input.apellidos[name="apellidos"]');
-  const inputCorreo = document.querySelector('input.correo[name="correo"]');
-  const inputUsuario = document.querySelector('input.usuario[name="usuario"]');
-  const inputContrasenia = document.querySelector('input.contrasenia[name="contrasenia"]');
-  const selectRol = document.querySelector('select.rol[name="rol"]');
-  const btnGuardar = document.getElementById("btnRegistrarusuario");
+// Inputs requeridos dentro del formulario de registro para validar
+const inputsRequeridos = formularioRegistro.querySelectorAll('input[required], select[required]');
 
-  // Inputs requeridos dentro del formulario de registro
-  const inputsRequeridos = document.querySelectorAll('.registrarUsuario input[required], .registrarUsuario select[required]');
 
-  // Evento para abrir el formulario de registro
+// ------------ Eventos para mostrar/ocultar formulario registro -----------
+
+if (enlaceRegistrar) {
   enlaceRegistrar.addEventListener("click", () => {
     contenedorIniciar.classList.add("toggle");
-  });
 
-  // Evento para volver a la vista inicial
+    // Esperar 3 segundos para remover la clase input-error solo en los contenedores
+    setTimeout(() => {
+      if (contenedorUsuario) contenedorUsuario.classList.remove('input-error');
+      if (contenedorContrasenia) contenedorContrasenia.classList.remove('input-error');
+    }, 1000);
+  });
+}
+
+
+if (btnVolverInicio) {
   btnVolverInicio.addEventListener("click", () => {
+    // Remueve la clase toggle inmediatamente
     contenedorIniciar.classList.remove("toggle");
+
+    // Esperar 3 segundos para remover la clase input-error
+    setTimeout(() => {
+      inputsRequeridos.forEach(input => {
+        input.classList.remove("input-error");
+      });
+    }, 1000);
+  });
+}
+
+
+// --------- Funciones de validación --------------
+
+function validarCamposVacios() {
+  let error = false;
+
+  inputsRequeridos.forEach(input => {
+    if (input.value.trim() === "") {
+      input.classList.add("input-error");
+      error = true;
+    } else {
+      input.classList.remove("input-error");
+    }
   });
 
-  // Función para validar campos vacíos
-  function validarCamposVacios() {
-    let error = false;
+  return error; // true si hay error (campos vacíos)
+}
 
-    inputsRequeridos.forEach(input => {
-      if (input.value.trim() === "") {
-        input.classList.add("input-error");
-        error = true;
-      } else {
-        input.classList.remove("input-error");
-      }
+function esCorreoValido(correo) {
+  const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regexCorreo.test(correo);
+}
+
+function esDominioValidoParaDocente(correo) {
+  const partes = correo.split("@");
+  if (partes.length !== 2) return false;
+  return partes[1].toLowerCase() === "ucenfotec.ac.cr";
+}
+
+function validar() {
+  if (validarCamposVacios()) {
+    Swal.fire({
+      icon: "warning",
+      title: "No se puede registrar al usuario",
+      text: "Por favor complete los campos resaltados.",
+      showClass: { popup: 'animate__animated animate__headShake' },
+      hideClass: { popup: 'animate__animated animate__fadeOut' }
     });
-
-    return error;
+    return false;
   }
 
-  // Función para validar formato general de correo
-  function esCorreoValido(correo) {
-    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regexCorreo.test(correo);
+  if (!esCorreoValido(inputCorreo.value.trim())) {
+    Swal.fire({
+      icon: "error",
+      title: "Correo inválido",
+      text: "Por favor ingrese un correo electrónico válido.",
+      showClass: { popup: 'animate__animated animate__shakeX' },
+      hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+    });
+    inputCorreo.classList.add("input-error");
+    return false;
+  } else {
+    inputCorreo.classList.remove("input-error");
   }
 
-  // Función para validar dominio institucional para rol docente
-  function esDominioValidoParaDocente(correo) {
-    const partes = correo.split("@");
-    if (partes.length !== 2) return false;
-    return partes[1].toLowerCase() === "ucenfotec.ac.cr";
-  }
-
-  // Función principal para validar antes de registrar
-  function validar() {
-    if (validarCamposVacios()) {
-      Swal.fire({
-        icon: "warning",
-        title: "No se puede registrar al usuario",
-        text: "Por favor complete los campos resaltados.",
-        showClass: { popup: 'animate__animated animate__headShake' },
-        hideClass: { popup: 'animate__animated animate__fadeOut' }
-      });
-      return;
-    }
-
-    // Validar formato del correo
-    if (!esCorreoValido(inputCorreo.value.trim())) {
+  if (selectRol.value === "docente") {
+    if (!esDominioValidoParaDocente(inputCorreo.value.trim())) {
       Swal.fire({
         icon: "error",
-        title: "Correo inválido",
-        text: "Por favor ingrese un correo electrónico válido.",
+        title: "Dominio inválido",
+        text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
         showClass: { popup: 'animate__animated animate__shakeX' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' }
       });
       inputCorreo.classList.add("input-error");
-      return;
+      return false;
     } else {
       inputCorreo.classList.remove("input-error");
     }
+  }
 
-    // Validar dominio para rol docente
-    if (selectRol.value === "docente") {
-      if (!esDominioValidoParaDocente(inputCorreo.value.trim())) {
+  return true;
+}
+
+// --------- Función para registrar usuario -----------
+
+function registrarUsuario() {
+  const datosUsuario_mep = {
+    nombre: inputNombre.value.trim(),
+    apellidos: inputApellidos.value.trim(),
+    correo: inputCorreo.value.trim(),
+    usuario: inputUsuario.value.trim(),
+    contrasenia: inputContrasenia.value,
+    rol: selectRol.value.trim()
+  };
+
+  fetch("http://localhost:3000/usuario_mep", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datosUsuario_mep)
+  })
+  .then(response => {
+    if (!response.ok) {
+      if (response.status === 400) {
         Swal.fire({
           icon: "error",
-          title: "Dominio inválido",
-          text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
+          title: "Usuario duplicado",
+          text: "El correo o nombre de usuario ya existe en la base de datos.",
           showClass: { popup: 'animate__animated animate__shakeX' },
           hideClass: { popup: 'animate__animated animate__fadeOutUp' }
         });
-        inputCorreo.classList.add("input-error");
-        return;
       } else {
-        inputCorreo.classList.remove("input-error");
-      }
-    }
-
-    // Si todo está bien, registra usuario
-    registrarUsuario();
-  }
-
-  // Función para enviar datos al backend y manejar respuesta
-  function registrarUsuario() {
-    const datosUsuario_mep = {
-      nombre: inputNombre.value.trim(),
-      apellidos: inputApellidos.value.trim(),
-      correo: inputCorreo.value.trim(),
-      usuario: inputUsuario.value.trim(),
-      contrasenia: inputContrasenia.value,
-      rol: selectRol.value.trim()
-    };
-
-    fetch("http://localhost:3000/usuario_mep", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(datosUsuario_mep)
-    })
-    .then(response => {
-      if (!response.ok) {
-        if (response.status === 400) {
-          Swal.fire({
-            icon: "error",
-            title: "Usuario duplicado",
-            text: "El correo o nombre de usuario ya existe en la base de datos.",
-            showClass: { popup: 'animate__animated animate__shakeX' },
-            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error de servidor",
-            text: "Ocurrió un error al registrar el usuario.",
-            showClass: { popup: 'animate__animated animate__shakeX' },
-            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-          });
-        }
-      } else {
+       
         Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "¡Registro realizado exitosamente!",
-          showConfirmButton: false,
-          timer: 2000,
-          showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },
-          hideClass: { popup: 'animate__animated animate__fadeOutDown animate__faster' }
+          icon: "error",
+          title: "Error de servidor",
+          text: "Ocurrió un error al registrar el usuario.",
+          showClass: { popup: 'animate__animated animate__shakeX' },
+          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
         });
-
-        // Limpiar campos
-        inputNombre.value = "";
-        inputApellidos.value = "";
-        inputCorreo.value = "";
-        inputUsuario.value = "";
-        inputContrasenia.value = "";
-        selectRol.value = "padre";
-
-        // Eliminar clases de error
-        inputsRequeridos.forEach(input => input.classList.remove("input-error"));
-
-        // Cerrar formulario registro
-        contenedorIniciar.classList.remove("toggle");
       }
-    })
-    .catch(error => {
-      console.error(error);
+    } else {
       Swal.fire({
-        icon: "error",
-        title: "Error de red",
-        text: "No se pudo conectar con el servidor.",
-        showClass: { popup: 'animate__animated animate__shakeX' },
-        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+        position: "center",
+        icon: "success",
+        title: "¡Registro realizado exitosamente!",
+        showConfirmButton: false,
+        timer: 2000,
+        showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },
+        hideClass: { popup: 'animate__animated animate__fadeOutDown animate__faster' }
       });
-    });
-  }
 
-  // Asociar evento al botón Registrar con prevención del submit por defecto
+      // Limpiar campos
+      inputNombre.value = "";
+      inputApellidos.value = "";
+      inputCorreo.value = "";
+      inputUsuario.value = "";
+      inputContrasenia.value = "";
+      selectRol.value = "padre";
+
+      // Eliminar clases de error
+      inputsRequeridos.forEach(input => input.classList.remove("input-error"));
+
+      // Cerrar formulario registro
+      contenedorIniciar.classList.remove("toggle");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    Swal.fire({
+      icon: "error",
+      title: "Error de red",
+      text: "No se pudo conectar con el servidor.",
+      showClass: { popup: 'animate__animated animate__shakeX' },
+      hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+    });
+  });
+}
+
+// Evento para botón Registrar con prevención comportamiento por defecto
+if (btnGuardar) {
   btnGuardar.addEventListener("click", function(e) {
     e.preventDefault();
-    validar();
+    if (validar()) {
+      registrarUsuario();
+    }
   });
-
+}
 
   //******************************Inicio de sesión**********************************//
+
 
   // Referencias a elementos del DOM con variables en español
 const usuarioIniciar = document.getElementById('inputUsuarioIniciar');
 const contraseniaIniciar = document.getElementById('inputContraseniaIniciar');
-const contenedorUsuario = document.getElementsByClassName("contenedorUsuario");
-const contenedorContrasenia = document.getElementsByClassName("contenedorContrasenia");
+const contenedorUsuario = document.querySelector(".contenedorUsuario");
+const contenedorContrasenia = document.querySelector(".contenedorContrasenia");
 const btnIniciar = document.getElementById('btnIniciar');
 const imgOcultarContrasenia = document.getElementById('imgOcultarContrasenia');
 const imgMostrarContrasenia= document.getElementById('imgMostrarContrasenia');
+
 
 function mostrarContrasenia() {
     if (contraseniaIniciar.type === "password") {
@@ -204,8 +226,10 @@ function mostrarContrasenia() {
         imgOcultarContrasenia.style.visibility = 'visible';
         imgOcultarContrasenia.style.opacity = '1';
 
+
     }
 }
+
 
 function ocultarContrasenia() {
     if (contraseniaIniciar.type === "text"){
@@ -217,26 +241,27 @@ function ocultarContrasenia() {
     }
 }
 
+
 function validarCamposInicioSesion() {
   let error = false;
 
-  // Usar el primer elemento de cada colección
   if (usuarioIniciar.value.trim() === '') {
-    contenedorUsuario[0].classList.add('input-error');
+    if (contenedorUsuario) contenedorUsuario.classList.add('input-error');
     error = true;
   } else {
-    contenedorUsuario[0].classList.remove('input-error');
+    if (contenedorUsuario) contenedorUsuario.classList.remove('input-error');
   }
 
   if (contraseniaIniciar.value.trim() === '') {
-    contenedorContrasenia[0].classList.add('input-error');
+    if (contenedorContrasenia) contenedorContrasenia.classList.add('input-error');
     error = true;
   } else {
-    contenedorContrasenia[0].classList.remove('input-error');
+    if (contenedorContrasenia) contenedorContrasenia.classList.remove('input-error');
   }
 
   return !error;
 }
+
 // Función para iniciar sesión
 function iniciarSesion() {
   if (!validarCamposInicioSesion()) {
@@ -250,10 +275,12 @@ function iniciarSesion() {
     return;
   }
 
+
   const datosInicioSesion = {
     usuario: usuarioIniciar.value.trim(),
     contrasenia: contraseniaIniciar.value.trim()
   };
+
 
   fetch('http://localhost:3000/usuario_mep/iniciar', {
     method: 'POST',
@@ -299,9 +326,9 @@ function iniciarSesion() {
     });
 }
 
+
 // Listener para el botón de iniciar sesión
 btnIniciar.addEventListener('click', (e) => {
   e.preventDefault();
   iniciarSesion();
 });
-

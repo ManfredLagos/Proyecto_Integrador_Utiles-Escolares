@@ -14,6 +14,14 @@
     color: var(--azulOscuro);
 }
 
+.formularioRegistrarUsuario{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .registrarUsuario h1{
     font-size: 38px;
     font-weight: 600;
@@ -31,7 +39,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding-left: 40px;
+    padding-left: 20px;
     margin: 15px 0 20px 0;
     gap: 10px;
 }
@@ -56,15 +64,15 @@
 }
 
 .input-error{
-    border: 2px solid #ff3636 !important;
+    border: 2px solid #ff3636;
 }
 
-.input-error::placeholder {
+.input-error::placeholder{
   color: #ff3636;
   opacity: 1;
 }
 
-#btnRegistrarusuario{
+.btnRegistrarUsuario{
     height: 45px;
     width: 130px;
     background-color: var(--azulOscuro);
@@ -81,7 +89,7 @@
     border: 2px solid var(--azulOscuro);
 }
 
-#btnRegistrarusuario:hover{
+.btnRegistrarUsuario:hover{
     background-color: #fff;
     color: #3449a0;
     border: 2px solid #3449a0;
