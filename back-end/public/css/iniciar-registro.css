@@ -72,7 +72,7 @@
   opacity: 1;
 }
 
-.btnRegistrarUsuario{
+#btnRegistrarUsuario{
     height: 45px;
     width: 130px;
     background-color: var(--azulOscuro);
@@ -89,7 +89,7 @@
     border: 2px solid var(--azulOscuro);
 }
 
-.btnRegistrarUsuario:hover{
+#btnRegistrarUsuario:hover{
     background-color: #fff;
     color: #3449a0;
     border: 2px solid #3449a0;

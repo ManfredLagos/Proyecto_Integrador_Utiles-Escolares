@@ -82,38 +82,38 @@
             <div class="modal-body">
                 <form id="loginForm" novalidate>
                 <div class="mb-3">
-                    <label for="loginName" class="form-label">Nombre</label>
-                    <input id="loginName" class="nombre form-control" name="nombre" type="text" placeholder="Ej: Manfred" required>
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input id="registrarNombreAdministrador" class="form-control" name="nombre" type="text" placeholder="Ej: Manfred" required>
                     <div id="nameError" class="invalid-feedback">Por favor ingrese su nombre.</div>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="loginLastname" class="form-label">Apellidos</label>
-                    <input id="loginLastname" class="apellidos form-control" name="apellidos" type="text" placeholder="Ej: Lagos Rodríguez" required>
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input id="registrarApellidosAdministrador" class="form-control" name="apellidos" type="text" placeholder="Ej: Lagos Rodríguez" required>
                     <div id="lastnameError" class="invalid-feedback">Por favor ingrese sus apellidos.</div>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="loginEmail" class="form-label">Correo electrónico</label>
-                    <input id="loginEmail" class="correo form-control" name="correo" type="email" placeholder="Ej: manfred@gmail.com" required>
+                    <label for="correo" class="form-label">Correo electrónico</label>
+                    <input id="registrarCorreoAdministrador" class="correo form-control" name="correo" type="email" placeholder="Ej: manfred@gmail.com" required>
                     <div id="emailError" class="invalid-feedback">Ingrese un correo válido.</div>
                 </div>   
                 
                 <div class="mb-3">
-                    <label for="loginUser" class="form-label">Usuario</label>
-                    <input id="loginUser" class="usuario form-control" name="usuario" type="text" placeholder="Ej: mlagos" required>
+                    <label for="usuario" class="form-label">Usuario</label>
+                    <input id="registrarUsuarioAdministrador" class="form-control" name="usuario" type="text" placeholder="Ej: mlagos" required>
                     <div id="userError" class="invalid-feedback">Ingrese un nombre de usuario.</div>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="loginPassword" class="form-label">Contraseña</label>
-                    <input id="loginPassword" class="contrasenia form-control" name="contrasenia" type="password" placeholder="Ingrese su contraseña" required>
+                    <label for="contrasenia" class="form-label">Contraseña</label>
+                    <input id="registrarContraseniaAdministrador" class="form-control" name="contrasenia" type="password" placeholder="Ingrese su contraseña" required>
                     <div id="passwordError" class="invalid-feedback">Ingrese una contraseña.</div>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="loginRol" class="form-label">Rol</label>
-                    <select id="loginRol" class="rol form-select" name="rol" required>
+                    <label for="rol" class="form-label">Rol</label>
+                    <select id="registrarRolAdministrador" class="rol form-select" name="rol" required>
                     <option value="" disabled selected>Seleccione su rol</option>
                     <option value="padre">Padre</option>
                     <option value="docente">Docente</option>
@@ -123,10 +123,10 @@
                 </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                <button type="submit" form="loginForm" class="btn btn-primary btnRegistrarUsuario">Crear Usuario</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="submit" form="loginForm" id="btnRegistrarUsuarioAdministrador" class="btn btn-primary">Crear Usuario</button>
+                </div>
             </div>
         </div>
     </div>
@@ -177,6 +177,6 @@
         crossorigin="anonymous"></script>
     <script src="js/usuario_mep-listar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/usuario-iniciar.js"></script>
+    <script src="/js/registrar-usuario-administrador.js"></script>
 </body>
 </html>

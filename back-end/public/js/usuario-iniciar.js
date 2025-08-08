@@ -4,17 +4,16 @@ const enlaceRegistrar = document.getElementById("enlaceRegistrar");
 const btnVolverInicio = document.getElementById("btnVolverInicio");
 
 // Selectores para formulario registro dentro del contenedor
-const formularioRegistro = document.querySelector('.registrarUsuario');
-const inputNombre = formularioRegistro.querySelector('input.nombre[name="nombre"]');
-const inputApellidos = formularioRegistro.querySelector('input.apellidos[name="apellidos"]');
-const inputCorreo = formularioRegistro.querySelector('input.correo[name="correo"]');
-const inputUsuario = formularioRegistro.querySelector('input.usuario[name="usuario"]');
-const inputContrasenia = formularioRegistro.querySelector('input.contrasenia[name="contrasenia"]');
-const selectRol = formularioRegistro.querySelector('select.rol[name="rol"]');
-const btnGuardar = formularioRegistro.querySelector(".btnRegistrarUsuario");
+const inputNombre = document.getElementById("nombre");
+const inputApellidos = document.getElementById("apellidos");
+const inputCorreo = document.getElementById("correo");
+const inputUsuario = document.getElementById("usuario");
+const inputContrasenia = document.getElementById("contrasenia");
+const selectRol = document.getElementById("rol");
+const btnGuardar = document.getElementById("btnRegistrarUsuario");
 
 // Inputs requeridos dentro del formulario de registro para validar
-const inputsRequeridos = formularioRegistro.querySelectorAll('input[required], select[required]');
+const inputsRequeridos = document.querySelectorAll('input[required], select[required]');
 
 
 // ------------ Eventos para mostrar/ocultar formulario registro -----------
