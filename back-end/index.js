@@ -7,7 +7,6 @@ const layouts = require("express-ejs-layouts");
 
 require('dotenv').config(); //Se importa el archivo .env para poder utilizar sus variables dentro del cÃ³digo
 
-
 const app = express(); //Crear una instancia de express
 const PORT = process.env.PORT || 3000; //Usar el puerto indicado en .env o si no se indica usar el puerto 3000
 const path = require('path');
@@ -17,6 +16,7 @@ const usuario_mepRoute = require("./src/routes/usuario_mep.route")
 const utilesRoute = require("./src/routes/utiles.route")
 const lista_utilesRoute = require("./src/routes/lista-utiles.route")
 const gradoRoute = require("./src/routes/grado.route")
+const estadoRoute = require("./src/routes/estados.route")
 
 app.use(express.json());//Habilita el manejo de JSON en las peticiones
 app.use(express.static(path.join(__dirname, 'public')));
@@ -36,10 +36,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch(error => console.log('Ocurrió un error al conectarse con MongoDB: ', error));
 
 //rutas
-app.use("/usuario_mep", usuario_mepRoute)
-app.use("/utiles", utilesRoute)
-app.use("/lista-utiles", lista_utilesRoute)
-app.use("/grado", gradoRoute)
+app.use("/usuario_mep", usuario_mepRoute);
+app.use("/utiles", utilesRoute);
+app.use("/lista-utiles", lista_utilesRoute);
+app.use("/grado", gradoRoute);
+app.use("/estado", estadoRoute);
 
 const mainRouter = require("./src/routes/main.route");
 app.use(mainRouter);

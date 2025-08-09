@@ -168,5 +168,23 @@ body{
   padding: 15px;
 }
 
+#btnRegistrarUsuarioAdministrador{
+    background-color: var(--azulOscuro);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .57);
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    border: 2px solid var(--azulOscuro);
+}
+
+#btnRegistrarUsuarioAdministrador:hover{
+    background-color: #fff;
+    color: #3449a0;
+    border: 2px solid #3449a0;
+}
+
 
 

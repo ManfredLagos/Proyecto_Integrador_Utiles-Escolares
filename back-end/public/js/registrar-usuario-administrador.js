@@ -1,128 +1,167 @@
-// Selectores para formulario registro dentro del contenedor
-const inputNombreAdministrador = document.getElementById("registrarNombreAdministrador");
-const inputApellidosAdministrador = document.getElementById("registrarApellidosAdministrador");
-const inputCorreoAdministrador = document.getElementById("registrarCorreoAdministrador");
-const inputUsuarioAdministrador = document.getElementById("registrarUsuarioAdministrador");
-const inputContraseniaAdministrador = document.getElementById("registrarContraseniaAdministrador");
-const selectRolAdministrador = document.getElementById("registrarRolAdministrador");
-const btnGuardarAdministrador = document.getElementById("btnRegistrarUsuarioAdministrador");
+document.addEventListener("DOMContentLoaded", () => {
+  // Referencias a elementos del formulario modal administrador
+  const formAdministrador = document.getElementById("loginForm");
 
-// Inputs requeridos dentro del formulario de registro para validar
-const inputsRequeridosAdministrador = document.querySelectorAll('input[required], select[required]');
+  const inputNombreAdministrador = document.getElementById("registrarNombreAdministrador");
+  const inputApellidosAdministrador = document.getElementById("registrarApellidosAdministrador");
+  const inputCorreoAdministrador = document.getElementById("registrarCorreoAdministrador");
+  const inputUsuarioAdministrador = document.getElementById("registrarUsuarioAdministrador");
+  const inputContraseniaAdministrador = document.getElementById("registrarContraseniaAdministrador");
+  const selectRolAdministrador = document.getElementById("registrarRolAdministrador");
 
+  // Para feedback, usa los inputs con Bootstrap is-invalid y los div.invalid-feedback que ya tienes en HTML
 
-// --------- Funciones de validación --------------
-
-function validarCamposVacios() {
-
+  // Validación de campos vacíos y formatos
+  function validarCamposVacios() {
     let error = false;
 
-    inputsRequeridosAdministrador.forEach(input => {
-        if (input.value.trim() === "") {
-            input.classList.add("input-error");
-            error = true;
-        } else {
-            input.classList.remove("input-error");
-        }
-    });
+    // Nombre
+    if (!inputNombreAdministrador.value.trim()) {
+      inputNombreAdministrador.classList.add("is-invalid");
+      error = true;
+    } else {
+      inputNombreAdministrador.classList.remove("is-invalid");
+    }
 
-  return error; // true si hay error (campos vacíos)
-}
+    // Apellidos
+    if (!inputApellidosAdministrador.value.trim()) {
+      inputApellidosAdministrador.classList.add("is-invalid");
+      error = true;
+    } else {
+      inputApellidosAdministrador.classList.remove("is-invalid");
+    }
 
-function esCorreoValido(correo) {
-  const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regexCorreo.test(correo);
-}
+    // Correo
+    if (!inputCorreoAdministrador.value.trim()) {
+      inputCorreoAdministrador.classList.add("is-invalid");
+      error = true;
+    } else {
+      inputCorreoAdministrador.classList.remove("is-invalid");
+    }
 
-function esDominioValidoParaDocente(correo) {
-  const partes = correo.split("@");
-  if (partes.length !== 2) return false;
-  return partes[1].toLowerCase() === "ucenfotec.ac.cr";
-}
+    // Usuario
+    if (!inputUsuarioAdministrador.value.trim()) {
+      inputUsuarioAdministrador.classList.add("is-invalid");
+      error = true;
+    } else {
+      inputUsuarioAdministrador.classList.remove("is-invalid");
+    }
 
-function validar() {
-  if (validarCamposVacios()) {
-    Swal.fire({
-      icon: "warning",
-      title: "No se puede registrar al usuario",
-      text: "Por favor complete los campos resaltados.",
-      showClass: { popup: 'animate__animated animate__headShake' },
-      hideClass: { popup: 'animate__animated animate__fadeOut' }
-    });
-    return false;
+    // Contraseña
+    if (!inputContraseniaAdministrador.value.trim()) {
+      inputContraseniaAdministrador.classList.add("is-invalid");
+      error = true;
+    } else {
+      inputContraseniaAdministrador.classList.remove("is-invalid");
+    }
+
+    // Rol
+    if (!selectRolAdministrador.value) {
+      selectRolAdministrador.classList.add("is-invalid");
+      error = true;
+    } else {
+      selectRolAdministrador.classList.remove("is-invalid");
+    }
+
+    return error; // true si hay error
   }
 
-  if (!esCorreoValido(inputCorreoAdministrador.value.trim())) {
-    Swal.fire({
-      icon: "error",
-      title: "Correo inválido",
-      text: "Por favor ingrese un correo electrónico válido.",
-      showClass: { popup: 'animate__animated animate__shakeX' },
-      hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-    });
-    inputCorreoAdministrador.classList.add("input-error");
-    return false;
-  } else {
-    inputCorreoAdministrador.classList.remove("input-error");
+  function esCorreoValido(correo) {
+    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regexCorreo.test(correo);
   }
 
-  if (selectRolAdministrador.value === "docente") {
-    if (!esDominioValidoParaDocente(inputCorreoAdministrador.value.trim())) {
+  function esDominioValidoParaDocente(correo) {
+    const partes = correo.split("@");
+    if (partes.length !== 2) return false;
+    return partes[1].toLowerCase() === "ucenfotec.ac.cr";
+  }
+
+  function validar() {
+    if (validarCamposVacios()) {
+      Swal.fire({
+        icon: "warning",
+        title: "No se puede registrar al usuario",
+        text: "Por favor complete los campos resaltados.",
+        showClass: { popup: 'animate__animated animate__headShake' },
+        hideClass: { popup: 'animate__animated animate__fadeOut' }
+      });
+      return false;
+    }
+
+    const correoVal = inputCorreoAdministrador.value.trim();
+
+    if (!esCorreoValido(correoVal)) {
+      inputCorreoAdministrador.classList.add("is-invalid");
       Swal.fire({
         icon: "error",
-        title: "Dominio inválido",
-        text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
+        title: "Correo inválido",
+        text: "Por favor ingrese un correo electrónico válido.",
         showClass: { popup: 'animate__animated animate__shakeX' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' }
       });
-      inputCorreoAdministrador.classList.add("input-error");
       return false;
     } else {
-      inputCorreoAdministrador.classList.remove("input-error");
+      inputCorreoAdministrador.classList.remove("is-invalid");
     }
+
+    if (selectRolAdministrador.value === "docente") {
+      if (!esDominioValidoParaDocente(correoVal)) {
+        inputCorreoAdministrador.classList.add("is-invalid");
+        Swal.fire({
+          icon: "error",
+          title: "Dominio inválido",
+          text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
+          showClass: { popup: 'animate__animated animate__shakeX' },
+          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+        });
+        return false;
+      } else {
+        inputCorreoAdministrador.classList.remove("is-invalid");
+      }
+    }
+
+    return true;
   }
 
-  return true;
-}
+  async function registrarUsuario() {
+    const datosRegistroUsuario_mep = {
+      nombre: inputNombreAdministrador.value.trim(),
+      apellidos: inputApellidosAdministrador.value.trim(),
+      correo: inputCorreoAdministrador.value.trim(),
+      usuario: inputUsuarioAdministrador.value.trim(),
+      contrasenia: inputContraseniaAdministrador.value,
+      rol: selectRolAdministrador.value.trim()
+    };
 
-// --------- Función para registrar usuario -----------
+    try {
+      const response = await fetch("http://localhost:3000/usuario_mep", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datosRegistroUsuario_mep)
+      });
 
-function registrarUsuario() {
-  const datosRegistroUsuario_mep = {
-    nombre: inputNombreAdministrador.value.trim(),
-    apellidos: inputApellidosAdministrador.value.trim(),
-    correo: inputCorreoAdministrador.value.trim(),
-    usuario: inputUsuarioAdministrador.value.trim(),
-    contrasenia: inputContraseniaAdministrador.value,
-    rol: selectRolAdministrador.value.trim()
-  };
-
-  fetch("http://localhost:3000/usuario_mep", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(datosRegistroUsuario_mep)
-  })
-  .then(response => {
-    if (!response.ok) {
-      if (response.status === 400) {
-        Swal.fire({
-          icon: "error",
-          title: "Usuario duplicado",
-          text: "El correo o nombre de usuario ya existe en la base de datos.",
-          showClass: { popup: 'animate__animated animate__shakeX' },
-          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-        });
-      } else {
-       
-        Swal.fire({
-          icon: "error",
-          title: "Error de servidor",
-          text: "Ocurrió un error al registrar el usuario.",
-          showClass: { popup: 'animate__animated animate__shakeX' },
-          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-        });
+      if (!response.ok) {
+        if (response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Usuario duplicado",
+            text: "El correo o nombre de usuario ya existe en la base de datos.",
+            showClass: { popup: 'animate__animated animate__shakeX' },
+            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error de servidor",
+            text: "Ocurrió un error al registrar el usuario.",
+            showClass: { popup: 'animate__animated animate__shakeX' },
+            hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+          });
+        }
+        return;
       }
-    } else {
+
       Swal.fire({
         position: "center",
         icon: "success",
@@ -133,36 +172,106 @@ function registrarUsuario() {
         hideClass: { popup: 'animate__animated animate__fadeOutDown animate__faster' }
       });
 
-      // Limpiar campos
+      // Limpiar campos y errores
       inputNombreAdministrador.value = "";
       inputApellidosAdministrador.value = "";
       inputCorreoAdministrador.value = "";
       inputUsuarioAdministrador.value = "";
-      inputContrasenia.value = "";
-      selectRolAdministrador.value = "padre";
+      inputContraseniaAdministrador.value = "";
+      selectRolAdministrador.value = "";
 
-      // Eliminar clases de error
-      inputsRequeridos.forEach(input => input.classList.remove("input-error"));
+      inputNombreAdministrador.classList.remove("is-invalid");
+      inputApellidosAdministrador.classList.remove("is-invalid");
+      inputCorreoAdministrador.classList.remove("is-invalid");
+      inputUsuarioAdministrador.classList.remove("is-invalid");
+      inputContraseniaAdministrador.classList.remove("is-invalid");
+      selectRolAdministrador.classList.remove("is-invalid");
+
+      // Cerrar modal usando Bootstrap 5 API
+      const loginModalEl = document.getElementById('loginModal');
+      const modalInstance = bootstrap.Modal.getInstance(loginModalEl) || new bootstrap.Modal(loginModalEl);
+      modalInstance.hide();
+
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de red",
+        text: "No se pudo conectar con el servidor.",
+        showClass: { popup: 'animate__animated animate__shakeX' },
+        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+      });
     }
-  })
-  .catch(error => {
-    console.error(error);
-    Swal.fire({
-      icon: "error",
-      title: "Error de red",
-      text: "No se pudo conectar con el servidor.",
-      showClass: { popup: 'animate__animated animate__shakeX' },
-      hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+  }
+
+  // Manejo del evento submit del formulario para prevenir envío natural
+  if (formAdministrador) {
+    formAdministrador.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (validar()) {
+        registrarUsuario();
+      }
     });
-  });
-}
+  }
 
-// Evento para botón Registrar con prevención comportamiento por defecto
-if (btnGuardarAdministrador) {
-  btnGuardarAdministrador.addEventListener("click", function(e) {
-    e.preventDefault();
-    if (validar()) {
-      registrarUsuario();
-    }
+});
+
+
+
+// --------------------------------------
+
+  // Botones cerrar y volver en el modal
+document.addEventListener("DOMContentLoaded", () => {
+  // Referencias a inputs y select del formulario modal administrador
+  const inputNombreAdministrador = document.getElementById("registrarNombreAdministrador");
+  const inputApellidosAdministrador = document.getElementById("registrarApellidosAdministrador");
+  const inputCorreoAdministrador = document.getElementById("registrarCorreoAdministrador");
+  const inputUsuarioAdministrador = document.getElementById("registrarUsuarioAdministrador");
+  const inputContraseniaAdministrador = document.getElementById("registrarContraseniaAdministrador");
+  const selectRolAdministrador = document.getElementById("registrarRolAdministrador");
+
+  // Botones cerrar y volver en el modal
+  const btnCerrarModal = document.querySelector("#loginModal .btn-close");
+  const btnVolverModal = document.querySelector("#loginModal .btn-secondary");
+
+  const loginModalEl = document.getElementById('loginModal');
+  const modalInstance = bootstrap.Modal.getInstance(loginModalEl); 
+
+  // Función para limpiar campos y errores
+  function limpiarFormularioRegistro() {
+    inputNombreAdministrador.value = "";
+    inputApellidosAdministrador.value = "";
+    inputCorreoAdministrador.value = "";
+    inputUsuarioAdministrador.value = "";
+    inputContraseniaAdministrador.value = "";
+    selectRolAdministrador.value = "";
+
+    inputNombreAdministrador.classList.remove("is-invalid");
+    inputApellidosAdministrador.classList.remove("is-invalid");
+    inputCorreoAdministrador.classList.remove("is-invalid");
+    inputUsuarioAdministrador.classList.remove("is-invalid");
+    inputContraseniaAdministrador.classList.remove("is-invalid");
+    selectRolAdministrador.classList.remove("is-invalid");
+  }
+
+  // Asignar evento a botón cerrar
+  if (btnCerrarModal) {
+    btnCerrarModal.addEventListener("click", () => {
+      limpiarFormularioRegistro();
+    });
+  }
+
+  // Asignar evento a botón volver
+  if (btnVolverModal) {
+    btnVolverModal.addEventListener("click", () => {
+      limpiarFormularioRegistro();
+    });
+  }
+
+  if (loginModalEl) {
+  loginModalEl.addEventListener('hidden.bs.modal', () => {
+    limpiarFormularioRegistro();
   });
-} 
+  }
+});

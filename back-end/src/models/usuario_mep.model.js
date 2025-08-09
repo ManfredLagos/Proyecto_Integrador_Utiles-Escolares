@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const Schema = mongoose.Schema;
+
 const schemaUsuario_mep = new mongoose.Schema({
     nombre: {
         type: String,
@@ -30,7 +32,19 @@ const schemaUsuario_mep = new mongoose.Schema({
         type: String,
         required:true,
         unique:false
-    }
+    },
+    grado: [
+        {
+            type: Schema.Types.ObjectId,
+            ref:"Grado"
+        }
+    ],
+    estado: [
+        {
+            type: Schema.Types.ObjectId,
+            ref:"Estado"
+        }
+    ]
 });
 
 const Usuario_mep = mongoose.model("Usuario_mep", schemaUsuario_mep);
