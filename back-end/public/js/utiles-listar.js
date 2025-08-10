@@ -14,15 +14,23 @@ async function cargarTablaUtiles() {
         tablaUtiles.innerHTML = ""; // Limpiar tabla antes de cargar
 
         listaUtiles.forEach(util => {
+
+            const infoUtil = Array.isArray(util.lista)
+              ? util.lista.map(g => g.nombre).join(", ")
+              : "";
+
             const fila = document.createElement("tr");
 
             fila.innerHTML = `
                 <td>${util.nombre}</td>
                 <td>${util.descripcion}</td>
                 <td>${util.cantidad}</td>
-                <td class="text-center">N/A</td>
+                <td class="text-center">${infoUtil}</td>
                 <td class="text-center">
                     <button class="btnEditarUtil" data-_id="${util._id}">Editar</button>
+                </td>
+                <td class="text-center">
+                    <button class="btnEliminarutil" data-_id="${util._id}">Eliminar</button>
                 </td>
             `;
 

@@ -339,4 +339,41 @@ mostrarGrados();
 mostrarEstados();
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const btnOpciones = document.getElementById("opcionesConfiguracion");
+  const listaConfiguracion = document.querySelector(".listaConfiguración");
+
+  // Inicialmente oculta con CSS o JS
+  listaConfiguracion.style.visibility = "hidden";
+
+  // Función para mostrar u ocultar la lista
+  function toggleLista() {
+    if (listaConfiguracion.style.visibility === "hidden") {
+      listaConfiguracion.style.visibility = "visible";
+    } else {
+      listaConfiguracion.style.visibility = "hidden";
+    }
+  }
+
+  // Cuando se hace click en el botón "Configuración"
+  btnOpciones.addEventListener("click", (e) => {
+    e.stopPropagation(); // evitar que el click se propague y oculte inmediatamente la lista
+    toggleLista();
+  });
+
+  // Cuando se haga click fuera de la lista o del botón configuracion, ocultar la lista si está visible
+  document.addEventListener("click", (e) => {
+    // Si la lista está visible y el click no fue dentro del menú ni botón
+    if (
+      listaConfiguracion.style.visibility === "visible" &&
+      !listaConfiguracion.contains(e.target) &&
+      !btnOpciones.contains(e.target)
+    ) {
+      listaConfiguracion.style.visibility = "hidden";
+    }
+  });
+});
+
+
+
 

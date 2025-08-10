@@ -247,6 +247,11 @@ body{
   border: 2px solid #3449a0;
 }
 
+.listaConfiguración{
+  visibility: hidden;
+}
+
+
 
 
 
