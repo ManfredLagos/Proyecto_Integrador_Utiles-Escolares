@@ -49,6 +49,26 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ msj: "ID inválido" });
+  }
+
+  try {
+    const resultado = await Usuario_mep.deleteOne({ _id: id });
+
+    if (resultado.deletedCount === 0) {
+      return res.status(404).json({ msj: "No se encontró usuario con el ID proporcionado" });
+    }
+
+    res.json({ msj: "Usuario eliminado correctamente", id: id, registrosEliminados: resultado.deletedCount });
+  } catch (error) {
+    res.status(500).json({ msj: "Error en el servidor al eliminar usuario", error: error.message });
+  }
+});
+
 router.get("/informacionUsuario/:id", async (req, res) => {
   const id = req.params.id;
 

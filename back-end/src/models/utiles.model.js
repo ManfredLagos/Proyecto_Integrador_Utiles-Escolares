@@ -21,7 +21,7 @@ const schemaUtiles = new mongoose.Schema({
     lista: [
         {
             type: Schema.Types.ObjectId,
-            ref:"Lista"
+            ref:"Lista_utiles"
         }
     ]
 });

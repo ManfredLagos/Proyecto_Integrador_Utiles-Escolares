@@ -53,11 +53,11 @@
                     <h2>Útiles escolares</h1>
                 </div>
                 <div class="col-4" id="columna-4">
-                    <button id="crearUsuario" data-bs-toggle="modal" data-bs-target="#loginModal">Crear Nuevo Útil</button>
+                    <button id="crearUtil" data-bs-toggle="modal" data-bs-target="#crearUtilModal">Crear Nuevo Útil</button>
                 </div>
             </div>
             <div class="row" style="padding: 20px;">
-                <table id="tblUtiles" class="table table-striped table-bordered">
+                <table id="tablaUtiles" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal fade" id="crearUtilModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">           
                 <div class="modal-header">
@@ -83,7 +83,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>             
                 <div class="modal-body">
-                    <form id="crarUtilForm" novalidate>
+                    <form id="crearUtilForm" novalidate>
                         <div class="mb-3">
                             <label for="nombreUtil" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombreUtil" required>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="lista" class="form-label">Lista</label>
-                            <select id="lista" name="lista" class="form-select" required>
+                            <select id="listaUtil" name="lista" class="form-select editarListaUtil" required>
                             
                             </select>
                             <div id="rolError" class="invalid-feedback">Seleccione una lista.</div>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                    <button type="submit" form="formularioUtil" id="btnCrearUtil" class="btn btn-primary">Crear Útil</button>
+                    <button type="submit" form="crearUtilForm" id="btnCrearUtil" class="btn btn-primary">Crear Útil</button>
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@
         <div class="modal-dialog">
             <div class="modal-content">        
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editarUsuarioLabel">Editar Útiles</h5>
+                    <h5 class="modal-title" id="editarUtilLabel">Editar Útiles</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -136,19 +136,18 @@
                         </div>
                         <div class="mb-3">
                             <label for="editarCantidadUtil" class="form-label">Cantidad</label>
-                            <input type="text" class="form-control" id="editarCantidadUtil" required>
+                            <input type="number" class="form-control" id="editarCantidadUtil" required>
                         </div>
                         <div class="mb-3">
                             <label for="editarListaUtil" class="form-label">Lista</label>
-                            <select id="editarListaUtil" class="form-select" required>
+                            <select id="editarListaUtil" class="form-select editarListaUtil" required>
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="btnEliminarUtil">Eliminar Útil</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" form="editarUsuarioForm" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="submit" form="editarUsuarioForm" class="btn btn-primary" id="btnGuardarEdicionUtil">Guardar Cambios</button>
                 </div>
             </div>
         </div>
@@ -160,5 +159,6 @@
     <script src="js/usuario_mep-listar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/registrar-usuario-administrador.js"></script>
+    <script src="/js/utiles-listar.js"></script>
 </body>
 </html>
