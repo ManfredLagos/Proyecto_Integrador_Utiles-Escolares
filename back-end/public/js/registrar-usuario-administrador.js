@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputUsuarioAdministrador = document.getElementById("registrarUsuarioAdministrador");
   const inputContraseniaAdministrador = document.getElementById("registrarContraseniaAdministrador");
   const selectRolAdministrador = document.getElementById("registrarRolAdministrador");
+  const selectGradoAdministrador = document.getElementById("registrarGradoAdministrador");
+  const selectEstadoAdministrador = document.getElementById("registrarEstadoAdministrador");
 
   // Para feedback, usa los inputs con Bootstrap is-invalid y los div.invalid-feedback que ya tienes en HTML
 
@@ -131,7 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
       correo: inputCorreoAdministrador.value.trim(),
       usuario: inputUsuarioAdministrador.value.trim(),
       contrasenia: inputContraseniaAdministrador.value,
-      rol: selectRolAdministrador.value.trim()
+      rol: selectRolAdministrador.value.trim(),
+      grado: [selectGradoAdministrador.value],
+      estado: [selectEstadoAdministrador.value]
     };
 
     try {
@@ -217,8 +221,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-
-
 // --------------------------------------
 
   // Botones cerrar y volver en el modal
@@ -236,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnVolverModal = document.querySelector("#loginModal .btn-secondary");
 
   const loginModalEl = document.getElementById('loginModal');
-  const modalInstance = bootstrap.Modal.getInstance(loginModalEl); 
 
   // Función para limpiar campos y errores
   function limpiarFormularioRegistro() {
@@ -275,3 +276,67 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   }
 });
+
+
+const listaGrados = document.querySelectorAll(".editarGrado"); // NodeList
+const listaEstados = document.querySelectorAll(".editarEstado");
+
+async function mostrarGrados() {
+  try {
+    const response = await fetch("http://localhost:3000/grado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const data = await response.json();
+
+    // Limpiar cada select con clase .editarGrado
+    listaGrados.forEach(select => {
+      select.innerHTML = "";  // Limpiar opciones previas
+
+      data.forEach(grado => {
+        const opcion = document.createElement("option");
+        opcion.value = grado._id;
+        opcion.textContent = grado.nombre;
+        select.appendChild(opcion);
+      });
+    });
+
+  } catch (error) {
+    console.error("Error al cargar grados:", error);
+  }
+}
+
+
+async function mostrarEstados() {
+  try {
+    const response = await fetch("http://localhost:3000/estado", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const data = await response.json();
+
+    listaEstados.forEach(select => {
+      select.innerHTML = ""; // Limpiar opciones
+
+      data.forEach(estado => {
+        const opcion = document.createElement("option");
+        opcion.value = estado._id;
+        opcion.textContent = estado.nombre;
+        select.appendChild(opcion);
+      });
+    });
+
+  } catch (error) {
+    console.error("Error al cargar estados:", error);
+  }
+}
+
+mostrarGrados();
+mostrarEstados();
+
+
+

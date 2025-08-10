@@ -17,6 +17,7 @@ const utilesRoute = require("./src/routes/utiles.route")
 const lista_utilesRoute = require("./src/routes/lista-utiles.route")
 const gradoRoute = require("./src/routes/grado.route")
 const estadoRoute = require("./src/routes/estados.route")
+const hijosRoute = require("./src/routes/hijos.route")
 
 app.use(express.json());//Habilita el manejo de JSON en las peticiones
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,6 +42,7 @@ app.use("/utiles", utilesRoute);
 app.use("/lista-utiles", lista_utilesRoute);
 app.use("/grado", gradoRoute);
 app.use("/estado", estadoRoute);
+app.use("/hijos", hijosRoute);
 
 const mainRouter = require("./src/routes/main.route");
 app.use(mainRouter);

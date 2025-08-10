@@ -6,12 +6,12 @@ const Usuario_mep = require("../models/usuario_mep.model");
 // Ruta POST
 
 router.post("/", async(req, res) => {
-    const{nombre, apellidos, correo, usuario, contrasenia, rol} = req.body;
+    const{nombre, apellidos, correo, usuario, contrasenia, rol, grado, estado, hijo} = req.body;
     if (!nombre || !apellidos || !correo || !usuario || !contrasenia || !rol){
         return res.status(400).json({msj: "Todos los campos son obligatorios"});
     }
     try{
-        const nuevoUsuario_mep = new Usuario_mep({nombre, apellidos, correo, usuario, contrasenia, rol});
+        const nuevoUsuario_mep = new Usuario_mep({nombre, apellidos, correo, usuario, contrasenia, rol, grado, estado, hijo});
         await nuevoUsuario_mep.save()
         res.status(201).json(nuevoUsuario_mep);
     } catch(error){
@@ -23,7 +23,10 @@ router.post("/", async(req, res) => {
 // GET: Solicitar datos al servidor (listar usuarios)
 router.get("/", async(req, res) => {
     try {
-        const usuarios_mep = await Usuario_mep.find();
+        const usuarios_mep = await Usuario_mep.find()
+        .populate('grado')
+        .populate('estado')
+        .populate('hijo')
         res.json(usuarios_mep);
     } catch (error) {
         res.status(500).json({msj: error.message});
@@ -46,7 +49,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -66,7 +68,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ msj: "Error en el servidor al eliminar usuario", error: error.message });
   }
 });
-
 
 // Ruta POST para iniciar sesión
 router.post("/iniciar", async (req, res) => {
@@ -112,14 +113,32 @@ router.post("/iniciar", async (req, res) => {
   }
 });
 
-router.get('/perfil', (req, res) => {
-  const usuario = req.session.usuario; // o carga desde DB según sesión
-  if (!usuario) {
-    return res.status(401).json({ mensaje: 'No autenticado' });
-  }
-  res.json({ usuario });
-});
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  const { nombre, apellidos, correo, usuario, rol, grado, estado } = req.body;
 
+  try {
+    const usuarioActualizado = await Usuario_mep.findByIdAndUpdate(
+      id,
+      { nombre, apellidos, correo, usuario, rol, grado, estado },
+      { new: true, runValidators: true }
+    );
+
+    if (!usuarioActualizado) {
+      return res.status(404).json({ msj: "Usuario no encontrado" });
+    }
+
+    res.json(usuarioActualizado);
+
+  } catch (error) {
+    // Manejamos error de clave duplicada con código 11000
+    if (error.code === 11000) {
+      return res.status(409).json({ msj: "Usuario duplicado" });
+    }
+    // Otros errores son 400 (bad request)
+    res.status(400).json({ msj: "Datos incompletos o mal formados" });
+  }
+});
 
 module.exports = router;
 

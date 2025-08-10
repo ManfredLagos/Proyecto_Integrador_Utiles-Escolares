@@ -11,6 +11,9 @@ const inputUsuario = document.getElementById("usuario");
 const inputContrasenia = document.getElementById("contrasenia");
 const selectRol = document.getElementById("rol");
 const btnGuardar = document.getElementById("btnRegistrarUsuario");
+const idGradoNA = "6886a19bddfc296d582e321a";
+const idEstadoNA = "689641dd4dc2172ab1aeb770";
+const idHijoNA = "68979d557482715e059fb4f7";
 
 // Inputs requeridos dentro del formulario de registro para validar
 const inputsRequeridos = document.querySelectorAll('input[required], select[required]');
@@ -128,7 +131,10 @@ function registrarUsuario() {
     correo: inputCorreo.value.trim(),
     usuario: inputUsuario.value.trim(),
     contrasenia: inputContrasenia.value,
-    rol: selectRol.value.trim()
+    rol: selectRol.value.trim(),
+    grado: [idGradoNA],
+    estado: [idEstadoNA],
+    hijo: [idHijoNA]
   };
 
   fetch("http://localhost:3000/usuario_mep", {
@@ -229,7 +235,6 @@ function mostrarContrasenia() {
     }
 }
 
-
 function ocultarContrasenia() {
     if (contraseniaIniciar.type === "text"){
         contraseniaIniciar.type = "password";
@@ -239,7 +244,6 @@ function ocultarContrasenia() {
         imgOcultarContrasenia.style.opacity = '0';
     }
 }
-
 
 function validarCamposInicioSesion() {
   let error = false;
@@ -274,55 +278,76 @@ function iniciarSesion() {
     return;
   }
 
-
   const datosInicioSesion = {
     usuario: usuarioIniciar.value.trim(),
     contrasenia: contraseniaIniciar.value.trim()
   };
-
 
   fetch('http://localhost:3000/usuario_mep/iniciar', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datosInicioSesion)
   })
-    .then(response => response.json().then(data => ({ status: response.status, body: data })))
-    .then(({ status, body }) => {
-      if (status !== 200) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al iniciar sesión',
-          text: body.message || 'Usuario o contraseña incorrectos.',
-          showClass: { popup: 'animate__animated animate__shakeX' },
-          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
-        });
-      } else {
-          switch(body.usuario.rol) {
-            case 'administrador':
-              window.location.href = '/administrador-dashboard';
-              break;
-            case 'docente':
-              window.location.href = '/docente-dashboard';
-              break;
-            case 'padre':
-              window.location.href = '/padre-dashboard';
-              break;
-            default:
-              window.location.href = '/';
-              break;
-          }
-        }
-    })
-    .catch(error => {
-      console.error('Error en login:', error);
+  .then(response => 
+    response.json().then(data => ({
+      status: response.status, 
+      body: data
+    }))
+  )
+  .then(({ status, body }) => {
+    if (status !== 200) {
       Swal.fire({
         icon: 'error',
-        title: 'Error de red',
-        text: 'No se pudo conectar con el servidor.',
+        title: 'Error al iniciar sesión',
+        text: body.message || 'Usuario o contraseña incorrectos.',
         showClass: { popup: 'animate__animated animate__shakeX' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' }
       });
+      return;
+    }
+
+    // Validar si el usuario tiene estado 'inactivo'
+    const estados = body.usuario.estado || [];
+    const tieneEstadoInactivo = estados.some(e => e.nombre?.toLowerCase() === 'Inactivo');
+
+    if (tieneEstadoInactivo) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Cuenta Inactiva',
+        html: 'Su cuenta está inactiva. Por favor, comuníquese al correo <a href="mailto:soporte@ministeriodesalud.ac.cr">soporte@ministeriodesalud.ac.cr</a> para asistencia.',
+        showClass: { popup: 'animate__animated animate__shakeX' },
+        hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+      });
+      return; // No continuar con redirección
+    }
+
+    // Si no está inactivo, redirigir según rol
+    switch(body.usuario.rol) {
+      case 'administrador':
+        window.location.href = '/administrador-dashboard';
+        break;
+      case 'docente':
+        window.location.href = '/docente-dashboard';
+        break;
+      case 'padre':
+        window.location.href = '/padre-dashboard';
+        break;
+      default:
+        window.location.href = '/';
+        break;
+    }
+
+  })
+  .catch(error => {
+    console.error('Error en login:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error de red',
+      text: 'No se pudo conectar con el servidor.',
+      showClass: { popup: 'animate__animated animate__shakeX' },
+      hideClass: { popup: 'animate__animated animate__fadeOutUp' }
     });
+  });
 }
 
 

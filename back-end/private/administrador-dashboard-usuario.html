@@ -40,6 +40,10 @@
                     <div class="icon-col"><img src="images/configuraciones.png" alt="Listas"></div>
                     <div class="text-col"><a href="/administrador-dashboard-configuracion">Configuración</a></div>
                 </div>
+                <ul class="listaConfiguración">
+                    <li><a class="btnEditar" href="/administrador-dashboard-configuracion">Editar información</a></li>
+                    <li><a href="/iniciar">Cerrar Sesión</a></li>
+                </ul>
             </div>
         </div>
 
@@ -58,11 +62,13 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Apellidos</th>
                             <th>Correo</th>
                             <th>Usuario</th>
                             <th>Rol</th>
                             <th class="text-center">Grado</th>
                             <th class="text-center">Estado</th>
+                            <th class="text-center">Acción</th>
                             <th class="text-center">Acción</th>
                         </tr>
                     </thead>
@@ -82,46 +88,58 @@
             </div>         
             <div class="modal-body">
                 <form id="loginForm" novalidate>
-                <div class="mb-3">
-                    <label for="registrarNombreAdministrador" class="form-label">Nombre</label>
-                    <input id="registrarNombreAdministrador" class="form-control" name="nombre" type="text" placeholder="Ej: Manfred" required>
-                    <div class="invalid-feedback">Por favor ingrese su nombre.</div>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="registrarApellidosAdministrador" class="form-label">Apellidos</label>
-                    <input id="registrarApellidosAdministrador" class="form-control" name="apellidos" type="text" placeholder="Ej: Lagos Rodríguez" required>
-                    <div class="invalid-feedback">Por favor ingrese sus apellidos.</div>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="registrarCorreoAdministrador" class="form-label">Correo electrónico</label>
-                    <input id="registrarCorreoAdministrador" class="form-control" name="correo" type="email" placeholder="Ej: manfred@gmail.com" required>
-                    <div class="invalid-feedback">Ingrese un correo válido.</div>
-                </div>   
-                
-                <div class="mb-3">
-                    <label for="registrarUsuarioAdministrador" class="form-label">Usuario</label>
-                    <input id="registrarUsuarioAdministrador" class="form-control" name="usuario" type="text" placeholder="Ej: mlagos" required>
-                    <div class="invalid-feedback">Ingrese un nombre de usuario.</div>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="registrarContraseniaAdministrador" class="form-label">Contraseña</label>
-                    <input id="registrarContraseniaAdministrador" class="form-control" name="contrasenia" type="password" placeholder="Ingrese su contraseña" required>
-                    <div class="invalid-feedback">Ingrese una contraseña.</div>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="registrarRolAdministrador" class="form-label">Rol</label>
-                    <select id="registrarRolAdministrador" class="form-select" name="rol" required>
-                    <option value="" disabled selected>Seleccione su rol</option>
-                    <option value="padre">Padre</option>
-                    <option value="docente">Docente</option>
-                    <option value="administrador">Administrador</option>
-                    </select>
-                    <div class="invalid-feedback">Seleccione un rol.</div>
-                </div>
+                    <div class="mb-3">
+                        <label for="registrarNombreAdministrador" class="form-label">Nombre</label>
+                        <input id="registrarNombreAdministrador" class="form-control" name="nombre" type="text" placeholder="Ej: Manfred" required>
+                        <div class="invalid-feedback">Por favor ingrese su nombre.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="registrarApellidosAdministrador" class="form-label">Apellidos</label>
+                        <input id="registrarApellidosAdministrador" class="form-control" name="apellidos" type="text" placeholder="Ej: Lagos Rodríguez" required>
+                        <div class="invalid-feedback">Por favor ingrese sus apellidos.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="registrarCorreoAdministrador" class="form-label">Correo electrónico</label>
+                        <input id="registrarCorreoAdministrador" class="form-control" name="correo" type="email" placeholder="Ej: manfred@gmail.com" required>
+                        <div class="invalid-feedback">Ingrese un correo válido.</div>
+                    </div>   
+                    
+                    <div class="mb-3">
+                        <label for="registrarUsuarioAdministrador" class="form-label">Usuario</label>
+                        <input id="registrarUsuarioAdministrador" class="form-control" name="usuario" type="text" placeholder="Ej: mlagos" required>
+                        <div class="invalid-feedback">Ingrese un nombre de usuario.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="registrarContraseniaAdministrador" class="form-label">Contraseña</label>
+                        <input id="registrarContraseniaAdministrador" class="form-control" name="contrasenia" type="password" placeholder="Ingrese su contraseña" required>
+                        <div class="invalid-feedback">Ingrese una contraseña.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="registrarRolAdministrador" class="form-label">Rol</label>
+                        <select id="registrarRolAdministrador" class="form-select" name="rol" required>
+                        <option value="" disabled selected>Seleccione su rol</option>
+                        <option value="padre">Padre</option>
+                        <option value="docente">Docente</option>
+                        <option value="administrador">Administrador</option>
+                        </select>
+                        <div class="invalid-feedback">Seleccione un rol.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editarGrado" class="form-label">Grado:</label>
+                        <select id="registrarGradoAdministrador" class="form-select editarGrado">
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editarEstado" class="form-label">Estado:</label>
+                        <select id="registrarEstadoAdministrador" class="form-select editarEstado">
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -148,6 +166,10 @@
                         <input type="text" class="form-control" id="editarNombre" required>
                     </div>
                     <div class="mb-3">
+                        <label for="editarApellidos" class="form-label">Apellidos:</label>
+                        <input type="text" class="form-control" id="editarApellidos" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="editarCorreo" class="form-label">Correo electrónico:</label>
                         <input type="email" class="form-control" id="editarCorreo" required>
                     </div>
@@ -165,23 +187,19 @@
                     </div>
                     <div class="mb-3">
                         <label for="editarGrado" class="form-label">Grado:</label>
-                        <select id="editarGrado" class="form-select" required>
-                            <option value="noAplica" selected>N/A</option>
+                        <select id="editarGrado" class="form-select editarGrado">
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="editarGrado" class="form-label">Estado:</label>
-                        <select id="editarGrado" class="form-select" required>
-                            <option value="activo" selected>Activo</option>
-                            <option value="inactivo">Inactivo</option>
+                        <label for="editarEstado" class="form-label">Estado:</label>
+                        <select id="editarEstado" class="form-select editarEstado">
                         </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btnEliminar btn btn-danger" id="btnEliminarUsuario">Eliminar Usuario</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" form="editarUsuarioForm" class="btn btn-primary">Guardar Cambios</button>
+                <button type="submit" form="editarUsuarioForm" id="btnGuardarEdicion" class="btn btn-primary">Guardar Cambios</button>
             </div>
         </div>
     </div>

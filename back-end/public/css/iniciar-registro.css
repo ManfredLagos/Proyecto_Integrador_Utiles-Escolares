@@ -187,14 +187,14 @@
 
 /* Botón confirmación (aceptar) */
 .swal2-confirm {
-  height: 45px !important;
-  width: 130px !important;
+  height: 40px !important;
+  width: 110px !important;
   background-color: var(--azulOscuro) !important;
   color: #fff !important;
   border: 2px solid var(--azulOscuro) !important;
   border-radius: 7px !important;
-  font-weight: 600 !important;
-  font-size: 20px !important;
+  border: 2px solid var(--azulOscuro) !important;
+  font-size: 16px !important;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, .57) !important;
   cursor: pointer !important;
   text-decoration: none !important;
@@ -210,19 +210,17 @@
   background-color: #fff !important;
   color: #3449a0 !important;
   border-color: #3449a0 !important;
-  font-weight: 600 !important;
 }
 
 /* Botón cancelar */
 .swal2-cancel {
-  height: 45px !important;
-  width: 130px !important;
+  height: 40px !important;
+  width: 110px !important;
   background-color: #ccc !important; /* O color neutro que prefieras */
   color: #333 !important;
   border-radius: 7px !important;
-  font-weight: 600 !important;
-  font-size: 20px !important;
   border: 2px solid #999 !important;
+  font-size: 16px !important;
   cursor: pointer !important;
   margin: 0 5px !important;
   padding: 0 !important;
@@ -230,8 +228,8 @@
 }
 
 .swal2-cancel:hover {
-  background-color: #999 !important;
+  background-color: #333 !important;
   color: #fff !important;
-  border-color: #666 !important;
+  border-color: #333 !important;
 }
 

@@ -42,7 +42,13 @@ const schemaUsuario_mep = new mongoose.Schema({
     estado: [
         {
             type: Schema.Types.ObjectId,
-            ref:"Estado"
+            ref:"Estados"
+        }
+    ],
+    hijo: [
+        {
+            type: Schema.Types.ObjectId,
+            ref:"Hijos"
         }
     ]
 });

@@ -132,6 +132,26 @@ body{
     font-weight: 600;
 }
 
+.btnEliminarUsuario{
+    border: none;
+    color: #ffffff;
+    background-color: #af2626;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 80px;
+    height: 30px;
+    border: 2px solid #af2626;
+}
+
+.btnEliminarUsuario:hover{
+    background-color: #fff;
+    color: #af2626;
+    border: 2px solid #af2626;
+    font-weight: 600;
+}
+
 #columna-4{
   display: flex;
   flex-direction: column;
@@ -185,6 +205,50 @@ body{
     color: #3449a0;
     border: 2px solid #3449a0;
 }
+
+.formularioInformacionPeronal{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 10px 0 0 60px;
+  
+}
+
+.formularioInformacionPeronal form{
+  width: 800px;
+  margin-top: 10px
+}
+
+.btnFormularioInformacionPersonal{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 10px;
+}
+
+.btnFormularioInformacionPersonal button{
+  background-color: var(--azulOscuro);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, .57);
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  border: 2px solid var(--azulOscuro);
+}
+
+.btnFormularioInformacionPersonal button:hover{
+  background-color: #fff;
+  color: #3449a0;
+  border: 2px solid #3449a0;
+}
+
+
+
 
 
 
