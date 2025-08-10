@@ -374,6 +374,40 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const usuarioId = localStorage.getItem('usuarioId');
 
+  fetch(`http://localhost:3000/usuario_mep/informacionUsuario/${usuarioId}`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data.usuario) {
+        console.error("No se encontró usuario con ese id");
+        return;
+      }
 
+      const usuario = data.usuario;
 
+      const contenedorNombre = document.getElementById('cargarNombreUsuario');
+      const contenedorInfo = document.getElementById('infoUsuario');
+
+      if (contenedorNombre)
+        contenedorNombre.innerHTML = `<h1>${usuario.nombre} ${usuario.apellidos}</h1>`;
+        contenedorNombre.innerHTML +=`<h2>Administrador</h2>`;
+
+      if (contenedorInfo) {
+        contenedorInfo.innerHTML = `
+          Nombre: ${usuario.nombre}<br><hr>
+          Apellidos: ${usuario.apellidos}<br><hr>
+          Correo: ${usuario.correo}<br><hr>
+          Usuario: ${usuario.usuario}<br><hr>
+          Rol: ${usuario.rol}<br><hr>
+          ${Array.isArray(usuario.grado) ? 'Grado: ' + usuario.grado.map(g => g.nombre || g).join(', ') + '<br><hr>' : ''}
+          ${Array.isArray(usuario.estado) ? 'Estado: ' + usuario.estado.map(e => e.nombre || e).join(', ') + '<br><hr>' : ''}
+        `;
+      }
+    })
+    .catch(error => {
+      console.error('Error al obtener info usuario:', error);
+      // Puedes agregar acción adicional, como logout o alerta
+    });
+});

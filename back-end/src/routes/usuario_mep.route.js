@@ -49,7 +49,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.get("/informacionUsuario/:id", async (req, res) => {
   const id = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -57,44 +57,40 @@ router.delete("/:id", async (req, res) => {
   }
 
   try {
-    const resultado = await Usuario_mep.deleteOne({ _id: id });
+    const usuario = await Usuario_mep.findById(id)
+      .populate('grado')
+      .populate('estado');
 
-    if (resultado.deletedCount === 0) {
-      return res.status(404).json({ msj: "No se encontró usuario con el ID proporcionado" });
+    if (!usuario) {
+      return res.status(404).json({ msj: "Usuario no encontrado" });
     }
 
-    res.json({ msj: "Usuario eliminado correctamente", id: id, registrosEliminados: resultado.deletedCount });
+    res.json({ usuario });
   } catch (error) {
-    res.status(500).json({ msj: "Error en el servidor al eliminar usuario", error: error.message });
+    res.status(500).json({ msj: "Error en el servidor", error: error.message });
   }
 });
 
-// Ruta POST para iniciar sesión
 router.post("/iniciar", async (req, res) => {
   const { usuario, contrasenia } = req.body;
 
-  // Validar que se envíen ambos campos
   if (!usuario || !contrasenia) {
     return res.status(400).json({ msj: "Usuario y contraseña son obligatorios" });
   }
 
   try {
-    // Buscar usuario por el nombre de usuario
-    const usuarioEncontrado = await Usuario_mep.findOne({ usuario: usuario });
+    // Buscar usuario y popular campo estado
+    const usuarioEncontrado = await Usuario_mep.findOne({ usuario: usuario }).populate('estado');
 
     if (!usuarioEncontrado) {
-      // Si no existe el usuario
       return res.status(401).json({ msj: "Usuario o contraseña incorrectos" });
     }
 
-    // Aquí asumo que la contraseña está guardada en texto plano (lo ideal es hashed)
-    // Comparar contraseñas (en caso de hash, usar bcrypt.compare)
     if (usuarioEncontrado.contrasenia !== contrasenia) {
       return res.status(401).json({ msj: "Usuario o contraseña incorrectos" });
     }
 
-    // Si el usuario y contraseña son correctos, devolver datos relevantes (sin enviar contraseña)
-    const { _id, nombre, apellidos, correo, rol } = usuarioEncontrado;
+    const { _id, nombre, apellidos, correo, rol, estado } = usuarioEncontrado;
 
     res.json({
       msj: "Inicio de sesión exitoso",
@@ -104,7 +100,8 @@ router.post("/iniciar", async (req, res) => {
         apellidos,
         correo,
         usuario,
-        rol
+        rol,
+        estado
       }
     });
 
@@ -112,6 +109,7 @@ router.post("/iniciar", async (req, res) => {
     res.status(500).json({ msj: "Error en el servidor", error: error.message });
   }
 });
+
 
 router.put("/:id", async (req, res) => {
   const id = req.params.id;

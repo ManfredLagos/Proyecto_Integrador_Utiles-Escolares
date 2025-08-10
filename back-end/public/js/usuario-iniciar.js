@@ -265,7 +265,9 @@ function validarCamposInicioSesion() {
   return !error;
 }
 
-// Función para iniciar sesión
+// ID del estado "inactivo"
+const ID_INACTIVO = "689642604dc2172ab1aeb776";
+
 function iniciarSesion() {
   if (!validarCamposInicioSesion()) {
     Swal.fire({
@@ -288,9 +290,9 @@ function iniciarSesion() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datosInicioSesion)
   })
-  .then(response => 
+  .then(response =>
     response.json().then(data => ({
-      status: response.status, 
+      status: response.status,
       body: data
     }))
   )
@@ -306,9 +308,12 @@ function iniciarSesion() {
       return;
     }
 
-    // Validar si el usuario tiene estado 'inactivo'
-    const estados = body.usuario.estado || [];
-    const tieneEstadoInactivo = estados.some(e => e.nombre?.toLowerCase() === 'Inactivo');
+    const estados = Array.isArray(body.usuario.estado) ? body.usuario.estado : [];
+
+    const tieneEstadoInactivo = estados.some(e =>
+      (e._id && e._id.toString() === ID_INACTIVO) ||
+      (e.nombre && e.nombre.toLowerCase() === 'inactivo')
+    );
 
     if (tieneEstadoInactivo) {
       Swal.fire({
@@ -318,11 +323,14 @@ function iniciarSesion() {
         showClass: { popup: 'animate__animated animate__shakeX' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' }
       });
-      return; // No continuar con redirección
+      return;
     }
 
-    // Si no está inactivo, redirigir según rol
-    switch(body.usuario.rol) {
+    // Guardar solo el ID del usuario en localStorage
+    localStorage.setItem('usuarioId', body.usuario.id);
+
+    // Redirigir según rol
+    switch (body.usuario.rol) {
       case 'administrador':
         window.location.href = '/administrador-dashboard';
         break;
@@ -349,7 +357,6 @@ function iniciarSesion() {
     });
   });
 }
-
 
 // Listener para el botón de iniciar sesión
 btnIniciar.addEventListener('click', (e) => {

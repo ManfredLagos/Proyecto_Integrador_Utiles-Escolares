@@ -35,7 +35,7 @@ router.get("/:id", async (req, res) => {
     return res.status(400).json({ msj: "ID inválido" });
   }
   try {
-    const util = await Utiles.findById(id);
+    const util = await Utiles.findById(id).populate('lista');
     if (!util) {
       return res.status(404).json({ msj: "Útil no encontrado" });
     }
