@@ -96,8 +96,3 @@
 .input-error{
     border: 2px solid #ff3636 !important;
 }
-
-.input-error::placeholder{
-  color: #ff3636 !important;
-  opacity: 1 !important;
-}

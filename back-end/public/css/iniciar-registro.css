@@ -67,11 +67,6 @@
     border: 2px solid #ff3636;
 }
 
-.input-error::placeholder{
-  color: #ff3636;
-  opacity: 1;
-}
-
 #btnRegistrarUsuario{
     height: 45px;
     width: 130px;
