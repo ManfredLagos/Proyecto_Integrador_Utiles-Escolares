@@ -23,7 +23,7 @@ async function cargarTablaGrados() {
       fila.innerHTML = `
         <td>${grado.nombre}</td>
         <td>${grado.descripcion}</td>
-        <td>${grado.grado}</td>
+        <td  class="text-center">${grado.grado}</td>
         <td class="text-center">
           <button class="btnEditarGrado btn btn-sm btn-primary" data-id="${grado._id}">Editar</button>
         </td>

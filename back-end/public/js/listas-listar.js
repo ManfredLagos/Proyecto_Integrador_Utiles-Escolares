@@ -11,7 +11,7 @@ async function cargarTablaListas() {
       }
     });
 
-    if (!response.ok) throw new Error('Error al cargar útiles');
+    if (!response.ok) throw new Error('Error al cargar lista');
 
     const listaUtiles = await response.json();
 
@@ -74,24 +74,12 @@ async function editarListaHandler(event) {
     const response = await fetch(`http://localhost:3000/lista-utiles/${id}`);
     if (!response.ok) throw new Error('Error al obtener datos de la lista');
 
-    const util = await response.json();
+    const lista = await response.json();
 
-    // Rellenar los campos del formulario con los datos del útil
-    document.getElementById("editarIdLista").value = util._id;
-    document.getElementById("editarNombreLista").value = util.nombre || '';
-    document.getElementById("editarDescripcionLista").value = util.descripcion || '';
-
-    // Asignar valores al select Lista
-    const selectUtiles = document.getElementById("editarUtilesLista");
-    if (lista.utiles && Array.isArray(lista.utiles)) {
-      const valoresUtiles = lista.utiles.map(g => g._id || g);
-      for (let option of selectUtiles .options) {
-        option.selected = valoresUtiles.includes(option.value);
-      }
-    } else {
-      // Limpiar selección
-      Array.from(selectUtiles.options).forEach(opt => opt.selected = false);
-    }
+    // Rellenar los campos del formulario con los datos de la lista
+    document.getElementById("editarIdLista").value = lista._id;
+    document.getElementById("editarNombreLista").value = lista.nombre || '';
+    document.getElementById("editarDescripcionLista").value = lista.descripcion || '';
 
     // Asignar valores al select Lista
     const selectGrados = document.getElementById("editarGradosLista");
@@ -157,7 +145,7 @@ async function actualizarUtil(modalInstance) {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'ID del útil no válido.',
+      text: 'ID de la lista no es válido.',
     });
     return;
   }
@@ -199,12 +187,12 @@ async function actualizarUtil(modalInstance) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({ msj: 'Error desconocido' }));
-      throw new Error(errorData.msj || "Error al actualizar útil");
+      throw new Error(errorData.msj || "Error al actualizar lista");
     }
 
     Swal.fire({
       icon: "success",
-      title: "Útil actualizado",
+      title: "Lista actualizado",
       timer: 1500,
       showConfirmButton: false,
       showClass: { popup: 'animate__animated animate__fadeInDown' },
@@ -226,7 +214,7 @@ async function actualizarUtil(modalInstance) {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: error.message || "Error al actualizar útil",
+      text: error.message || "Error al actualizar lista",
       showClass: { popup: 'animate__animated animate__shakeX' },
       hideClass: { popup: 'animate__animated animate__fadeOutUp' }
     });
@@ -236,56 +224,53 @@ async function actualizarUtil(modalInstance) {
 // Cargar tabla cuando cargue el script
 cargarTablaListas();
 
-const listaListas = document.querySelectorAll(".editarListaUtil");
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("http://localhost:3000/lista-utiles", {
+    const response = await fetch("http://localhost:3000/grado", {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     });
 
     const data = await response.json();
 
-    const listaListas = document.querySelectorAll(".editarListaUtil");
+    const listaGrados = document.querySelectorAll(".editarListaGrado");
 
-    listaListas.forEach(select => {
+    listaGrados.forEach(select => {
       select.innerHTML = ""; // Limpiar opciones
 
-      data.forEach(lista => {
+      data.forEach(grado => {
         const opcion = document.createElement("option");
-        opcion.value = lista._id;
-        // Cambia 'util' por la propiedad que corresponda en tu objeto
-        opcion.textContent = lista.util || lista.nombre || "Sin nombre";
+        opcion.value = grado._id;
+        opcion.textContent = grado.util || grado.nombre || "Sin nombre";
         select.appendChild(opcion);
       });
     });
 
   } catch (error) {
-    console.error("Error al cargar listas:", error);
+    console.error("Error al cargar lista grados:", error);
     // Aquí podrías mostrar alerta
   }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const crearUtil = document.getElementById("crearUtilForm");
+  const crearLista = document.getElementById("crearListaForm");
 
-  const inputNombreUtil = document.getElementById("nombreUtil");
-  const inputDescripcionUtil = document.getElementById("descripcionUtil");
-  const inputCantidadUtil = document.getElementById("cantidadUtil");
-  const selectListasUtil = document.getElementById("listaUtil");
+  const inputNombreLista = document.getElementById("nombreLista");
+  const inputDescripcionLista = document.getElementById("descripcionLista");
+  const selectListasGrado = document.getElementById("listaGrado");
+  const idUtilNA = "68869bc099469292bc674be0";
 
-  async function registrarUtil() {
+  async function registrarLista() {
     // Si el select permite múltiples selecciones
-    const listasSeleccionadas = selectListasUtil.multiple
-      ? Array.from(selectListasUtil.selectedOptions).map(option => option.value)
-      : [selectListasUtil.value.trim()];
+    const gradosSeleccionados = selectListasGrado.multiple
+      ? Array.from(selectListasGrado.selectedOptions).map(option => option.value)
+      : [selectListasGrado.value.trim()];
 
-    const datosRegistroUtil = {
-      nombre: inputNombreUtil.value.trim(),
-      descripcion: inputDescripcionUtil.value.trim(),
-      cantidad: inputCantidadUtil.value.trim(),
-      lista: listasSeleccionadas
+    const datosRegistroLista = {
+      nombre: inputNombreLista.value.trim(),
+      descripcion: inputDescripcionLista.value.trim(),
+      grado: gradosSeleccionados,
+      utiles: [idUtilNA]
     };
 
     try {
@@ -294,14 +279,14 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(datosRegistroUtil)
+        body: JSON.stringify(datosRegistroLista)
       });
 
       if (!response.ok) {
         if (response.status === 400) {
           Swal.fire({
             icon: "error",
-            title: "Útil duplicado",
+            title: "Lista duplicada",
             text: "El correo o nombre de usuario ya existe en la base de datos.",
             showClass: { popup: "animate__animated animate__shakeX" },
             hideClass: { popup: "animate__animated animate__fadeOutUp" }
@@ -331,20 +316,19 @@ document.addEventListener("DOMContentLoaded", () => {
       cargarTablaListas();
 
       // Limpiar campos y errores
-      inputNombreUtil.value = "";
-      inputDescripcionUtil.value = "";
-      inputCantidadUtil.value = "";
-      selectListasUtil.value = "";
+      inputNombreLista.value = "";
+      inputDescripcionLista.value = "";
+      selectListasGrado.value = "";
 
-      inputNombreUtil.classList.remove("is-invalid");
-      inputDescripcionUtil.classList.remove("is-invalid");
-      inputCantidadUtil.classList.remove("is-invalid");
-      selectListasUtil.classList.remove("is-invalid");
+      inputNombreLista.classList.remove("is-invalid");
+      inputDescripcionLista.classList.remove("is-invalid");
+      selectListasGrado.classList.remove("is-invalid");
+
 
       // Cerrar modal correctamente
-      const crearUtilModal = document.getElementById("crearUtilModal");
+      const crearListaModal = document.getElementById("crearListaModal");
       const modalInstance =
-        bootstrap.Modal.getInstance(crearUtilModal) || new bootstrap.Modal(crearUtilModal);
+        bootstrap.Modal.getInstance(crearListaModal) || new bootstrap.Modal(crearListaModal);
       modalInstance.hide();
     } catch (error) {
       console.error(error);
@@ -358,11 +342,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  if (crearUtil) {
-    crearUtil.addEventListener("submit", (e) => {
+  if (crearLista) {
+    crearLista.addEventListener("submit", (e) => {
       e.preventDefault();
       if (typeof validar === "function" ? validar() : true) {
-        registrarUtil();
+        registrarLista();
       }
     });
   }
@@ -371,8 +355,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // Función para asignar evento eliminar a botones de la tabla
-function eliminarUtil() {
-  document.querySelectorAll(".btnEliminarUtil").forEach(btn => {
+function eliminarLista() {
+  document.querySelectorAll(".btnEliminarLista").forEach(btn => {
     btn.addEventListener("click", async function() {
       const id = this.dataset.id;
       if (!id) {
@@ -387,7 +371,7 @@ function eliminarUtil() {
       }
 
       const result = await Swal.fire({
-        title: '¿Seguro que deseas eliminar este útil?',
+        title: '¿Seguro que deseas eliminar esta lista?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
@@ -415,7 +399,7 @@ function eliminarUtil() {
 
           Swal.fire({
             icon: 'success',
-            title: 'Útil eliminado',
+            title: 'Lista eliminada',
             showConfirmButton: false,
             timer: 1500,
             showClass: { popup: 'animate__animated animate__fadeInDown' },
