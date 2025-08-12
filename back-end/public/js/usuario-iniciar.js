@@ -108,7 +108,7 @@ function validar() {
       Swal.fire({
         icon: "error",
         title: "Dominio inválido",
-        text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
+        text: "Para el rol de docente, el correo debe ser institucional (@mep.go.cr).",
         showClass: { popup: 'animate__animated animate__shakeX' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' }
       });
@@ -319,7 +319,7 @@ function iniciarSesion() {
       Swal.fire({
         icon: 'error',
         title: 'Cuenta Inactiva',
-        html: 'Su cuenta está inactiva. Por favor, comuníquese al correo <a href="mailto:soporte@ministeriodesalud.ac.cr">soporte@ministeriodesalud.ac.cr</a> para asistencia.',
+        html: 'Su cuenta está inactiva. Por favor, comuníquese al correo <a href="/contacto">soporte@mep.go.cr</a> para asistencia.',
         showClass: { popup: 'animate__animated animate__shakeX' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' }
       });
