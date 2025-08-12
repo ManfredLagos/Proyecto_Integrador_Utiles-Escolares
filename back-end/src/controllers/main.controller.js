@@ -64,8 +64,8 @@ const padreDashboard = (req, res) => {
   res.sendFile(path.join(__dirname, "../../private/padre-dashboard-inicio.html"));
 };
 
-const padreDashboardUsuarios = (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../../private/padre-dashboard-usuario.html"));
+const padreDashboardHijos = (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../private/padre-dashboard-hijos.html"));
 };
 
 const padreDashboardGrados = (req, res) => {
@@ -105,7 +105,7 @@ module.exports = {
     docenteDashboardReportes,
     docenteDashboardConfiguracion,
     padreDashboard,
-    padreDashboardUsuarios,
+    padreDashboardHijos,
     padreDashboardGrados,
     padreDashboardUtiles,
     padreDashboardListas,

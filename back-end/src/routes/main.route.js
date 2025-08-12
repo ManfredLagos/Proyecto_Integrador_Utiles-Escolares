@@ -19,7 +19,7 @@ router.get("/docente-dashboard-listas", controller.docenteDashboardListas);
 router.get("/docente-dashboard-reportes", controller.docenteDashboardReportes);
 router.get("/docente-dashboard-configuracion", controller.docenteDashboardConfiguracion);
 router.get("/padre-dashboard", controller.padreDashboard);
-router.get("/padre-dashboard-usuarios", controller.padreDashboardUsuarios);
+router.get("/padre-dashboard-hijos", controller.padreDashboardHijos);
 router.get("/padre-dashboard-grados", controller.padreDashboardGrados);
 router.get("/padre-dashboard-utiles", controller.padreDashboardUtiles);
 router.get("/padre-dashboard-listas", controller.padreDashboardListas);
