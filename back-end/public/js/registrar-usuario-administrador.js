@@ -341,7 +341,7 @@ mostrarEstados();
 
 document.addEventListener("DOMContentLoaded", () => {
   const btnOpciones = document.getElementById("opcionesConfiguracion");
-  const listaConfiguracion = document.querySelector(".listaConfiguración");
+  const listaConfiguracion = document.querySelector(".listaConfiguracion");
 
   // Inicialmente oculta con CSS o JS
   listaConfiguracion.style.visibility = "hidden";

@@ -79,10 +79,53 @@ router.get("/informacionUsuario/:id", async (req, res) => {
   try {
     const usuario = await Usuario_mep.findById(id)
       .populate('grado')
-      .populate('estado');
-
+      .populate('estado')
+      .populate('hijo');
     if (!usuario) {
       return res.status(404).json({ msj: "Usuario no encontrado" });
+    }
+
+    res.json({ usuario });
+  } catch (error) {
+    res.status(500).json({ msj: "Error en el servidor", error: error.message });
+  }
+});
+
+router.get("/informacionPadre/:id", async (req, res) => {
+  const id = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ msj: "ID inválido" });
+  }
+
+  try {
+    const usuario = await Usuario_mep.findById(id)
+      .populate('hijo')
+
+    if (!usuario) {
+      return res.status(404).json({ msj: "Padre no encontrado" });
+    }
+
+    res.json({ usuario });
+  } catch (error) {
+    res.status(500).json({ msj: "Error en el servidor", error: error.message });
+  }
+});
+
+router.get("/informacionDocente/:id", async (req, res) => {
+  const id = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ msj: "ID inválido" });
+  }
+
+  try {
+    const usuario = await Usuario_mep.findById(id)
+      .populate('grado')
+      .populate('listas');
+
+    if (!usuario) {
+      return res.status(404).json({ msj: "Docente no encontrado" });
     }
 
     res.json({ usuario });

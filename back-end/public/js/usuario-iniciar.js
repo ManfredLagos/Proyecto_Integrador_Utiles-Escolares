@@ -13,7 +13,7 @@ const selectRol = document.getElementById("rol");
 const btnGuardar = document.getElementById("btnRegistrarUsuario");
 const idGradoNA = "6886a19bddfc296d582e321a";
 const idEstadoNA = "689642464dc2172ab1aeb774";
-const idHijoNA = "68979d557482715e059fb4f7";
+const idHijoNA = "68979d2c7482715e059fb4f5";
 
 // Inputs requeridos dentro del formulario de registro para validar
 const inputsRequeridos = document.querySelectorAll('input[required], select[required]');
