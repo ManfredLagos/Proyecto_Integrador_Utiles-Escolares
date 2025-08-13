@@ -13,6 +13,11 @@ const schemaLista_utiles = new mongoose.Schema({
         required: true,
         unique: false
     },
+    idDocente: {
+        type:String,
+        required: true,
+        unique: false
+    },
     utiles: [
         {
             type: Schema.Types.ObjectId,
@@ -25,6 +30,7 @@ const schemaLista_utiles = new mongoose.Schema({
             ref:"Grado"
         }
     ]
+    
 });
 
 const Lista_utiles = mongoose.model("Lista_utiles", schemaLista_utiles);

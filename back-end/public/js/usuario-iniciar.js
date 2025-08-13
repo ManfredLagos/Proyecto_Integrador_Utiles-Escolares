@@ -74,7 +74,7 @@ function esCorreoValido(correo) {
 function esDominioValidoParaDocente(correo) {
   const partes = correo.split("@");
   if (partes.length !== 2) return false;
-  return partes[1].toLowerCase() === "ucenfotec.ac.cr";
+  return partes[1].toLowerCase() === "mep.go.cr";
 }
 
 function validar() {
@@ -326,18 +326,21 @@ function iniciarSesion() {
       return;
     }
 
-    // Guardar solo el ID del usuario en localStorage
-    localStorage.setItem('usuarioId', body.usuario.id);
-
     // Redirigir según rol
     switch (body.usuario.rol) {
       case 'administrador':
+        // Guardar solo el ID del usuario en localStorage
+        localStorage.setItem('usuarioId', body.usuario.id);
         window.location.href = '/administrador-dashboard';
         break;
       case 'docente':
+        // Guardar solo el ID del usuario en localStorage
+        localStorage.setItem('docenteId', body.usuario.id);
         window.location.href = '/docente-dashboard';
         break;
       case 'padre':
+        // Guardar solo el ID del usuario en localStorage
+        localStorage.setItem('padreId', body.usuario.id);
         window.location.href = '/padre-dashboard';
         break;
       default:

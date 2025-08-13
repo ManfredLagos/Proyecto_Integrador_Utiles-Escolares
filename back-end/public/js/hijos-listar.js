@@ -29,10 +29,10 @@ async function cargarTablaHijos() {
         <td>${hijo.apellidos}</td>
         <td  class="text-center">${infoGradoHijo}</td>
         <td class="text-center">
-          <button class="btnEditarHijo btn btn-sm btn-primary" data-id="${hijo._id}">Editar</button>
+          <button class="btnEditar btnEditarHijo btn btn-sm btn-primary" data-id="${hijo._id}">Editar</button>
         </td>
         <td class="text-center">
-          <button class="btnEliminarHijo btn btn-sm btn-danger" data-id="${hijo._id}">Eliminar</button>
+          <button class="btnEliminarUsuario btnEliminarHijo btn btn-sm btn-danger" data-id="${hijo._id}">Eliminar</button>
         </td>
       `;
 

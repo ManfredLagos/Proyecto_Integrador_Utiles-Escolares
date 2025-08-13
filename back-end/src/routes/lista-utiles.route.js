@@ -4,12 +4,12 @@ const router = express.Router();
 const Lista_util = require("../models/lista-utiles.model");
 
 router.post("/", async(req, res) => {
-    const{nombre, descripcion, utiles, grado} = req.body;
-    if (!nombre || !descripcion){
+    const{nombre, descripcion, idDocente, utiles, grado} = req.body;
+    if (!nombre || !descripcion || !idDocente){
         return res.status(400).json({msj: "Todos los campos son obligatorios"});
     }
     try{
-        const nuevoLista = new Lista_util({nombre, descripcion, utiles, grado});
+        const nuevoLista = new Lista_util({nombre, descripcion, idDocente, utiles, grado});
         await nuevoLista.save()
         res.status(201).json(nuevoLista);
     } catch(error){
@@ -46,6 +46,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//Ruta para visualizar útiles por ID
+
+router.get("/docente/:idDocente", async (req, res) => {
+  const idDocente = req.params.idDocente;
+  if (!mongoose.Types.ObjectId.isValid(idDocente)) {
+    return res.status(400).json({ msj: "ID inválido" });
+  }
+  try {
+    // Buscar todas las listas donde el campo 'docente' sea igual a idDocente
+    const listas_utiles = await Lista_util.find({ idDocente: idDocente }).populate("utiles grado");
+    
+    if (!listas_utiles || listas_utiles.length === 0) {
+      return res.status(404).json({ msj: "No se encontraron listas para este docente" });
+    }
+    res.json(listas_utiles);
+  } catch (error) {
+    res.status(500).json({ msj: error.message });
+  }
+});
+
+
 //Ruta para eliminar útiles por ID
 
 router.delete("/:id", async (req, res) => {
@@ -81,7 +102,7 @@ router.put("/:id", async (req, res) => {
   try {
     const listaActualizada = await Lista_util.findByIdAndUpdate(
       id,
-      { nombre, descripcion, utiles, grado },
+      { nombre, descripcion, idDocente, utiles, grado },
       { new: true, runValidators: true }
     );
 

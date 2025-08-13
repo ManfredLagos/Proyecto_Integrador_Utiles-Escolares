@@ -13,6 +13,11 @@ const schemaHijos = new mongoose.Schema({
         required: true,
         unique: false
     },
+    idPadre: {
+        type:String,
+        requered: true,
+        unique: false
+    },
     grado: [
         {
             type: Schema.Types.ObjectId,

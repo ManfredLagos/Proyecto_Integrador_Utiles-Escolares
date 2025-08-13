@@ -128,6 +128,26 @@ body{
     font-weight: 600;
 }
 
+.btnGuardar{
+    border: none;
+    color: #ffffff;
+    background-color: #1E2957;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 160px;
+    height: 38px;
+    border: 2px solid var(--azulOscuro);
+}
+
+.btnGuardar:hover{
+    background-color: #fff;
+    color: #3449a0;
+    border: 2px solid #3449a0;
+    font-weight: 500;
+}
+
 .btnEliminarUsuario{
     border: none;
     color: #ffffff;
@@ -319,6 +339,14 @@ body{
 }
 
 #cargarNombrePadre h2{
+  font-size: 16px;
+}
+
+#cargarNombreDocente{
+  margin-bottom: 15px;
+}
+
+#cargarNombreDocente h2{
   font-size: 16px;
 }
 

@@ -20,27 +20,26 @@
                 </div>
                 <div class="row" id="menuLateral">
                     <div class="menu-item">
-                        <div class="icon-col"><img src="images/hogar.png" alt="Casa"></div>
+                        <div class="icon-col"><img src="images/hogar.png" alt="imgCasa"></div>
                         <div class="text-col"><a href="/administrador-dashboard">Inicio</a></div>
                     </div>
                     <div class="menu-item">
-                        <div class="icon-col"><img src="images/anadir-grupo.png" alt="Usuario"></div>
+                        <div class="icon-col"><img src="images/anadir-grupo.png" alt="imgUsuario"></div>
                         <div class="text-col"><a href="/administrador-dashboard-usuarios">Usuarios</a></div>
                     </div>
                     <div class="menu-item" style="background-color: #d1d1d1;">
-                        <div class="icon-col"><img src="images/conocimiento.png" alt="Grado"></div>
+                        <div class="icon-col"><img src="images/conocimiento.png" alt="imgGrado"></div>
                         <div class="text-col"><a href="/administrador-dashboard-grados">Grados</a></div>
                     </div>
                     <div class="menu-item" id="menuLateralUtiles">
-                        <div class="icon-col"><img src="images/utiles-escolares (1).png" alt="Útiles"></div>
+                        <div class="icon-col"><img src="images/utiles-escolares (1).png" alt="imgÚtiles"></div>
                         <div class="text-col"><a href="/administrador-dashboard-utiles">Útiles</a></div>
                     </div>
                     <div class="menu-item">
-                        <div class="icon-col"><img src="images/configuraciones.png" alt="Listas"></div>
+                        <div class="icon-col"><img src="images/configuraciones.png" alt="imgConfiguración"></div>
                         <div class="text-col" id="opcionesConfiguracion"><a href="#">Configuración</a></div>
                     </div>
                     <ul class="listaConfiguracion">
-                        <li><a href="/administrador-dashboard-configuracion">Editar información</a></li>
                         <li><a href="/iniciar">Cerrar Sesión</a></li>
                     </ul>
                 </div>
@@ -54,7 +53,7 @@
                     <h2>Lista de grados</h1>
                 </div>
                 <div class="col-4" id="columna-4">
-                    <button id="crearGrado" data-bs-toggle="modal" data-bs-target="#crearGradoModal">Crear Nuevo Grado</button>
+                    <button class="crearUsuario" id="crearGrado" data-bs-toggle="modal" data-bs-target="#crearGradoModal">Crear Nuevo Grado</button>
                 </div>
             </div>
             <div class="row" style="padding: 20px;">
@@ -136,7 +135,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" form="editarGradoForm" class="btn btn-primary" id="btnGuardarEdicionGrado">Guardar Cambios</button>
+                <button type="submit" form="editarGradoForm" class="btnGuardar btn btn-primary" id="btnGuardarEdicionGrado">Guardar Cambios</button>
             </div>
         </div>
     </div>

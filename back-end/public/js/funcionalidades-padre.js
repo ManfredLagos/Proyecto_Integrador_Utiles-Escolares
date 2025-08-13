@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const usuarioId = localStorage.getItem('usuarioId');
+  const usuarioId = localStorage.getItem('padreId');
 
   fetch(`http://localhost:3000/usuario_mep/informacionPadre/${usuarioId}`)
     .then(res => res.json())

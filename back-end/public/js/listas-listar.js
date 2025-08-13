@@ -3,43 +3,50 @@ const tablaListasBody = document.querySelector("#tablaListas tbody");
 // const tablaListasBody = document.getElementById("tablaListas");
 
 async function cargarTablaListas() {
+
+  const usuarioId = localStorage.getItem('docenteId');
+
+  console.log(usuarioId);
+
   try {
-    const response = await fetch("http://localhost:3000/lista-utiles", {
+    const response = await fetch(`http://localhost:3000/lista-utiles/docente/${usuarioId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     });
 
-    if (!response.ok) throw new Error('Error al cargar lista');
+    if (!response.ok) throw new Error('Error al cargar Encontar usuario');
 
-    const listaUtiles = await response.json();
+    const usuarioLista = await response.json();
+
+    console.log(usuarioLista);
 
     // Limpiar tabla antes de cargar
     tablaListasBody.innerHTML = "";
 
-    listaUtiles.forEach(lista => {
+    usuarioLista.forEach(lista => {
 
-      const infoUtil = Array.isArray(lista.utiles)
-        ? lista.utiles.map(g => g.nombre).join(", ")
-        : "";
+      const gradoLista = Array.isArray(lista.grado)
+      ? lista.grado.map(g => g.nombre).join(", ")
+      : "";
 
-      const infoGrado = Array.isArray(lista.grado)
-            ? lista.grado.map(g => g.nombre).join(", ")
-            : "";
+      const utilLista = Array.isArray(lista.utiles)
+      ? lista.utiles.map(g => g.nombre).join(", ")
+      : "";
 
       const fila = document.createElement("tr");
 
       fila.innerHTML = `
         <td>${lista.nombre}</td>
         <td>${lista.descripcion}</td>
-        <td class="text-center">${infoUtil}</td>
-        <td class="text-center">${infoGrado}</td>
+        <td class="text-center">${gradoLista}</td>
+        <td class="text-center">${utilLista}</td>
         <td class="text-center">
-          <button class="btnEditarLista btn btn-sm btn-primary" data-id="${lista._id}">Editar</button>
+          <button class="btnEditar btnEditarLista btn btn-sm btn-primary" data-id="${lista._id}">Editar</button>
         </td>
         <td class="text-center">
-          <button class="btnEliminarLista btn btn-sm btn-danger" data-id="${lista._id}">Eliminar</button>
+          <button class="btnEliminarUsuario btnEliminarLista btn btn-sm btn-danger" data-id="${lista._id}">Eliminar</button>
         </td>
       `;
 
@@ -259,6 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputDescripcionLista = document.getElementById("descripcionLista");
   const selectListasGrado = document.getElementById("listaGrado");
   const idUtilNA = "68869bc099469292bc674be0";
+  const idDocente = usuarioId;
 
   async function registrarLista() {
     // Si el select permite múltiples selecciones
@@ -270,7 +278,8 @@ document.addEventListener("DOMContentLoaded", () => {
       nombre: inputNombreLista.value.trim(),
       descripcion: inputDescripcionLista.value.trim(),
       grado: gradosSeleccionados,
-      utiles: [idUtilNA]
+      utiles: [idUtilNA],
+      idDocente: idDocente
     };
 
     try {
@@ -302,6 +311,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return;
       }
+
+      //Asociar lista a usuario
 
       Swal.fire({
         position: "center",
@@ -422,3 +433,55 @@ function eliminarLista() {
     });
   });
 }
+
+
+
+
+async function mostrarUtilesCheckbox() {
+  try {
+    const response = await fetch("http://localhost:3000/utiles", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) throw new Error('Error al obtener los útiles');
+
+    const utiles = await response.json();
+
+    // Contenedor donde se agregarán los checkboxes
+    const contenedorUtiles = document.getElementById("contenedorUtiles");
+    contenedorUtiles.innerHTML = ""; // limpiar contenido previo
+
+    utiles.forEach(util => {
+      // Crear checkbox
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = "util_" + util._id;
+      checkbox.value = util._id;
+      checkbox.name = "utilesSeleccionados"; // Si quieres agruparlos
+
+      // Crear etiqueta label
+      const label = document.createElement("label");
+      label.htmlFor = checkbox.id;
+      label.textContent = util.nombre;
+
+      // Crear contenedor para checkbox + label
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("form-check"); // si usas Bootstrap
+
+      checkbox.classList.add("form-check-input");
+      label.classList.add("form-check-label");
+
+      wrapper.appendChild(checkbox);
+      wrapper.appendChild(label);
+
+      contenedorUtiles.appendChild(wrapper);
+    });
+  } catch (error) {
+    console.error("Error al cargar útiles:", error);
+  }
+}
+
+mostrarUtilesCheckbox();

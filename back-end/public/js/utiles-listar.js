@@ -32,10 +32,10 @@ async function cargarTablaUtiles() {
         <td>${util.cantidad}</td>
         <td class="text-center">${infoUtil}</td>
         <td class="text-center">
-          <button class="btnEditarUtil btn btn-sm btn-primary" data-id="${util._id}">Editar</button>
+          <button class="btnEditar btnEditarUtil btn btn-sm btn-primary" data-id="${util._id}">Editar</button>
         </td>
         <td class="text-center">
-          <button class="btnEliminarUtil btn btn-sm btn-danger" data-id="${util._id}">Eliminar</button>
+          <button class="btnEliminarUsuario btnEliminarUtil btn btn-sm btn-danger" data-id="${util._id}">Eliminar</button>
         </td>
       `;
 

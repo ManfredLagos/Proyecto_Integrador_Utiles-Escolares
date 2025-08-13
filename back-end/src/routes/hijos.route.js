@@ -4,12 +4,12 @@ const router = express.Router();
 const Hijos = require("../models/hijos.model");
 
 router.post("/", async(req, res) => {
-    const{nombre, apellidos, grado} = req.body;
+    const{nombre, apellidos, idPadre, grado} = req.body;
     if (!nombre || !apellidos){
         return res.status(400).json({msj: "Todos los campos son obligatorios"});
     }
     try{
-        const nuevoHijo = new Hijos({nombre, apellidos, grado});
+        const nuevoHijo = new Hijos({nombre, apellidos, idPadre, grado});
         await nuevoHijo.save()
         res.status(201).json(nuevoHijo);
     } catch(error){
@@ -71,7 +71,7 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
-  const { nombre, apellidos, grado } = req.body;
+  const { nombre, apellidos, idPadre, grado } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ msj: "ID inválido" });
@@ -80,7 +80,7 @@ router.put("/:id", async (req, res) => {
   try {
     const hijoActualizado = await Hijos.findByIdAndUpdate(
       id,
-      { nombre, apellidos, grado },
+      { nombre, apellidos, idPadre, grado },
       { new: true, runValidators: true }
     );
 

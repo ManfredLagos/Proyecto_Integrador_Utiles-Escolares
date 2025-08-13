@@ -16,7 +16,7 @@
         <div class="col-2" id="columna-1">
             <div class="menuLateral">
                 <div class="row" id="nombreUsuario">
-                    <div id="cargarNombreUsuario"></div>
+                    <div id="cargarNombreDocente"></div>
                 </div>
                 <div class="row" id="menuLateral">
                     <div class="menu-item">
@@ -45,7 +45,7 @@
                     <h2>Listas de útiles escolares</h1>
                 </div>
                 <div class="col-4" id="columna-4">
-                    <a href="/administrador-dashboard-configuracion">Editar Información</a>
+                    <button id="crearLista" class="crearUsuario" data-bs-toggle="modal" data-bs-target="#listaModal">Crear Lista</button>
                 </div>
             </div>
             <div class="row" style="padding: 20px;">
@@ -66,6 +66,82 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="listaModal" tabindex="-1" aria-labelledby="ListaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">           
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ListaModalLabel">Registrar Lista</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>             
+                <div class="modal-body">
+                    <form id="crearListaForm" novalidate>
+                        <div class="mb-3">
+                            <label for="nombreLista" class="form-label">Nombre: </label>
+                            <input type="text" class="form-control" id="nombreLista" required>
+                            <div id="nombreListaError" class="invalid-feedback">Por favor ingrese el nombre de la lista.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcionLista" class="form-label">Descripción: </label>
+                            <input type="text" class="form-control" id="descripcionLista" required>
+                            <div id="descripcionListaError" class="invalid-feedback">Por favor ingrese la descripción.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cantidadLista" class="form-label">Utiles: </label>
+                            <div id="contenedorUtiles"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="crearGradoLista" class="form-label">Grado: </label>
+                            <select id="crearGradoLista" class="form-select editarGrado">
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="submit" form="crearListaForm" class="crearUsuario" id="btnCrearLista" class="btn btn-primary">Crear Útil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editarListaModal" tabindex="-1" aria-labelledby="editarListaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">        
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarListaLabel">Editar Útiles</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarListaForm">
+                        <input type="hidden" id="editarIdLista">
+                        <div class="mb-3">
+                            <label for="editarNombreLista" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editarNombreLista" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarDescripcionLista" class="form-label">Descripción</label>
+                            <input type="email" class="form-control" id="editarDescripcionLista" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarCantidadLista" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="editarCantidadlista" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarGradoLista" class="form-label">Grado:</label>
+                            <select id="editarGradoLista" class="form-select editarGrado">
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="editarUsuarioForm" class="btnGuardar btn btn-primary" id="btnGuardarEdicionLista">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
@@ -75,6 +151,7 @@
     <script src="/js/registrar-usuario-administrador.js"></script>
     <script src="js/usuario-inicias.js"></script>
     <script src="/js/funcionalidades-docente.js"></script>
+    <script src="/js/listas-listar.js"></script>
 
 </body>
 </html>

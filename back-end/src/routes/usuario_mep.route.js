@@ -78,6 +78,7 @@ router.get("/informacionUsuario/:id", async (req, res) => {
 
   try {
     const usuario = await Usuario_mep.findById(id)
+      .populate('lista')
       .populate('grado')
       .populate('estado')
       .populate('hijo');
@@ -122,7 +123,7 @@ router.get("/informacionDocente/:id", async (req, res) => {
   try {
     const usuario = await Usuario_mep.findById(id)
       .populate('grado')
-      .populate('listas');
+      .populate('lista');
 
     if (!usuario) {
       return res.status(404).json({ msj: "Docente no encontrado" });

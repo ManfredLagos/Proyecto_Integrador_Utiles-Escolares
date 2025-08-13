@@ -33,6 +33,12 @@ const schemaUsuario_mep = new mongoose.Schema({
         required:true,
         unique:false
     },
+    lista: [
+        {
+            type: Schema.Types.ObjectId,
+            ref:"Lista_utiles"
+        }
+    ],
     grado: [
         {
             type: Schema.Types.ObjectId,

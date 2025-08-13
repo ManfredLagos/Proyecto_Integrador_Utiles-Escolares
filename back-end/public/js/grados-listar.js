@@ -25,10 +25,10 @@ async function cargarTablaGrados() {
         <td>${grado.descripcion}</td>
         <td  class="text-center">${grado.grado}</td>
         <td class="text-center">
-          <button class="btnEditarGrado btn btn-sm btn-primary" data-id="${grado._id}">Editar</button>
+          <button class="btnEditar btnEditarGrado btn btn-sm btn-primary" data-id="${grado._id}">Editar</button>
         </td>
         <td class="text-center">
-          <button class="btnEliminarGrado btn btn-sm btn-danger" data-id="${grado._id}">Eliminar</button>
+          <button class="btnEliminarUsuario btnEliminarGrado btn btn-sm btn-danger" data-id="${grado._id}">Eliminar</button>
         </td>
       `;
 
