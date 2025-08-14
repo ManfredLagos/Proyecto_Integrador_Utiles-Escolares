@@ -36,7 +36,9 @@ router.get("/:id", async (req, res) => {
     return res.status(400).json({ msj: "ID inválido" });
   }
   try {
-    const lista_util = await Lista_util.findById(id);
+    const lista_util = await Lista_util.findById(id)
+    .populate('utiles')
+    .populate('grado');
     if (!lista_util) {
       return res.status(404).json({ msj: "Lista no encontrada" });
     }
@@ -93,7 +95,7 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
-  const { nombre, descripcion, utiles, grado } = req.body;
+  const { nombre, descripcion, idDocente, utiles, grado } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ msj: "ID inválido" });
@@ -106,8 +108,11 @@ router.put("/:id", async (req, res) => {
       { new: true, runValidators: true }
     );
 
+    console.log("Estos son los datos recibidos")
+    console.log(listaActualizada);
+
     if (!listaActualizada) {
-      return res.status(404).json({ msj: "Útil no encontrado" });
+      return res.status(404).json({ msj: "Lista no encontrada" });
     }
 
     res.json(listaActualizada);

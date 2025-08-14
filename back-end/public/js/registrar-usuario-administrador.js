@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function esDominioValidoParaDocente(correo) {
     const partes = correo.split("@");
     if (partes.length !== 2) return false;
-    return partes[1].toLowerCase() === "ucenfotec.ac.cr";
+    return partes[1].toLowerCase() === "mep.go.cr";
   }
 
   function validar() {
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         Swal.fire({
           icon: "error",
           title: "Dominio inválido",
-          text: "Para el rol de docente, el correo debe ser institucional (ucenfotec.ac.cr).",
+          text: "Para el rol de docente, el correo debe ser institucional (mep.go.cr).",
           showClass: { popup: 'animate__animated animate__shakeX' },
           hideClass: { popup: 'animate__animated animate__fadeOutUp' }
         });

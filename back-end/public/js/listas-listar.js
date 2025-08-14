@@ -6,8 +6,6 @@ async function cargarTablaListas() {
 
   const usuarioId = localStorage.getItem('docenteId');
 
-  console.log(usuarioId);
-
   try {
     const response = await fetch(`http://localhost:3000/lista-utiles/docente/${usuarioId}`, {
       method: "GET",
@@ -19,8 +17,6 @@ async function cargarTablaListas() {
     if (!response.ok) throw new Error('Error al cargar Encontar usuario');
 
     const usuarioLista = await response.json();
-
-    console.log(usuarioLista);
 
     // Limpiar tabla antes de cargar
     tablaListasBody.innerHTML = "";
@@ -40,8 +36,8 @@ async function cargarTablaListas() {
       fila.innerHTML = `
         <td>${lista.nombre}</td>
         <td>${lista.descripcion}</td>
-        <td class="text-center">${gradoLista}</td>
         <td class="text-center">${utilLista}</td>
+        <td class="text-center">${gradoLista}</td>
         <td class="text-center">
           <button class="btnEditar btnEditarLista btn btn-sm btn-primary" data-id="${lista._id}">Editar</button>
         </td>
@@ -89,15 +85,33 @@ async function editarListaHandler(event) {
     document.getElementById("editarDescripcionLista").value = lista.descripcion || '';
 
     // Asignar valores al select Lista
-    const selectGrados = document.getElementById("editarGradosLista");
+    const selectGrados = document.getElementById("editarGradoLista");
     if (lista.grado && Array.isArray(lista.grado)) {
-      const valoresGrados = grado.utiles.map(g => g._id || g);
+      const valoresGrados = lista.grado.map(g => g._id || g);
       for (let option of selectGrados .options) {
         option.selected = valoresGrados.includes(option.value);
       }
     } else {
       // Limpiar selección
       Array.from(selectGrados.options).forEach(opt => opt.selected = false);
+    }
+
+    const contenedorUtilesCheckbox = document.querySelectorAll(".contenedorUtiles");
+
+    if (lista.utiles && Array.isArray(lista.utiles)) {
+      const valoresUtiles = lista.utiles.map(u => u._id || u);
+
+      contenedorUtilesCheckbox.forEach(contenedor => {
+        const checkboxes = contenedor.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+          checkbox.checked = valoresUtiles.includes(checkbox.value);
+        });
+      });
+    } else {
+      contenedorUtilesCheckbox.forEach(contenedor => {
+        const checkboxes = contenedor.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+      });
     }
 
     // Mostrar el modal
@@ -128,68 +142,63 @@ async function editarListaHandler(event) {
   }
 }
 
+
 async function actualizarUtil(modalInstance) {
-  const id = document.getElementById("editarIdUtil").value;
-  const nombre = document.getElementById("editarNombreUtil").value.trim();
-  const descripcion = document.getElementById("editarDescripcionUtil").value.trim();
-  const cantidad = document.getElementById("editarCantidadUtil").value.trim();
+  const id = document.getElementById("editarIdLista").value;
+  const nombre = document.getElementById("editarNombreLista").value.trim();
+  const descripcion = document.getElementById("editarDescripcionLista").value.trim();
+  const gradoLista = document.getElementById("editarGradoLista");
+  const idDocente = localStorage.getItem('docenteId');
 
-  const selectLista = document.getElementById("editarListaUtil");
+  const gradosSeleccionadosLista = Array.from(gradoLista.selectedOptions).map(opt => opt.value);
 
-  if (!selectLista) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: 'No se encontró el campo Lista en el formulario.',
+  const contenedoresUtiles = document.querySelectorAll(".contenedorUtiles");
+  let utilesSeleccionados = [];
+
+  contenedoresUtiles.forEach(contenedor => {
+    const checkboxes = contenedor.querySelectorAll('input[type="checkbox"]:checked');
+    checkboxes.forEach(checkbox => {
+      if (!utilesSeleccionados.includes(checkbox.value)) {
+        utilesSeleccionados.push(checkbox.value);
+      }
     });
-    return;
-  }
+  });
 
-  const listasSeleccionadas = Array.from(selectLista.selectedOptions).map(option => option.value);
-
-  // Validaciones simples
   if (!id) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: 'ID de la lista no es válido.',
-    });
+    await Swal.fire({ icon: 'error', title: 'Error', text: 'ID de la lista no es válido.' });
     return;
   }
 
   if (!nombre) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Advertencia',
-      text: 'El nombre es obligatorio.',
-    });
+    await Swal.fire({ icon: 'warning', title: 'Advertencia', text: 'El nombre es obligatorio.' });
     return;
   }
 
-  const cantidadNum = Number(cantidad);
-  if (isNaN(cantidadNum) || cantidadNum < 0) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Cantidad inválida',
-      text: 'Por favor, ingrese una cantidad válida (número mayor o igual a 0).',
-    });
+  if (gradosSeleccionadosLista.length === 0) {
+    await Swal.fire({ icon: 'warning', title: 'Advertencia', text: 'Debe seleccionar al menos un grado.' });
     return;
   }
 
-  const datosActualizadosUtil = {
+  if (utilesSeleccionados.length === 0) {
+    await Swal.fire({ icon: 'warning', title: 'Advertencia', text: 'Debe seleccionar al menos un útil.' });
+    return;
+  }
+
+  const datosActualizadosLista = {
     nombre,
     descripcion,
-    cantidad: cantidadNum,
-    lista: listasSeleccionadas,
+    idDocente,
+    utiles: utilesSeleccionados,
+    grado: gradosSeleccionadosLista
   };
 
+console.log(datosActualizadosLista);
+
   try {
-    const response = await fetch(`http://localhost:3000/lista-utiles/${id}`, {
+    const response = await fetch(`http://localhost:3000/lista-utiles/${idDocente}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(datosActualizadosUtil)
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datosActualizadosLista)
     });
 
     if (!response.ok) {
@@ -197,28 +206,26 @@ async function actualizarUtil(modalInstance) {
       throw new Error(errorData.msj || "Error al actualizar lista");
     }
 
-    Swal.fire({
+    await Swal.fire({
       icon: "success",
-      title: "Lista actualizado",
+      title: "Lista actualizada",
       timer: 1500,
       showConfirmButton: false,
       showClass: { popup: 'animate__animated animate__fadeInDown' },
       hideClass: { popup: 'animate__animated animate__fadeOutUp' }
     });
 
-    // Cerrar modal si se pasó como parámetro, si no lo busca dinámicamente
     if (modalInstance) {
       modalInstance.hide();
     } else {
-      const modal = bootstrap.Modal.getInstance(document.getElementById("editarUtilModal"));
+      const modal = bootstrap.Modal.getInstance(document.getElementById("editarListaModal")); // verificar id aquí
       if (modal) modal.hide();
     }
 
-    // Recargar tabla para mostrar los cambios
     cargarTablaListas();
 
   } catch (error) {
-    Swal.fire({
+    await Swal.fire({
       icon: 'error',
       title: 'Error',
       text: error.message || "Error al actualizar lista",
@@ -227,6 +234,8 @@ async function actualizarUtil(modalInstance) {
     });
   }
 }
+
+
 
 // Cargar tabla cuando cargue el script
 cargarTablaListas();
@@ -264,9 +273,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const inputNombreLista = document.getElementById("nombreLista");
   const inputDescripcionLista = document.getElementById("descripcionLista");
-  const selectListasGrado = document.getElementById("listaGrado");
-  const idUtilNA = "68869bc099469292bc674be0";
-  const idDocente = usuarioId;
+  const idDocente = localStorage.getItem('docenteId');
+  const selectListasGrado = document.getElementById("crearGradoLista");
+
+  // Contenedor donde están los checkboxes de útiles
+  const contenedorUtiles = document.getElementById("contenedorUtiles");
 
   async function registrarLista() {
     // Si el select permite múltiples selecciones
@@ -274,12 +285,16 @@ document.addEventListener("DOMContentLoaded", () => {
       ? Array.from(selectListasGrado.selectedOptions).map(option => option.value)
       : [selectListasGrado.value.trim()];
 
+      // Obtiene los útiles seleccionados consultando los checkboxes marcados
+    const utilesSeleccionados = Array.from(contenedorUtiles.querySelectorAll('input[type="checkbox"]:checked'))
+      .map(checkbox => checkbox.value);
+
     const datosRegistroLista = {
       nombre: inputNombreLista.value.trim(),
       descripcion: inputDescripcionLista.value.trim(),
-      grado: gradosSeleccionados,
-      utiles: [idUtilNA],
-      idDocente: idDocente
+      idDocente: idDocente,
+      utiles: utilesSeleccionados,
+      grado: gradosSeleccionados
     };
 
     try {
@@ -330,6 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inputNombreLista.value = "";
       inputDescripcionLista.value = "";
       selectListasGrado.value = "";
+      selectListasGrado.value = "";
 
       inputNombreLista.classList.remove("is-invalid");
       inputDescripcionLista.classList.remove("is-invalid");
@@ -337,7 +353,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       // Cerrar modal correctamente
-      const crearListaModal = document.getElementById("crearListaModal");
+      const crearListaModal = document.getElementById("listaModal");
       const modalInstance =
         bootstrap.Modal.getInstance(crearListaModal) || new bootstrap.Modal(crearListaModal);
       modalInstance.hide();
@@ -374,7 +390,7 @@ function eliminarLista() {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'No se encontró el id del usuario para eliminar',
+          text: 'No se encontró el id de la lista a eliminar',
           showClass: { popup: 'animate__animated animate__shakeX' },
           hideClass: { popup: 'animate__animated animate__fadeOutUp' }
         });
@@ -401,7 +417,7 @@ function eliminarLista() {
             Swal.fire({
               icon: 'error',
               title: 'Error',
-              text: data.msj || 'Error al eliminar util',
+              text: data.msj || 'Error al eliminar lista',
               showClass: { popup: 'animate__animated animate__shakeX' },
               hideClass: { popup: 'animate__animated animate__fadeOutUp' }
             });
@@ -424,7 +440,7 @@ function eliminarLista() {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Error en el servidor al eliminar usuario',
+            text: 'Error en el servidor al eliminar lista',
             showClass: { popup: 'animate__animated animate__shakeX' },
             hideClass: { popup: 'animate__animated animate__fadeOutUp' }
           });
@@ -435,53 +451,52 @@ function eliminarLista() {
 }
 
 
-
-
 async function mostrarUtilesCheckbox() {
   try {
     const response = await fetch("http://localhost:3000/utiles", {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" }
     });
 
-    if (!response.ok) throw new Error('Error al obtener los útiles');
+    if (!response.ok) throw new Error("Error al obtener los útiles");
 
     const utiles = await response.json();
 
-    // Contenedor donde se agregarán los checkboxes
-    const contenedorUtiles = document.getElementById("contenedorUtiles");
-    contenedorUtiles.innerHTML = ""; // limpiar contenido previo
+    // Obtener todos los contenedores con la clase .contenedorUtiles
+    const contenedoresUtiles = document.querySelectorAll(".contenedorUtiles");
 
-    utiles.forEach(util => {
-      // Crear checkbox
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.id = "util_" + util._id;
-      checkbox.value = util._id;
-      checkbox.name = "utilesSeleccionados"; // Si quieres agruparlos
+    // Recorrer cada contenedor para llenarlo con los checkboxes
+    contenedoresUtiles.forEach(contenedor => {
+      contenedor.innerHTML = "";  // Limpiar contenido anterior
 
-      // Crear etiqueta label
-      const label = document.createElement("label");
-      label.htmlFor = checkbox.id;
-      label.textContent = util.nombre;
+      utiles.forEach(util => {
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = "util_" + util._id;
+        checkbox.value = util._id;
+        checkbox.name = "utilesSeleccionados"; // Si quieres que se agrupen
 
-      // Crear contenedor para checkbox + label
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("form-check"); // si usas Bootstrap
+        const label = document.createElement("label");
+        label.htmlFor = checkbox.id;
+        label.textContent = util.nombre;
 
-      checkbox.classList.add("form-check-input");
-      label.classList.add("form-check-label");
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("form-check");
 
-      wrapper.appendChild(checkbox);
-      wrapper.appendChild(label);
+        checkbox.classList.add("form-check-input");
+        label.classList.add("form-check-label");
 
-      contenedorUtiles.appendChild(wrapper);
+        wrapper.appendChild(checkbox);
+        wrapper.appendChild(label);
+
+        contenedor.appendChild(wrapper);
+      });
     });
   } catch (error) {
     console.error("Error al cargar útiles:", error);
   }
 }
 
-mostrarUtilesCheckbox();
+document.addEventListener("DOMContentLoaded", () => {
+  mostrarUtilesCheckbox();
+});

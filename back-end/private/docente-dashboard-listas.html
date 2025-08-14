@@ -87,8 +87,8 @@
                             <div id="descripcionListaError" class="invalid-feedback">Por favor ingrese la descripción.</div>
                         </div>
                         <div class="mb-3">
-                            <label for="cantidadLista" class="form-label">Utiles: </label>
-                            <div id="contenedorUtiles"></div>
+                            <label for="contenedorUtiles" class="form-label">Utiles: </label>
+                            <div class="contenedorUtiles"></div>
                         </div>
                         <div class="mb-3">
                             <label for="crearGradoLista" class="form-label">Grado: </label>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                    <button type="submit" form="crearListaForm" class="crearUsuario" id="btnCrearLista" class="btn btn-primary">Crear Útil</button>
+                    <button type="submit" form="crearListaForm" id="btnCrearLista" class="btn btn-primary">Crear Lista</button>
                 </div>
             </div>
         </div>
@@ -121,11 +121,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="editarDescripcionLista" class="form-label">Descripción</label>
-                            <input type="email" class="form-control" id="editarDescripcionLista" required>
+                            <input type="text" class="form-control" id="editarDescripcionLista" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editarCantidadLista" class="form-label">Cantidad</label>
-                            <input type="number" class="form-control" id="editarCantidadlista" required>
+                            <label for="contenedorUtiles" class="form-label">Utiles: </label>
+                            <div class="contenedorUtiles"></div>
                         </div>
                         <div class="mb-3">
                             <label for="editarGradoLista" class="form-label">Grado:</label>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" form="editarUsuarioForm" class="btnGuardar btn btn-primary" id="btnGuardarEdicionLista">Guardar Cambios</button>
+                    <button type="submit" form="editarListaForm" class="btnGuardar btn btn-primary" id="btnGuardarEdicionLista">Guardar Cambios</button>
                 </div>
             </div>
         </div>
