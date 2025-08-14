@@ -350,6 +350,32 @@ body{
   font-size: 16px;
 }
 
+.cargar {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Cambiado a fixed para que esté siempre en la pantalla */
+    width: 190px; /* Ancho del contenedor */
+    height: 140px; /* Alto del contenedor */
+    top: 45%; /* Centrado verticalmente */
+    left: 50%; /* Centrado horizontalmente */
+    transform: translate(-50%, -50%); /* Para centrar exactamente */
+    z-index: 9999; /* Asegúrate de que esté por encima de otros elementos */
+    text-align: center; /* Centrar texto en el contenedor */
+    border-radius: 10px; /* Bordes redondeados (opcional) */
+}
+
+.sombra {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Mantenerlo fijo en la pantalla */
+    top: 0; /* Posicionar en la parte superior */
+    left: 0; /* Posicionar en la parte izquierda */
+    width: 100%; /* Ancho total de la pantalla */
+    height: 100%; /* Alto total de la pantalla */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    z-index: 9998; /* Detrás del GIF, pero por encima del resto del contenido */
+    margin: 0;
+    padding: 0;
+}
+
 
 
 
