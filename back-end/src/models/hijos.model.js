@@ -13,6 +13,11 @@ const schemaHijos = new mongoose.Schema({
         required: true,
         unique: false
     },
+    cedula: {
+        type:String,
+        required: true,
+        unique: true
+    },
     idPadre: {
         type:String,
         requered: true,

@@ -1,8 +1,9 @@
 const tablaHijosBody = document.querySelector("#tablaHijos tbody"); 
 
 async function cargarTablaHijos() {
+  const idPadre = localStorage.getItem('padreId');
   try {
-    const response = await fetch("http://localhost:3000/hijos", {
+    const response = await fetch(`http://localhost:3000/hijos/padre/${idPadre}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -27,6 +28,7 @@ async function cargarTablaHijos() {
       fila.innerHTML = `
         <td>${hijo.nombre}</td>
         <td>${hijo.apellidos}</td>
+        <td>${hijo.cedula}</td>
         <td  class="text-center">${infoGradoHijo}</td>
         <td class="text-center">
           <button class="btnEditar btnEditarHijo btn btn-sm btn-primary" data-id="${hijo._id}">Editar</button>
@@ -73,6 +75,7 @@ async function editarHijoHandler(event) {
     document.getElementById("editarIdHijo").value = hijo._id;
     document.getElementById("editarNombreHijo").value = hijo.nombre || '';
     document.getElementById("editarApellidosHijo").value = hijo.apellidos || '';
+    document.getElementById("editarCedulaHijo").value = hijo.cedula || '';
     
     
     // Asignar valores al select Lista
@@ -117,10 +120,10 @@ async function editarHijoHandler(event) {
 
 async function actualizarHijo(modalInstance) {
 
-    console.log("Actualizar hijo - función llamada");
   const id = document.getElementById("editarIdHijo").value;
   const nombre = document.getElementById("editarNombreHijo").value.trim();
   const apellidos = document.getElementById("editarApellidosHijo").value.trim();
+  const cedula = document.getElementById("editarCedulaHijo").value.trim();
 
   // Para los selects de grado y estado, si son múltiples:
   const selectGradoHijo = document.getElementById("editarGradoHijo");
@@ -140,11 +143,9 @@ async function actualizarHijo(modalInstance) {
   const datosActualizadosHijo = {
     nombre,
     apellidos,
+    cedula,
     grado: gradosSeleccionadosHijo
   };
-
-  console.log("Datos actualizados hijo:", datosActualizadosHijo);
-
 
   try {
     const response = await fetch(`http://localhost:3000/hijos/${id}`, {
@@ -195,16 +196,20 @@ async function actualizarHijo(modalInstance) {
 cargarTablaHijos();
 
 document.addEventListener("DOMContentLoaded", () => {
+  const idPadre = localStorage.getItem('padreId');
   const crearHijo = document.getElementById("hijoForm");
 
   const inputNombreHijo = document.getElementById("registrarNombreHijo");
   const inputApellidosHijo = document.getElementById("registrarApellidosHijo");
+  const inputCedulaHijo = document.getElementById("registrarCedulaHijo");
   const inputGradoHijo = document.getElementById("registrarGradoHijo");
 
   async function registrarHijo() {
     const datosRegistroHijo = {
       nombre: inputNombreHijo.value.trim(),
       apellidos: inputApellidosHijo.value.trim(),
+      cedula: inputCedulaHijo.value.trim(),
+      idPadre: idPadre,
       grado: [inputGradoHijo.value]
     };
 
@@ -254,10 +259,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Limpiar campos y clases de error
       inputNombreHijo.value = "";
       inputApellidosHijo.value = "";
+      inputCedulaHijo.value = "";
       inputGradoHijo.value = "";
 
       inputNombreHijo.classList.remove("is-invalid");
       inputApellidosHijo.classList.remove("is-invalid");
+      inputCedulaHijo.classList.remove("is-invalid");
       inputGradoHijo.classList.remove("is-invalid");
 
       // Cerrar modal correctamente
@@ -359,3 +366,138 @@ function eliminarHijos() {
     });
   });
 }
+
+// Cargar tabla listas 
+
+const contenedorHijosListas = document.getElementById("contenedorHijosListas");
+
+async function cargarHijosYListas() {
+  const idPadre = localStorage.getItem('padreId');
+
+  try {
+    const responseHijos = await fetch(`http://localhost:3000/hijos/padre/${idPadre}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    });
+
+    if (!responseHijos.ok) throw new Error("Error al cargar hijos");
+
+    const listaHijos = await responseHijos.json();
+
+    // Limpiar contenedor principal
+    contenedorHijosListas.innerHTML = "";
+
+    // Recorrer cada hijo
+    for (const hijo of listaHijos) {
+      // Crear título hijo
+      const tituloHijo = document.createElement("h3");
+      tituloHijo.textContent = `${hijo.nombre} ${hijo.apellidos}`;
+
+      // Agregar al contenedor
+      contenedorHijosListas.appendChild(tituloHijo);
+
+      // Obtener ids de grados del hijo
+      const gradosIds = (Array.isArray(hijo.grado)) ? hijo.grado.map(g => g._id || g) : [];
+
+      if (gradosIds.length === 0) {
+        const avisoSinGrados = document.createElement("p");
+        avisoSinGrados.textContent = "No tiene grados asignados.";
+        contenedorHijosListas.appendChild(avisoSinGrados);
+        continue; // pasa al siguiente hijo
+      }
+
+      // Llamar a la ruta que busca listas por grados
+      const paramsIds = gradosIds.join(",");
+      const responseListas = await fetch(`http://localhost:3000/lista-utiles/por-grados?ids=${paramsIds}`, {
+        headers: { "Content-Type": "application/json" }
+      });
+
+      if (!responseListas.ok) {
+        const errorMsg = await responseListas.json().catch(() => ({}));
+        const pError = document.createElement("p");
+        pError.textContent = errorMsg.msj || "Error al cargar listas para los grados";
+        contenedorHijosListas.appendChild(pError);
+        continue;
+      }
+
+      const listasUtiles = await responseListas.json();
+
+      if (!Array.isArray(listasUtiles) || listasUtiles.length === 0) {
+        const pSinListas = document.createElement("p");
+        pSinListas.textContent = "No hay listas asociadas a los grados de este hijo.";
+        contenedorHijosListas.appendChild(pSinListas);
+        continue;
+      }
+
+      // Por cada lista, generar tabla
+      listasUtiles.forEach(lista => {
+        const tabla = document.createElement("table");
+        tabla.classList.add("table", "table-bordered", "mb-4");
+
+        const thead = document.createElement("thead");
+        const trTitulo = document.createElement("tr");
+        const thTitulo = document.createElement("th");
+        thTitulo.colSpan = 3;
+        thTitulo.classList.add("bg-primary", "text-white", "text-center");
+        thTitulo.textContent = lista.nombre || "Lista sin nombre";
+        trTitulo.appendChild(thTitulo);
+        thead.appendChild(trTitulo);
+
+        // Encabezados de columnas para los útiles
+        const trHeaderUtiles = document.createElement("tr");
+        ["Nombre", "Descripción", "Cantidad"].forEach(texto => {
+          const th = document.createElement("th");
+          th.textContent = texto;
+          th.classList.add("text-center");
+          trHeaderUtiles.appendChild(th);
+        });
+        thead.appendChild(trHeaderUtiles);
+
+        tabla.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
+        if (Array.isArray(lista.utiles) && lista.utiles.length > 0) {
+          lista.utiles.forEach(util => {
+            const tr = document.createElement("tr");
+
+            const tdNombre = document.createElement("td");
+            tdNombre.textContent = util.nombre || "-";
+
+            const tdDescripcion = document.createElement("td");
+            tdDescripcion.textContent = util.descripcion || "-";
+
+            // Cantidad puede no venir en util, o debes ajustar ese dato según tu modelo
+            const tdCantidad = document.createElement("td");
+            tdCantidad.textContent = (util.cantidad !== undefined) ? util.cantidad : "-";
+            tdCantidad.classList.add("text-center");
+
+            tr.appendChild(tdNombre);
+            tr.appendChild(tdDescripcion);
+            tr.appendChild(tdCantidad);
+
+            tbody.appendChild(tr);
+          });
+        } else {
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.colSpan = 3;
+          td.classList.add("text-center");
+          td.textContent = "No hay útiles para esta lista.";
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        }
+
+        tabla.appendChild(tbody);
+        contenedorHijosListas.appendChild(tabla);
+      });
+
+    }
+
+  } catch (error) {
+    console.error("Error al cargar hijos y listas:", error);
+    contenedorHijosListas.innerHTML = "<p class='text-danger'>Error al cargar los datos.</p>";
+  }
+}
+
+cargarHijosYListas();

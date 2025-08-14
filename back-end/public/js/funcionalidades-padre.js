@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const usuarioPadre = data.usuario;
-      console.log(usuarioPadre);
 
       const contenedorNombrePadre = document.getElementById('cargarNombrePadre');
       const contenedorInfoPadre = document.getElementById('infoPadre');
