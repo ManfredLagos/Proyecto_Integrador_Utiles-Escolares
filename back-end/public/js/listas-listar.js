@@ -142,7 +142,7 @@ async function editarListaHandler(event) {
   }
 }
 
-
+//Función para actualizar la lista
 async function actualizarUtil(modalInstance) {
   const id = document.getElementById("editarIdLista").value;
   const nombre = document.getElementById("editarNombreLista").value.trim();
@@ -192,10 +192,8 @@ async function actualizarUtil(modalInstance) {
     grado: gradosSeleccionadosLista
   };
 
-console.log(datosActualizadosLista);
-
   try {
-    const response = await fetch(`http://localhost:3000/lista-utiles/${idDocente}`, {
+    const response = await fetch(`http://localhost:3000/lista-utiles/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datosActualizadosLista)
@@ -268,6 +266,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// Función para crear listas de útiles escolares
 document.addEventListener("DOMContentLoaded", () => {
   const crearLista = document.getElementById("crearListaForm");
 
@@ -276,18 +275,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const idDocente = localStorage.getItem('docenteId');
   const selectListasGrado = document.getElementById("crearGradoLista");
 
-  // Contenedor donde están los checkboxes de útiles
-  const contenedorUtiles = document.getElementById("contenedorUtiles");
-
   async function registrarLista() {
-    // Si el select permite múltiples selecciones
     const gradosSeleccionados = selectListasGrado.multiple
       ? Array.from(selectListasGrado.selectedOptions).map(option => option.value)
       : [selectListasGrado.value.trim()];
 
-      // Obtiene los útiles seleccionados consultando los checkboxes marcados
-    const utilesSeleccionados = Array.from(contenedorUtiles.querySelectorAll('input[type="checkbox"]:checked'))
-      .map(checkbox => checkbox.value);
+    const contenedoresUtiles = document.querySelectorAll(".contenedorUtiles");
+    let utilesSeleccionados = [];
+
+    contenedoresUtiles.forEach(contenedor => {
+      const checkboxes = contenedor.querySelectorAll('input[type="checkbox"]:checked');
+      checkboxes.forEach(checkbox => {
+        if (!utilesSeleccionados.includes(checkbox.value)) {
+          utilesSeleccionados.push(checkbox.value);
+        }
+      });
+    });
 
     const datosRegistroLista = {
       nombre: inputNombreLista.value.trim(),
@@ -300,9 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch("http://localhost:3000/lista-utiles", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datosRegistroLista)
       });
 
@@ -311,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
           Swal.fire({
             icon: "error",
             title: "Lista duplicada",
-            text: "El correo o nombre de usuario ya existe en la base de datos.",
+            text: "El nombre ya existe en la base de datos.",
             showClass: { popup: "animate__animated animate__shakeX" },
             hideClass: { popup: "animate__animated animate__fadeOutUp" }
           });
@@ -319,15 +320,13 @@ document.addEventListener("DOMContentLoaded", () => {
           Swal.fire({
             icon: "error",
             title: "Error de servidor",
-            text: "Ocurrió un error al registrar el usuario.",
+            text: "Ocurrió un error al registrar la lista.",
             showClass: { popup: "animate__animated animate__shakeX" },
             hideClass: { popup: "animate__animated animate__fadeOutUp" }
           });
         }
         return;
       }
-
-      //Asociar lista a usuario
 
       Swal.fire({
         position: "center",
@@ -341,22 +340,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cargarTablaListas();
 
-      // Limpiar campos y errores
+      // Limpiar campos
       inputNombreLista.value = "";
       inputDescripcionLista.value = "";
-      selectListasGrado.value = "";
       selectListasGrado.value = "";
 
       inputNombreLista.classList.remove("is-invalid");
       inputDescripcionLista.classList.remove("is-invalid");
       selectListasGrado.classList.remove("is-invalid");
 
-
-      // Cerrar modal correctamente
+      // Cerrar modal
       const crearListaModal = document.getElementById("listaModal");
-      const modalInstance =
-        bootstrap.Modal.getInstance(crearListaModal) || new bootstrap.Modal(crearListaModal);
+      const modalInstance = bootstrap.Modal.getInstance(crearListaModal) || new bootstrap.Modal(crearListaModal);
       modalInstance.hide();
+
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -378,7 +375,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
 
 
 // Función para asignar evento eliminar a botones de la tabla
