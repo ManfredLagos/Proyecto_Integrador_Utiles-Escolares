@@ -20,17 +20,12 @@ async function cargarTablaUtiles() {
 
     listaUtiles.forEach(util => {
 
-      const infoUtil = Array.isArray(util.lista)
-        ? util.lista.map(g => g.nombre).join(", ")
-        : "";
-
       const fila = document.createElement("tr");
 
       fila.innerHTML = `
         <td>${util.nombre}</td>
         <td>${util.descripcion}</td>
-        <td>${util.cantidad}</td>
-        <td class="text-center">${infoUtil}</td>
+        <td class="text-center">${util.cantidad}</td>
         <td class="text-center">
           <button class="btnEditar btnEditarUtil btn btn-sm btn-primary" data-id="${util._id}">Editar</button>
         </td>
@@ -301,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
           Swal.fire({
             icon: "error",
             title: "Error de servidor",
-            text: "Ocurrió un error al registrar el usuario.",
+            text: "Ocurrió un error al registrar el útil.",
             showClass: { popup: "animate__animated animate__shakeX" },
             hideClass: { popup: "animate__animated animate__fadeOutUp" }
           });
@@ -370,7 +365,7 @@ function eliminarUtil() {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'No se encontró el id del usuario para eliminar',
+          text: 'No se encontró el id del útil para eliminar',
           showClass: { popup: 'animate__animated animate__shakeX' },
           hideClass: { popup: 'animate__animated animate__fadeOutUp' }
         });

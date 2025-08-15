@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
           Correo: ${usuarioPadre.correo}<br><hr>
           Usuario: ${usuarioPadre.usuario}<br><hr>
           Rol: ${usuarioPadre.rol}<br><hr>
-          ${Array.isArray(usuarioPadre.hijo) ? 'Hijo: ' + usuarioPadre.hijo.map(g => g.nombre || g).join(', ') + '<br><hr>' : ''}
         `;
       }
     })

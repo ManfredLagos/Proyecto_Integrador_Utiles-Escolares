@@ -26,7 +26,7 @@ const schemaLista_utiles = new mongoose.Schema({
     ],
     grado: [
         {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref:"Grado"
         }
     ]

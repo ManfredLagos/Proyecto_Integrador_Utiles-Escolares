@@ -126,4 +126,37 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+
+router.get('/por-grados', async (req, res) => {
+  let { ids } = req.query;
+
+  if (!ids) {
+    return res.status(400).json({ msj: "Se requiere el parámetro 'ids' con los IDs de grados" });
+  }
+
+  ids = ids.split(',').map(id => id.trim());
+
+  const invalidIds = ids.filter(id => !mongoose.Types.ObjectId.isValid(id));
+  if (invalidIds.length > 0) {
+    return res.status(400).json({ msj: "IDs inválidos: " + invalidIds.join(', ') });
+  }
+
+  try {
+    const listasUtiles = await Lista_util.find({ grado: { $in: ids } }).populate('utiles grado');
+
+    if (!listasUtiles || listasUtiles.length === 0) {
+      return res.status(404).json({ msj: "No se encontraron listas para los grados indicados" });
+    }
+
+    res.json(listasUtiles);
+  } catch (error) {
+    console.error('Error al obtener listas por grados:', error);
+    res.status(500).json({ msj: 'Error interno del servidor', error: error.message });
+  }
+});
+
+
+
+
+
 module.exports = router;

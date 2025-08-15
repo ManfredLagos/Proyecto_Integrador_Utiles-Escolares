@@ -61,11 +61,11 @@ async function cargarTablaListas() {
 
   } catch (error) {
     console.error("Error al cargar la tabla:", error);
-    Swal.fire({
+    /*Swal.fire({
       icon: 'error',
       title: 'Error',
       text: error.message || 'Error al cargar las listas.',
-    });
+    });*/
   }
 }
 
@@ -496,3 +496,98 @@ async function mostrarUtilesCheckbox() {
 document.addEventListener("DOMContentLoaded", () => {
   mostrarUtilesCheckbox();
 });
+
+
+const contenedorListas = document.getElementById('contenedorListasUtiles'); // Div contenedor donde pondremos todas las tablas
+// IMPORTANTE: En tu HTML debes tener <div id="contenedorListasUtiles"></div>
+
+async function cargarListasPorDocente() {
+
+  try {
+    const response = await fetch(`http://localhost:3000/lista-utiles/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) throw new Error('Error al cargar las listas del docente');
+
+    const listas = await response.json();
+
+    // Limpiar contenedor antes de agregar tablas
+    contenedorListas.innerHTML = '';
+
+    listas.forEach(lista => {
+      // Crear título de la lista
+      const titulo = document.createElement('h4');
+      titulo.textContent = `Lista: ${lista.nombre || 'Sin nombre'}`;
+      contenedorListas.appendChild(titulo);
+
+      // Crear tabla
+      const tabla = document.createElement('table');
+      tabla.classList.add('table', 'table-bordered', 'mb-4');
+
+      // Crear encabezado de la tabla
+      const thead = document.createElement('thead');
+      const trHead = document.createElement('tr');
+      ['Nombre', 'Descripción', 'Cantidad'].forEach(texto => {
+        const th = document.createElement('th');
+        th.textContent = texto;
+        th.classList.add('text-center');
+        trHead.appendChild(th);
+      });
+      thead.appendChild(trHead);
+      tabla.appendChild(thead);
+
+      // Crear cuerpo de la tabla
+      const tbody = document.createElement('tbody');
+
+      if (Array.isArray(lista.utiles) && lista.utiles.length > 0) {
+        lista.utiles.forEach(util => {
+          const tr = document.createElement('tr');
+
+          const tdNombre = document.createElement('td');
+          tdNombre.textContent = util.nombre || '-';
+
+          const tdDescripcion = document.createElement('td');
+          tdDescripcion.textContent = util.descripcion || '-';
+
+          const tdCantidad = document.createElement('td');
+          tdCantidad.textContent = (util.cantidad !== undefined) ? util.cantidad : '-';
+          tdCantidad.classList.add('text-center');
+
+          tr.appendChild(tdNombre);
+          tr.appendChild(tdDescripcion);
+          tr.appendChild(tdCantidad);
+
+          tbody.appendChild(tr);
+        });
+      } else {
+        // Si no hay útiles, mostrar fila indicando vacío
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.setAttribute('colspan', '3');
+        td.classList.add('text-center');
+        td.textContent = 'No hay útiles para esta lista.';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      }
+
+      tabla.appendChild(tbody);
+      contenedorListas.appendChild(tabla);
+    });
+
+    // Aquí podrías agregar botones u otras funcionalidades si quieres
+    // Elimina las funciones eliminarLista() o editarListaHandler() si no aplican a este código
+  } catch (error) {
+    console.error("Error al cargar las listas:", error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error.message || 'Error al cargar las listas.'
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', cargarListasPorDocente);

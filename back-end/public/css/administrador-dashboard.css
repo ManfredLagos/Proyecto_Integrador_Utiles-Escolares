@@ -1,4 +1,4 @@
-body{
+html, body{
     padding: 0;
     margin: 0;
     height: 100%;
@@ -8,6 +8,8 @@ body{
 .contenedor-dashboar-administrador{
     padding: 0;
     margin: 0;
+    height: 100%;
+    width: 100%;
 }
 
 #fila{
@@ -19,7 +21,8 @@ body{
 
 #columna-1{
     border-right: 2px solid #f2f2f2;
-    height: 100vh;
+    min-height: 100vh; /* mínimo alto igual a la ventana */
+    height: auto;       /* la altura puede crecer porque es auto */
 }
 
 .menuLateral{
@@ -126,6 +129,25 @@ body{
     color: #3449a0;
     border: 2px solid #3449a0;
     font-weight: 600;
+}
+
+.btnCrear{
+    border: none;
+    color: #ffffff;
+    background-color: #1E2957;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 130px;
+    height: 39px;
+    border: 2px solid var(--azulOscuro);
+}
+
+.btnCrear:hover{
+    background-color: #fff;
+    color: #3449a0;
+    border: 2px solid #3449a0;
 }
 
 .btnGuardar{

@@ -101,7 +101,7 @@ router.get("/informacionPadre/:id", async (req, res) => {
 
   try {
     const usuario = await Usuario_mep.findById(id)
-      .populate('hijo')
+      .populate('hijo');
 
     if (!usuario) {
       return res.status(404).json({ msj: "Padre no encontrado" });

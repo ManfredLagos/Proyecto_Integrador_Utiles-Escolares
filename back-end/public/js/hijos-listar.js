@@ -113,7 +113,7 @@ async function editarHijoHandler(event) {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: error.message || 'No se pudo obtener la información del grado.'
+      text: error.message || 'No se pudo obtener la información del hijo.'
     });
   }
 }
@@ -307,7 +307,7 @@ function eliminarHijos() {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'No se encontró el id del grado para eliminar',
+          text: 'No se encontró el id del hijo para eliminar',
           showClass: { popup: 'animate__animated animate__shakeX' },
           hideClass: { popup: 'animate__animated animate__fadeOutUp' }
         });
@@ -315,7 +315,7 @@ function eliminarHijos() {
       }
 
       const result = await Swal.fire({
-        title: '¿Seguro que deseas eliminar este grado?',
+        title: '¿Seguro que deseas eliminar el registro de este hijo?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
@@ -366,138 +366,3 @@ function eliminarHijos() {
     });
   });
 }
-
-// Cargar tabla listas 
-
-const contenedorHijosListas = document.getElementById("contenedorHijosListas");
-
-async function cargarHijosYListas() {
-  const idPadre = localStorage.getItem('padreId');
-
-  try {
-    const responseHijos = await fetch(`http://localhost:3000/hijos/padre/${idPadre}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-
-    if (!responseHijos.ok) throw new Error("Error al cargar hijos");
-
-    const listaHijos = await responseHijos.json();
-
-    // Limpiar contenedor principal
-    contenedorHijosListas.innerHTML = "";
-
-    // Recorrer cada hijo
-    for (const hijo of listaHijos) {
-      // Crear título hijo
-      const tituloHijo = document.createElement("h3");
-      tituloHijo.textContent = `${hijo.nombre} ${hijo.apellidos}`;
-
-      // Agregar al contenedor
-      contenedorHijosListas.appendChild(tituloHijo);
-
-      // Obtener ids de grados del hijo
-      const gradosIds = (Array.isArray(hijo.grado)) ? hijo.grado.map(g => g._id || g) : [];
-
-      if (gradosIds.length === 0) {
-        const avisoSinGrados = document.createElement("p");
-        avisoSinGrados.textContent = "No tiene grados asignados.";
-        contenedorHijosListas.appendChild(avisoSinGrados);
-        continue; // pasa al siguiente hijo
-      }
-
-      // Llamar a la ruta que busca listas por grados
-      const paramsIds = gradosIds.join(",");
-      const responseListas = await fetch(`http://localhost:3000/lista-utiles/por-grados?ids=${paramsIds}`, {
-        headers: { "Content-Type": "application/json" }
-      });
-
-      if (!responseListas.ok) {
-        const errorMsg = await responseListas.json().catch(() => ({}));
-        const pError = document.createElement("p");
-        pError.textContent = errorMsg.msj || "Error al cargar listas para los grados";
-        contenedorHijosListas.appendChild(pError);
-        continue;
-      }
-
-      const listasUtiles = await responseListas.json();
-
-      if (!Array.isArray(listasUtiles) || listasUtiles.length === 0) {
-        const pSinListas = document.createElement("p");
-        pSinListas.textContent = "No hay listas asociadas a los grados de este hijo.";
-        contenedorHijosListas.appendChild(pSinListas);
-        continue;
-      }
-
-      // Por cada lista, generar tabla
-      listasUtiles.forEach(lista => {
-        const tabla = document.createElement("table");
-        tabla.classList.add("table", "table-bordered", "mb-4");
-
-        const thead = document.createElement("thead");
-        const trTitulo = document.createElement("tr");
-        const thTitulo = document.createElement("th");
-        thTitulo.colSpan = 3;
-        thTitulo.classList.add("bg-primary", "text-white", "text-center");
-        thTitulo.textContent = lista.nombre || "Lista sin nombre";
-        trTitulo.appendChild(thTitulo);
-        thead.appendChild(trTitulo);
-
-        // Encabezados de columnas para los útiles
-        const trHeaderUtiles = document.createElement("tr");
-        ["Nombre", "Descripción", "Cantidad"].forEach(texto => {
-          const th = document.createElement("th");
-          th.textContent = texto;
-          th.classList.add("text-center");
-          trHeaderUtiles.appendChild(th);
-        });
-        thead.appendChild(trHeaderUtiles);
-
-        tabla.appendChild(thead);
-
-        const tbody = document.createElement("tbody");
-
-        if (Array.isArray(lista.utiles) && lista.utiles.length > 0) {
-          lista.utiles.forEach(util => {
-            const tr = document.createElement("tr");
-
-            const tdNombre = document.createElement("td");
-            tdNombre.textContent = util.nombre || "-";
-
-            const tdDescripcion = document.createElement("td");
-            tdDescripcion.textContent = util.descripcion || "-";
-
-            // Cantidad puede no venir en util, o debes ajustar ese dato según tu modelo
-            const tdCantidad = document.createElement("td");
-            tdCantidad.textContent = (util.cantidad !== undefined) ? util.cantidad : "-";
-            tdCantidad.classList.add("text-center");
-
-            tr.appendChild(tdNombre);
-            tr.appendChild(tdDescripcion);
-            tr.appendChild(tdCantidad);
-
-            tbody.appendChild(tr);
-          });
-        } else {
-          const tr = document.createElement("tr");
-          const td = document.createElement("td");
-          td.colSpan = 3;
-          td.classList.add("text-center");
-          td.textContent = "No hay útiles para esta lista.";
-          tr.appendChild(td);
-          tbody.appendChild(tr);
-        }
-
-        tabla.appendChild(tbody);
-        contenedorHijosListas.appendChild(tabla);
-      });
-
-    }
-
-  } catch (error) {
-    console.error("Error al cargar hijos y listas:", error);
-    contenedorHijosListas.innerHTML = "<p class='text-danger'>Error al cargar los datos.</p>";
-  }
-}
-
-cargarHijosYListas();
