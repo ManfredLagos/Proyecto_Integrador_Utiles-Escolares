@@ -79,18 +79,6 @@ async function editarUtilHandler(event) {
     document.getElementById("editarDescripcionUtil").value = util.descripcion || '';
     document.getElementById("editarCantidadUtil").value = util.cantidad != null ? util.cantidad : '';
 
-    // Asignar valores al select Lista
-    const selectLista = document.getElementById("editarListaUtil");
-    if (util.lista && Array.isArray(util.lista)) {
-      const valoresLista = util.lista.map(g => g._id || g);
-      for (let option of selectLista.options) {
-        option.selected = valoresLista.includes(option.value);
-      }
-    } else {
-      // Limpiar selección
-      Array.from(selectLista.options).forEach(opt => opt.selected = false);
-    }
-
     // Mostrar el modal
     const modalElement = document.getElementById("editarUtilModal");
     const modal = new bootstrap.Modal(modalElement);
@@ -125,19 +113,6 @@ async function actualizarUtil(modalInstance) {
   const descripcion = document.getElementById("editarDescripcionUtil").value.trim();
   const cantidad = document.getElementById("editarCantidadUtil").value.trim();
 
-  const selectLista = document.getElementById("editarListaUtil");
-
-  if (!selectLista) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: 'No se encontró el campo Lista en el formulario.',
-    });
-    return;
-  }
-
-  const listasSeleccionadas = Array.from(selectLista.selectedOptions).map(option => option.value);
-
   // Validaciones simples
   if (!id) {
     Swal.fire({
@@ -171,7 +146,6 @@ async function actualizarUtil(modalInstance) {
     nombre,
     descripcion,
     cantidad: cantidadNum,
-    lista: listasSeleccionadas,
   };
 
   try {
@@ -259,19 +233,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputNombreUtil = document.getElementById("nombreUtil");
   const inputDescripcionUtil = document.getElementById("descripcionUtil");
   const inputCantidadUtil = document.getElementById("cantidadUtil");
-  const selectListasUtil = document.getElementById("listaUtil");
 
   async function registrarUtil() {
-    // Si el select permite múltiples selecciones
-    const listasSeleccionadas = selectListasUtil.multiple
-      ? Array.from(selectListasUtil.selectedOptions).map(option => option.value)
-      : [selectListasUtil.value.trim()];
 
     const datosRegistroUtil = {
       nombre: inputNombreUtil.value.trim(),
       descripcion: inputDescripcionUtil.value.trim(),
       cantidad: inputCantidadUtil.value.trim(),
-      lista: listasSeleccionadas
     };
 
     try {
@@ -320,12 +288,10 @@ document.addEventListener("DOMContentLoaded", () => {
       inputNombreUtil.value = "";
       inputDescripcionUtil.value = "";
       inputCantidadUtil.value = "";
-      selectListasUtil.value = "";
 
       inputNombreUtil.classList.remove("is-invalid");
       inputDescripcionUtil.classList.remove("is-invalid");
       inputCantidadUtil.classList.remove("is-invalid");
-      selectListasUtil.classList.remove("is-invalid");
 
       // Cerrar modal correctamente
       const crearUtilModal = document.getElementById("crearUtilModal");

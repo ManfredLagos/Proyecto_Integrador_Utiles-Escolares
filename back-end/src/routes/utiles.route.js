@@ -74,7 +74,7 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
-  const { nombre, descripcion, cantidad, lista } = req.body;
+  const { nombre, descripcion, cantidad } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ msj: "ID inválido" });
@@ -83,7 +83,7 @@ router.put("/:id", async (req, res) => {
   try {
     const utilActualizado = await Utiles.findByIdAndUpdate(
       id,
-      { nombre, descripcion, cantidad, lista },
+      { nombre, descripcion, cantidad },
       { new: true, runValidators: true }
     );
 
